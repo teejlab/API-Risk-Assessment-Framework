@@ -2,41 +2,59 @@
 
 ## api_endpoint_id:
 The unique identifier for the API endpoint.
+
 Type: numeric
 ## api_id:
 The ID of the API.
+
 Type: numeric
 
 ## api_vendor_id:
 The ID of the API vendor.
+
 Type: numeric
 
 ## api_vendor
 The vendor of the API, e.g "OneLook", "Victoria State Government Australia", "TeejLab"...
+
 Type: string
 
 ## api:
 The name of the API, e.g "Datamuse Dictionary", "DepartmentAPI"...
+
 Type: string
 
 ## category
 The category of the API, e.g "Research & Education", "AI & Data Science"...
+
 Type: string
 
 ## usage_base:
-Free or commercial API.
+Free or commercial API. 
+- Free: there are free limits, such as the number of calls that can be made for free. These limits are also available to hackers.
+- Commercial: need registration. Additional layer of security
+
 Type: string
 
 ## sample_response:
 A sample response from the API.
-Type: JSON
+- "None": not safe at all
+- "Path": risky
+- "others not listed": okay
+- "OAuth": strongest
+- 
+Type: String
 
 ## tagset:
 List of keys in the sample response.
+
 Type: list
 
 ## authentication:
 Authentication method, e.g "None", "OAuth 2.0", "Basic Authentication"...
+
+The risk level can be found here: <https://owasp.org/www-project-api-security/>
+
 Type: string
 
 ## security_test_category:
