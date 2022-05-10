@@ -1,6 +1,16 @@
-# An Analytical Framework for Quantifying API Risks Proposal Report
+# Proposal Report
 
-Check out the content pages to see more.
+### An Analytical Framework for Quantifying API Risks
+
+
+#### Table of Contents
 
 ```{tableofcontents}
 ```
+
+#### Contributors
+
+- Anupriya Srivastava
+- Harry Chan
+- Jacqueline Chong
+- Son Chau
