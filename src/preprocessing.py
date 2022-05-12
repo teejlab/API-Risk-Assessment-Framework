@@ -49,7 +49,7 @@ def main(input_path, input_path_country, output_path):
     df = pd.read_excel(input_path, "Core_Endpoint", usecols = "A:R")
 
     # Read country metric data
-    country_metric_df = pd.read_excel(input_path_country, "NRI 2021 - results", usecol = "B:C", skiprows=1) 
+    country_metric_df = pd.read_excel(input_path_country, "NRI 2021 - results", usecols = "B:C", skiprows=1) 
     # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Preprocess the data
