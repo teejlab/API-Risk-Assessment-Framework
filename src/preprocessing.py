@@ -29,9 +29,12 @@ def preprocessing(df):
         A preprocessed dataframe
     """
     # Rename the columns
-    df.rename(columns={'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result'}, inplace=True)
+    df.rename(columns={
+        'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result',
+        'risk_label_Baljeet': 'risk_label'
+        }, inplace=True)
     # Drop the columns that are not needed
-    # df = df.drop(['response_metadata'], axis=1)
+    df = df.drop(['response_metadata'], axis=1) # To-be-modifited
     # Update the rows with duplicates
     df.loc[df['hosting_isp'] == 'Amazon Technologies Inc.', 'hosting_isp'] = 'Amazon.com, Inc.'
     # Drop the rows with duplicates
@@ -41,6 +44,7 @@ def preprocessing(df):
 def main(input_path, output_path):
     # Read the file
     df = pd.read_excel(input_path, "Core_Endpoint", usecols = "A:R")
+
     # Preprocess the data
     df = preprocessing(df)
 
