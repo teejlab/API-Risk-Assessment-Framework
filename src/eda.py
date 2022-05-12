@@ -8,17 +8,16 @@ Options:
 --train_file=<train_file>    Path (including filename) to training data
 --output_path=<output_path>    Path (including filename) of where to locally write the file
 """
-
+  
 from docopt import docopt
 import altair as alt
 import pandas as pd
-import os
+import os 
 
 opt = docopt(__doc__)
 
-
 def main(train_file, output_path):
-
+    
     # Read the training data
     train_df = pd.read_csv(train_file)
     # Create the directory if not exists
@@ -31,7 +30,6 @@ def main(train_file, output_path):
         x=alt.X("count()", title="Count")
     )
     hist_target.save(output_path + "/histogram_categorical.png")
-
 
 if __name__ == "__main__":
   main(opt["--train_file"],  opt["--output_path"])
