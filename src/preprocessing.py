@@ -35,7 +35,7 @@ def preprocessing(df, country_metric_df):
         'risk_label_Baljeet': 'risk_label'
         }, inplace=True)
     # Merge country_metric data with input data
-    df = df.merge(country_metric_df, left_on='server_location', right_on='Country')
+    df = df.merge(country_metric_df, left_on='server_location', right_on='Country', how='left')
     # Drop the columns that are not needed
     df = df.drop(['response_metadata', 'server_location'], axis=1) # To-be-modifited
     # Update the rows with duplicates
