@@ -3,7 +3,7 @@
 
 ```{figure} ../../images/timeline.png
 ---
-height: 400px
+height: 350px
 name: timeline-fig
 ---
 The proposed timeline
