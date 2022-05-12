@@ -2,11 +2,12 @@
 # author: 
 # date: 
 """Reads train csv data from path, preprocess the data, and save the preprocessed data to path.
-Usage: preprocessing.py --input_path=<input_path> --output_path=<output_path>
+Usage: preprocessing.py --input_path=<input_path> --input_path_country=<input_path_country> --output_path=<output_path>
  
 Options:
---input_path=<input_path>     Path to input data
---output_path=<output_path>   Path for preprocessed file to be saved
+--input_path=<input_path>                    Path to input data
+--input_path_country=<input_path_country>    Path to input country metric data
+--output_path=<output_path>                  Path for preprocessed file to be saved
 """
 
 from docopt import docopt
@@ -17,7 +18,7 @@ import sys
 
 opt = docopt(__doc__)
 
-def preprocessing(df):
+def preprocessing(df, country_metric_df):
     """Read the file, and preprocess the data.
     Parameters
     ----------
@@ -33,17 +34,23 @@ def preprocessing(df):
         'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result',
         'risk_label_Baljeet': 'risk_label'
         }, inplace=True)
+    # Merge country_metric data with input data
+    df = df.merge(country_metric_df, left_on='server_location', right_on='Country')
     # Drop the columns that are not needed
-    df = df.drop(['response_metadata'], axis=1) # To-be-modifited
+    df = df.drop(['response_metadata', 'server_location'], axis=1) # To-be-modifited
     # Update the rows with duplicates
     df.loc[df['hosting_isp'] == 'Amazon Technologies Inc.', 'hosting_isp'] = 'Amazon.com, Inc.'
     # Drop the rows with duplicates
     df = df.drop_duplicates()
     return df
 
-def main(input_path, output_path):
+def main(input_path, input_path_country, output_path):
     # Read the file
     df = pd.read_excel(input_path, "Core_Endpoint", usecols = "A:R")
+
+    # Read country metric data
+    country_metric_df = pd.read_excel(input_path_country, "NRI 2021 - results", usecol = "B:C", skiprows=1) 
+    # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Preprocess the data
     df = preprocessing(df)
@@ -66,4 +73,4 @@ def main(input_path, output_path):
     #     test_df.to_csv(output_path + "/test.csv", index=False)
 
 if __name__ == "__main__":
-    main(opt["--input_path"], opt["--output_path"])
+    main(opt["--input_path"], opt["--input_path_country"], opt["--output_path"])
