@@ -53,7 +53,7 @@ def main(input_path, input_path_country, output_path):
     # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Preprocess the data
-    df = preprocessing(df)
+    df = preprocessing(df, country_metric_df)
 
     # Output the preprocessed dataframe to a csv file
     try:
