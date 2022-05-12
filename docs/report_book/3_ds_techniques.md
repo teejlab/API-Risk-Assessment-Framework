@@ -85,7 +85,7 @@ In this problem, it is very critical to identify the high risk APIs accurately. 
 
 Based on metrics scores, we will select the best performing model and build an integrated Machine Learning pipeline for predicting risk classification on new data. This pipeline will be used for evaluating performance on the test data.
 
-```{figure} ../../images/ML_Pipeline.jpg
+```{figure} ../../images/ML_Pipeline.png
 ---
 height: 500px
 name: ML_Pipeline-fig

@@ -389,7 +389,7 @@ const thebe_selector_output = ".output, .cell_output"
 <h2>3.2 Data Pre-processing<a class="headerlink" href="#data-pre-processing" title="Permalink to this headline">¶</a></h2>
 <p>During our EDA, we found out that multiple entries were identical with the exception of the request header field “Date” (i.e. timestamp of message) in the “metadata_response” column. However, this information is not useful for our analysis. Moreover, there were insufficient samples for certain risk labels after data wrangling (See <a class="reference internal" href="#histogram-categorical-fig"><span class="std std-ref">Figure 1</span></a>). More data points are required to make any further statistical conclusions.</p>
 <div class="figure align-default" id="histogram-categorical-fig">
-<a class="reference internal image-reference" href="_images/histogram_categorical.png"><img alt="_images/histogram_categorical.png" src="_images/histogram_categorical.png" style="height: 150px;" /></a>
+<a class="reference internal image-reference" href="../../images/histogram_categorical.png"><img alt="../../images/histogram_categorical.png" src="../../images/histogram_categorical.png" style="height: 150px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distribution of the Risk Label</span><a class="headerlink" href="#histogram-categorical-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
@@ -400,7 +400,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>In the “response_metadata” column, there are several keys to be extracted. Information, such as server software, and X-rate-limits, are vital. While it is difficult to concisely elaborate on the importance of each key that we are going to extract, the intuition is that with more information exposed to the attacker, they will be better able to exploit its vulnerabilities.</p>
 <p>These transformations can be visualised in <a class="reference internal" href="#nlp-preprocess-fig"><span class="std std-ref">Figure 2</span></a>.</p>
 <div class="figure align-default" id="nlp-preprocess-fig">
-<a class="reference internal image-reference" href="_images/NLP_preprocess.png"><img alt="_images/NLP_preprocess.png" src="_images/NLP_preprocess.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../../images/NLP_preprocess.png"><img alt="../../images/NLP_preprocess.png" src="../../images/NLP_preprocess.png" style="height: 250px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Feature engineering on API responses</span><a class="headerlink" href="#nlp-preprocess-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>Currently, most rows in “sample_response” contain missing data. As such, while waiting to acquire more data, we will test pre-trained ML models or find a similar corpus to train the model.</p>
@@ -413,7 +413,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>In this problem, it is very critical to identify the high risk APIs accurately. Hence, we are using Recall as the primary evaluation metric. However, as we want to avoid low risk APIs to show up as high risk, we will also look at f1-score and accuracy.</p>
 <p>Based on metrics scores, we will select the best performing model and build an integrated Machine Learning pipeline for predicting risk classification on new data. This pipeline will be used for evaluating performance on the test data.</p>
 <div class="figure align-default" id="ml-pipeline-fig">
-<a class="reference internal image-reference" href="_images/ML_Pipeline.jpg"><img alt="_images/ML_Pipeline.jpg" src="_images/ML_Pipeline.jpg" style="height: 500px;" /></a>
+<a class="reference internal image-reference" href="../../images/ML_Pipeline.png"><img alt="../../images/ML_Pipeline.png" src="../../images/ML_Pipeline.png" style="height: 500px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Machine Learning pipeline</span><a class="headerlink" href="#ml-pipeline-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
