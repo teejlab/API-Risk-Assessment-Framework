@@ -22,6 +22,7 @@ COPY . ./
 
 
 
-RUN make
+# RUN make
 
-# docker build - < Dockerfile -t program
+# docker build -t v1.0.0 -f Dockerfile .
+# docker run v1.0.0 make
