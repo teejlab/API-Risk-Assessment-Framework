@@ -6,7 +6,7 @@ train.csv: data/raw/RiskClassification_Data_Endpoints_V1.xlsx
 
 # Perform EDA
 histogram_categorical.png : train.csv
-	python src/eda.py --train_file=data/processed/train.csv --output_path=images/
+	python src/eda.py --train_file=data/processed/train.csv --output_path=docs/report/images/
 
 # Generate the report in PDF
 book.pdf : histogram_categorical.png
@@ -18,5 +18,5 @@ book.html : book.pdf
 
 clean:
 	rm -rf data/processed/*
-	rm -rf images/histogram_categorical.png
+	rm -rf docs/report/images/histogram_categorical.png
 	rm -rf docs/report_book/_build/*

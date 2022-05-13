@@ -1,7 +1,8 @@
 # 4. Timeline
 
+The proposed timeline for the project is as such ({ref}`Figure 4 <timeline-fig>`):
 
-```{figure} ../../images/timeline.png
+```{figure} images/timeline.png
 ---
 height: 350px
 name: timeline-fig
