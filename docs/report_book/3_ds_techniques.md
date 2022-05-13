@@ -2,7 +2,7 @@
 
 ## 3.1 Datasets
 
-The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by TeejLab Services to the third-party API endpoint, and all HTTP requests are annotated by the level of severity (i.e. High, Medium, Low, No). The overview of the datasets is shown in Table 1 and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`.
+The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by TeejLab Services to the third-party API endpoint, and all HTTP requests are annotated by the level of severity (i.e. High, Medium, Low, No). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`.
 
 ```{table} : The statistical summary of the Data Endpoints
 :name: table-1
@@ -16,6 +16,7 @@ The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfe
 | Total  | 2,000                 |
 ```
 
+&nbsp;
 
 ```{table} : The detailed description of the columns in the dataset
 :name: table-2
@@ -48,7 +49,7 @@ During our EDA, we found out that multiple entries were identical with the excep
 height: 150px
 name: histogram_categorical-fig
 ---
-Distribution of the Risk Label
+Distribution of the Risk Label No, Low, Medium, High
 ```
 
 ## 3.3 Feature Engineering
