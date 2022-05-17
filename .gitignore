@@ -1,2 +1,6 @@
 
 .DS_Store
+.virtual_documents
+geckodriver.log
+eda/geckodriver.log
+.vscode/
