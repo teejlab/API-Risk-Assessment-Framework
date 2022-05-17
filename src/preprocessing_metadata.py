@@ -1,11 +1,29 @@
+"""
+Extract fields from the response_metadata column (along with parameters).
+Replace the string value with recomended binary value for risk factor.
+Imputation of missing values with low risk factor.
 
+Usage: preprocessing_metadata.py --input_path=<input_path> --output_path=<output_path>
+ 
+Options:
+--input_path=<input_path>                    Path to input data
+--output_path=<output_path>                  Path for preprocessed file to be saved
+
+Example:
+python src/preprocessing_metadata.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
+"""
 
 from docopt import docopt
 import pandas as pd
 from pathlib import Path
-opt = docopt(__doc__)
 
-def main(input_path, output_path):
+def main():
+    # parse arguments
+    args = docopt(__doc__)
+    # assign args to variables
+    input_path = args['--input_path']
+    output_path = args['--output_path']
+
     # Read the excel file
     api_df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:R")
     # rename column "security_test_result (FALSE=Passed; TRUE=Failed)" to "security_test_result"
@@ -128,12 +146,11 @@ def main(input_path, output_path):
     api_df = api_df.fillna(0)
     
     # save api_df to excel
-    output_path = Path(output_path)
-    output_path.mkdir(parents=True, exist_ok=True)
+    path = Path(output_path)
+    path.mkdir(parents=True, exist_ok=True)
     api_df.to_excel(output_path + "/metadata.xlsx", index=False)
-    api_df.to_csv(output_path + "/metadata.xlsx", index=False)
+    api_df.to_csv(output_path + "/metadata.csv", index=False)
         
 
-
 if __name__ == "__main__":
-    main(opt["--input_path"], opt["--output_path"])
+    main()
