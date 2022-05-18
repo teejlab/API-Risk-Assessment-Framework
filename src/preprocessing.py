@@ -11,7 +11,7 @@ Options:
 
 from docopt import docopt
 from sklearn.model_selection import train_test_split
-from utils.pii_extraction import pii_extraction, fii_extraction
+from utils.pii_extraction import pii_extraction
 import os
 import pandas as pd
 import sys
@@ -71,8 +71,8 @@ def main(input_path, input_path_country, output_path):
     # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Add Columns for PII and FII
-    df["is_pii"] = df["sample_response"].apply(pii_extraction, args=(0.5,)).astype(str)
-    df["is_fii"] = df["sample_response"].apply(fii_extraction, args=(0.5,)).astype(str)
+    df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(str)
+    df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(str)
 
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
