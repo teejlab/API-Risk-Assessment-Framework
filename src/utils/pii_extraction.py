@@ -15,6 +15,7 @@ pii = [
 ]
 fii = ["CREDIT_CARD", "CRYPTO", "IBAN_CODE", "US_BANK_NUMBER", "US_ITIN", "US_SSN"]
 
+
 def pii_extraction(text, type="pii", conf_threshold=0.5):
     """
     Extracts PII from a text.
@@ -46,6 +47,7 @@ def pii_extraction(text, type="pii", conf_threshold=0.5):
         results += _pii_extraction_from_text(text, type, conf_threshold)
     return results
 
+
 def _pii_extraction_from_text(text, type="pii", conf_threshold=0.5):
     """
     Extracts PII from a text.
@@ -72,7 +74,7 @@ def _pii_extraction_from_text(text, type="pii", conf_threshold=0.5):
     for result in results:
         if result.score >= conf_threshold:
             filtered_results.append(result)
-            
+
     return filtered_results
 
 
@@ -83,7 +85,7 @@ def _pii_extraction_from_json(objs, type="pii", conf_threshold=0.5):
     ----------
     objs : list
         The json to be analyzed.
-    type : str 
+    type : str
         The type of PII to be extracted.
     conf_threshold : float
         The confidence threshold.
@@ -92,6 +94,12 @@ def _pii_extraction_from_json(objs, type="pii", conf_threshold=0.5):
     filtered_results : list
         A list containing the extracted PII.
     """
+    # Base Case
+    if not objs:
+        return []
+    if isinstance(objs, str):
+        return _pii_extraction_from_text(objs, type, conf_threshold)
+    
     filtered_results = []
     # Check if the object is a list
     if isinstance(objs, list):
@@ -100,14 +108,9 @@ def _pii_extraction_from_json(objs, type="pii", conf_threshold=0.5):
             filtered_results += _pii_extraction_from_json(obj, type, conf_threshold)
     # Check if the object is a dictionary
     elif isinstance(objs, dict):
+        # Recursively call the function for each element in the dictionary
         for obj in objs.values():
-            # For list type
-            if isinstance(obj, list):
-                for item in obj:
-                    filtered_results += _pii_extraction_from_text(str(item), type, conf_threshold)
-            # For string type
-            else:
-                filtered_results += _pii_extraction_from_text(str(obj), type, conf_threshold)
+            filtered_results += _pii_extraction_from_json(obj, type, conf_threshold)
     else:
         filtered_results += _pii_extraction_from_text(str(objs), type, conf_threshold)
     return filtered_results
