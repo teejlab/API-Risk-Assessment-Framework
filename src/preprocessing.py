@@ -55,6 +55,27 @@ def preprocessing(df, country_metric_df):
     df.loc[
         df["hosting_isp"] == "Akamai International, BV", "hosting_isp"
     ] = "Akamai Technologies, Inc."
+
+    # Authentication column
+    authentication_list = df.authentication.unique().tolist()
+    authentication_mapper = {}
+    for variable in authentication_list:
+        if variable == "none":
+            authentication_mapper[variable] = 0
+        else:
+            authentication_mapper[variable] = 1
+    df['authentication'] = df['authentication'].replace(authentication_mapper)
+    
+    # Usage Base
+    usagebase_list = df.usage_base.unique().tolist()
+    usagebase_mapper = {}
+    for variable in usagebase_list:
+        if variable == "commercial":
+            usagebase_mapper[variable] = 0
+        else:
+            usagebase_mapper[variable] = 1
+    df['usage_base'] = df['usage_base'].replace(usagebase_mapper)
+    
     # Drop the rows with duplicates
     df = df.drop_duplicates()
     return df
