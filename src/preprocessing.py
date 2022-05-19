@@ -16,6 +16,7 @@ from utils.pii_extraction import pii_extraction
 import os
 import pandas as pd
 import sys
+import re
 
 opt = docopt(__doc__)
 
@@ -121,9 +122,21 @@ def preprocessing(df, country_metric_df):
         if category not in df.columns:
             df[category]=0
 
+    # server_name
+    df['server_name'] = df['server_name'].astype(str).str.lower()
+    server_name_list = df.server_name.unique().tolist()
+    server_name_mapper = {}
+    for server in server_name_list:
+        server = server.lower()
+        if "obscured" in re.split('/| ', server) or "missing" in re.split('/| ', server) or "unavailable" in re.split('/| ', server):
+            server_name_mapper[server] = 0
+        else:
+            server_name_mapper[server] = 1
+    df['server_name'] = df['server_name'].replace(server_name_mapper)
+
     # Drop the rows with duplicates
     df = df.drop_duplicates()
-    df = df.drop(['category'], axis=1)
+    df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id', 'hosting city', 'hosting_isp'], axis=1)
     return df
 
 
