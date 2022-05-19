@@ -61,6 +61,10 @@ def preprocessing(df, country_metric_df):
     authentication_mapper = {}
     for variable in authentication_list:
         if variable == "none":
+            authentication_mapper[variable] = 3
+        if variable == "path":
+            authentication_mapper[variable] = 2
+        if variable == "OAuth2":
             authentication_mapper[variable] = 0
         else:
             authentication_mapper[variable] = 1
@@ -72,8 +76,10 @@ def preprocessing(df, country_metric_df):
     for variable in usagebase_list:
         if variable == "commercial":
             usagebase_mapper[variable] = 0
-        else:
+        if variable == "free_with_authentication":
             usagebase_mapper[variable] = 1
+        else:
+            usagebase_mapper[variable] = 2
     df['usage_base'] = df['usage_base'].replace(usagebase_mapper)
     
     # Drop the rows with duplicates
