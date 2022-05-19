@@ -125,10 +125,11 @@ def preprocessing(df, country_metric_df):
     # server_name
     df['server_name'] = df['server_name'].astype(str).str.lower()
     server_name_list = df.server_name.unique().tolist()
+    secure_server_keys = {"obscured", 'missing', 'unavailable'}
     server_name_mapper = {}
     for server in server_name_list:
-        server = server.lower()
-        if "obscured" in re.split('/| ', server) or "missing" in re.split('/| ', server) or "unavailable" in re.split('/| ', server):
+        s = set(re.split('/| ', server))
+        if secure_server_keys.isdisjoint(s) == False:
             server_name_mapper[server] = 0
         else:
             server_name_mapper[server] = 1
