@@ -11,6 +11,7 @@ Options:
 
 from docopt import docopt
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
 from utils.pii_extraction import pii_extraction
 import os
 import pandas as pd
@@ -81,9 +82,48 @@ def preprocessing(df, country_metric_df):
         else:
             usagebase_mapper[variable] = 2
     df['usage_base'] = df['usage_base'].replace(usagebase_mapper)
-    
+
+    # Categories
+    categories_list = ['AI & Data Science',
+                        'Business & Technology',
+                        'Environment & Weather',
+                        'Finance & Banking',
+                        'Food, Health & Medicine',
+                        'GeoInformatics & Navigation',
+                        'Government & Public Services',
+                        'Health Science & Medicine',
+                        'Information & Science',
+                        'Justice & Public Safety',
+                        'Logistics & Infrastructure',
+                        'Natural Resources & Energy',
+                        'News & Media',
+                        'None',
+                        'Religion & Spirituality',
+                        'Research & Education',
+                        'Sales & Marketing',
+                        'Security & Technology',
+                        'Skills & Career Development',
+                        'Social Media & Technology',
+                        'Software & Services',
+                        'Sports & Entertainment',
+                        'Transportation & Automobile',
+                        'Work & Personal Life',
+                        'eCommerce & Trade']
+
+    category_enc = OneHotEncoder(handle_unknown="ignore", sparse=False)
+    cat = df[['column']]
+    cat_enc = category_enc.fit_transform(cat)
+    cat_column_name = category_enc.get_feature_names_out(['column'])
+    cat_df = pd.DataFrame(cat_enc, columns=cat_column_name)
+    cat_df.columns = cat_df.columns.str.replace(r'^category_', '')
+    df = pd.concat([df, cat_df], axis=1)
+    for category in categories_list:
+        if category not in df.columns:
+            df[category]=0
+
     # Drop the rows with duplicates
     df = df.drop_duplicates()
+    df = df.drop(['category'], axis=1)
     return df
 
 
