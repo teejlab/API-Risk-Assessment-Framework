@@ -112,9 +112,9 @@ def preprocessing(df, country_metric_df):
                         'eCommerce & Trade']
 
     category_enc = OneHotEncoder(handle_unknown="ignore", sparse=False)
-    cat = df[['column']]
+    cat = df[['category']]
     cat_enc = category_enc.fit_transform(cat)
-    cat_column_name = category_enc.get_feature_names_out(['column'])
+    cat_column_name = category_enc.get_feature_names_out(['category'])
     cat_df = pd.DataFrame(cat_enc, columns=cat_column_name)
     cat_df.columns = cat_df.columns.str.replace(r'^category_', '')
     df = pd.concat([df, cat_df], axis=1)
@@ -143,7 +143,7 @@ def preprocessing(df, country_metric_df):
 
 def main(input_path, input_path_country, output_path):
     # Read the file
-    df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:R")
+    df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:S")
 
     # Read country metric data
     country_metric_df = pd.read_excel(
