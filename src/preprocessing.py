@@ -15,11 +15,11 @@ from sklearn.preprocessing import OneHotEncoder
 from utils.pii_extraction import pii_extraction
 import os
 import pandas as pd
+import swifter
 import sys
 import re
 
 opt = docopt(__doc__)
-
 
 def preprocessing(df, country_metric_df):
     """Read the file, and preprocess the data.
@@ -152,8 +152,8 @@ def main(input_path, input_path_country, output_path):
     # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Add Columns for PII and FII
-    df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
-    df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
+    df["is_pii"] = df["sample_response"].swifter.apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
+    df["is_fii"] = df["sample_response"].swifter.apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
 
     # Preprocess the data
     df = preprocessing(df, country_metric_df)

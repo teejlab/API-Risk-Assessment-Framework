@@ -1,8 +1,8 @@
 all: book.html
 
 # Preprocessing the data
-train.csv: data/raw/RiskClassification_Data_Endpoints_V1.xlsx 
-	python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoints_V1.xlsx --output_path=data/processed/
+train.csv: data/raw/RiskClassification_Data_Endpoints_V2.xlsx 
+	python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --input_path_country=data/raw/nri_2021_dataset.xlsx --output_path=data/processed/
 
 # Perform EDA
 histogram_categorical.png : train.csv
