@@ -13,6 +13,7 @@ from docopt import docopt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from utils.pii_extraction import pii_extraction
+from utils.security_test_feat_creation import security_test_feat_creation
 import os
 import pandas as pd
 import sys
@@ -140,44 +141,6 @@ def preprocessing(df, country_metric_df):
     df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id', 'hosting city', 'hosting_isp'], axis=1)
     return df
 
-def create_security_test_features(api_df):
-    """ Create new features corresponding to security tests. The following features are being created:
-    - security_test_conducted (0: No, 1: Yes)
-    - 6 columns corresponding to each security test (0: PASS, 1: FAIL, 0.5: NOT AVAILABLE)
-    Parameters
-    ----------
-    api_df: Pandas Dataframe
-        Input dataframe with raw data columns, including security_test_results
-    Returns
-    -------
-    feat_security_tests_df : Pandas Dataframe
-        dataframe with endpoint_id and new security test features
-    """
-    # Data extraction and cleaning
-    security_test_df = api_df[["api_endpoint_id", "security_test_category", "security_test_result (FALSE=Passed; TRUE=Failed)"]]
-    security_test_df = security_test_df.rename(columns = {"api_endpoint_id":"endpoint_id",
-                                   "security_test_category":"test_category",
-                                    "security_test_result (FALSE=Passed; TRUE=Failed)":"test_result"})
-
-    # Create security_test_conducted feature
-    feat_security_df = security_test_df.groupby('endpoint_id').count()
-    feat_security_df["security_test_conducted"] = 0
-    feat_security_df.loc[feat_security_df["test_category"] > 0 , "security_test_conducted"] = 1
-    feat_security_df.drop(columns=["test_category", "test_result"], inplace=True)
-    
-    # Create test_result features
-    stacked_df = security_test_df.groupby(["endpoint_id", "test_category"]).mean()
-    stacked_df.unstack() 
-    feat_security_df = pd.merge(feat_security_df,
-                            stacked_df.unstack(),
-                            on="endpoint_id",
-                            how="outer")
-    feat_security_df.fillna(0.5, inplace=True)     # Default value of 0.5 when test is not conducted (test pass-0, test fail-1)
-    feat_security_df = feat_security_df.round(decimals=1)
-    
-    return feat_security_df
-
-
 def main(input_path, input_path_country, output_path):
     # Read the file
     df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:S")
@@ -192,11 +155,11 @@ def main(input_path, input_path_country, output_path):
     df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
     df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
 
+    # Add Security test features
+    df = security_test_feat_creation(df)
+
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
-    
-    # Add Security test features
-    security_test_df = create_security_test_features(df)
 
     # Split the data into training and testing sets
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
