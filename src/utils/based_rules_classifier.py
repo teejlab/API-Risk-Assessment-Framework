@@ -13,9 +13,12 @@ Example:
 python src/utils/based_rules_classifier.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
 """
 
+
 from docopt import docopt
 import pandas as pd
 from pathlib import Path
+
+from pii_extraction import pii_extraction
 
 # write the rule to classify the Risk_Label based on rule_df
 
@@ -48,17 +51,22 @@ def main():
     output_path = args['--output_path']
 
     rule_df = pd.read_excel(
-        "../data/raw/RiskClassification_Data_Endpoints_V2_Shared.xlsx", sheet_name="RiskRules")
+        "data/raw/RiskClassification_Data_Endpoints_V2.xlsx", sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
     rule_df = rule_df.iloc[:, 1:]
 
-    api_df = pd.read_excel("../data/raw/RiskClassification_Data_Endpoints_V2.xlsx", "Core_Endpoint",
+    api_df = pd.read_excel(input_path, "Core_Endpoint",
                            usecols="A:R")
     # rename column "security_test_result (FALSE=Passed; TRUE=Failed)" to "security_test_result"
     api_df.rename(columns={
                 'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result'}, inplace=True)
     api_df = api_df[['authentication', 'security_test_category', 'security_test_result',
-                    'server_location', 'hosting_isp']]
+                    'server_location', 'hosting_isp','sample_response']]
+    # classify pii and fii
+    api_df["is_pii"] = api_df["sample_response"].apply(
+        pii_extraction, args=("pii", 0.5,)).astype(bool)
+    api_df["is_fii"] = api_df["sample_response"].apply(
+        pii_extraction, args=("fii", 0.5,)).astype(bool)
 
 
     # process column authentication from api_df, replace nan and none with "No Authentication"
@@ -100,7 +108,7 @@ def main():
     api_df["hosting_isp"] = "Anyone"
 
     # apply the function classify_risk to each row in api_df
-    api_df["Risk_Label"] = api_df.apply(classify_risk, axis=1, args=(rule_df))
+    api_df["Risk_Label"] = api_df.apply(classify_risk, axis=1, args=(rule_df,))
 
 
     # save api_df to excel
