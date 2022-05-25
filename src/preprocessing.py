@@ -162,10 +162,13 @@ def main(input_path, input_path_country, output_path):
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
 
+
     # Add Security test features
     df = security_test_feat_creation(df)
 
     df = extract_metadata(df)
+
+    df.to_excel(output_path + "/df_full.xlsx", index=False)
 
     # Split the data into training and testing sets
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
