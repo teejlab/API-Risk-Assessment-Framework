@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.compose import make_column_transformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
-
+from sklearn.pipeline import make_pipeline
 
 def security_test_feat_creation(df):
     """

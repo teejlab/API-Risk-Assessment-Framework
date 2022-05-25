@@ -155,11 +155,11 @@ def main(input_path, input_path_country, output_path):
     df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
     df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
 
-    # Add Security test features
-    df = security_test_feat_creation(df)
-
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
+
+    # Add Security test features
+    df = security_test_feat_creation(df)
 
     # Split the data into training and testing sets
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
