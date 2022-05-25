@@ -13,6 +13,7 @@ from docopt import docopt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from utils.pii_extraction import pii_extraction
+from utils.security_test_feat_creation import security_test_feat_creation
 import os
 import pandas as pd
 import swifter
@@ -140,7 +141,6 @@ def preprocessing(df, country_metric_df):
     df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id', 'hosting city', 'hosting_isp'], axis=1)
     return df
 
-
 def main(input_path, input_path_country, output_path):
     # Read the file
     df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:S")
@@ -157,6 +157,9 @@ def main(input_path, input_path_country, output_path):
 
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
+
+    # Add Security test features
+    df = security_test_feat_creation(df)
 
     # Split the data into training and testing sets
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
