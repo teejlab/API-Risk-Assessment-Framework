@@ -10,7 +10,7 @@ Options:
 --output_path=<output_path>                  Path for preprocessed file to be saved
 
 Example:
-python src/utils/based_rules_classifier.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
+python src/utils/based_rules_classifier.py --input_path=data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx --output_path=data/processed/
 """
 
 
@@ -49,24 +49,37 @@ def main():
     # assign args to variables
     input_path = args['--input_path']
     output_path = args['--output_path']
+    path = Path(output_path)
+    path.mkdir(parents=True, exist_ok=True)
 
     rule_df = pd.read_excel(
         "data/raw/RiskClassification_Data_Endpoints_V2.xlsx", sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
     rule_df = rule_df.iloc[:, 1:]
+    # change server_location to Amaricas to Americas
+    rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
 
-    api_df = pd.read_excel(input_path, "Core_Endpoint",
+    df = pd.read_excel(input_path, "Core_Endpoint",
                            usecols="A:R")
-    # rename column "security_test_result (FALSE=Passed; TRUE=Failed)" to "security_test_result"
+    # make a copy of api_df
+    api_df = df.copy()
     api_df.rename(columns={
                 'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result'}, inplace=True)
-    api_df = api_df[['authentication', 'security_test_category', 'security_test_result',
-                    'server_location', 'hosting_isp','sample_response']]
+    api_df = api_df[['api_endpoint_id','authentication', 'security_test_category', 'security_test_result','server_location', 'hosting_isp', 'sample_response']]
     # classify pii and fii
     api_df["is_pii"] = api_df["sample_response"].apply(
         pii_extraction, args=("pii", 0.5,)).astype(bool)
     api_df["is_fii"] = api_df["sample_response"].apply(
         pii_extraction, args=("fii", 0.5,)).astype(bool)
+    # replace is_pii true to yes and false to no
+    api_df["is_pii"] = api_df["is_pii"].replace(True, "Yes")
+    api_df["is_pii"] = api_df["is_pii"].replace(False, "No")
+    # replace is_fii true to yes and false to no
+    api_df["is_fii"] = api_df["is_fii"].replace(True, "Yes")
+    api_df["is_fii"] = api_df["is_fii"].replace(False, "No")
+    # fill security_test_result nan to 'Pass'
+    api_df["security_test_result"] = api_df["security_test_result"].fillna("Pass")
+
 
 
     # process column authentication from api_df, replace nan and none with "No Authentication"
@@ -93,11 +106,13 @@ def main():
     # replace true with "Failed"
     api_df["security_test_result"] = api_df["security_test_result"].replace(
         1., "Fail")
+    # fill nan with "Pass"
+    api_df["security_test_result"] = api_df["security_test_result"].fillna("Pass")
     
     # process column server_location from api_df, replace nan with "Anywhere"
     api_df["server_location"] = api_df["server_location"].fillna("Anywhere")
     api_df["server_location"] = api_df["server_location"].replace(
-        ["United States", "Canada"], "Amaricas")
+        ["United States", "Canada"], "Americas")
     api_df["server_location"] = api_df["server_location"].replace(
         ["United Kingdom", "Ireland", "Germany", "Spain"], "West Europe")
     # replace everything else with "Others"
@@ -110,12 +125,18 @@ def main():
     # apply the function classify_risk to each row in api_df
     api_df["Risk_Label"] = api_df.apply(classify_risk, axis=1, args=(rule_df,))
 
-
     # save api_df to excel
-    path = Path(output_path)
-    path.mkdir(parents=True, exist_ok=True)
-    api_df.to_excel(output_path + "/RiskLabel.xlsx", index=False)
-    api_df.to_csv(output_path + "/RiskLabel.csv", index=False)
+    api_df.to_excel(output_path + "/rule_labeled.xlsx", index=False)
+
+    # select only the columns "api_endpoint_id" and "Risk_Label"
+    api_df = api_df[["api_endpoint_id", "Risk_Label"]]
+
+    # merge api_df and df
+    df = pd.merge(df, api_df, on="api_endpoint_id", how="left")
+
+    # save df to excel
+    df.to_excel(output_path + "/risk_labeled.xlsx", index=False)
+
 
 
 if __name__ == "__main__":

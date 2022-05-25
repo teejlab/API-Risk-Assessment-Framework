@@ -9,7 +9,7 @@ Options:
 --output_path=<output_path>                  Path for preprocessed file to be saved
 
 Example:
-python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --input_path_country=data/raw/nri_2021_dataset.xlsx --output_path=data/processed/
+python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx --input_path_country=data/raw/nri_2021_dataset.xlsx --output_path=data/processed/
 """
 
 from docopt import docopt
@@ -142,7 +142,7 @@ def preprocessing(df, country_metric_df):
 
     # Drop the rows with duplicates
     df = df.drop_duplicates()
-    df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id', 'hosting city', 'hosting_isp'], axis=1)
+    df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id', 'hosting_city', 'hosting_isp'], axis=1)
     return df
 
 def main(input_path, input_path_country, output_path):
@@ -161,10 +161,12 @@ def main(input_path, input_path_country, output_path):
 
     # Preprocess the data
     df = preprocessing(df, country_metric_df)
+    df.to_excel(output_path + "/df1.xlsx", index=False)
 
 
     # Add Security test features
     df = security_test_feat_creation(df)
+    df.to_excel(output_path + "/df2.xlsx", index=False)
 
     df = extract_metadata(df)
 
