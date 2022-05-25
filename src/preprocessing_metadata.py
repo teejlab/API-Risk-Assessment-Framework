@@ -1,3 +1,4 @@
+
 """
 Extract fields from the response_metadata column (along with parameters).
 Replace the string value with recomended binary value for risk factor.
@@ -15,23 +16,9 @@ python src/preprocessing_metadata.py --input_path=data/raw/RiskClassification_Da
 
 from docopt import docopt
 import pandas as pd
-from pathlib import Path
 
-def main():
-    # parse arguments
-    args = docopt(__doc__)
-    # assign args to variables
-    input_path = args['--input_path']
-    output_path = args['--output_path']
 
-    # Read the excel file
-    api_df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:R")
-    # rename column "security_test_result (FALSE=Passed; TRUE=Failed)" to "security_test_result"
-    api_df.rename(columns={
-                'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result'}, inplace=True)
-    # get only api_id, parameters and response_metadata columns
-    api_df = api_df[['api_id', 'parameters', 'response_metadata']]
-    
+def extract_metadata(api_df):
     # get a list of all response_metadata
     metadata_list = api_df['response_metadata'].tolist()
     # get a list of all parameters
@@ -145,12 +132,10 @@ def main():
     # replace NaN value with 0
     api_df = api_df.fillna(0)
     
-    # save api_df to excel
-    path = Path(output_path)
-    path.mkdir(parents=True, exist_ok=True)
-    api_df.to_excel(output_path + "/metadata.xlsx", index=False)
-    api_df.to_csv(output_path + "/metadata.csv", index=False)
-        
+    # # save api_df to excel
+    # path = Path(output_path)
+    # path.mkdir(parents=True, exist_ok=True)
+    # api_df.to_excel(output_path + "/metadata.xlsx", index=False)
+    # api_df.to_csv(output_path + "/metadata.csv", index=False)
+    return api_df
 
-if __name__ == "__main__":
-    main()

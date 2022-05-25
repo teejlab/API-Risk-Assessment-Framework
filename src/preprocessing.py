@@ -7,11 +7,15 @@ Options:
 --input_path=<input_path>                    Path to input data
 --input_path_country=<input_path_country>    Path to input country metric data
 --output_path=<output_path>                  Path for preprocessed file to be saved
+
+Example:
+python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --input_path_country=data/raw/nri_2021_dataset.xlsx --output_path=data/processed/
 """
 
 from docopt import docopt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
+from utils.metadata_extraction import extract_metadata
 from utils.pii_extraction import pii_extraction
 from utils.security_test_feat_creation import security_test_feat_creation
 import os
@@ -160,6 +164,9 @@ def main(input_path, input_path_country, output_path):
 
     # Add Security test features
     df = security_test_feat_creation(df)
+
+    df = extract_metadata(df)
+    df.to_excel(output_path + "/df.xlsx", index=False)
 
     # Split the data into training and testing sets
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
