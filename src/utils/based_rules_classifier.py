@@ -10,7 +10,7 @@ Options:
 --output_path=<output_path>                  Path for preprocessed file to be saved
 
 Example:
-python src/preprocessing_metadata.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
+python src/utils/based_rules_classifier.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
 """
 
 from docopt import docopt
