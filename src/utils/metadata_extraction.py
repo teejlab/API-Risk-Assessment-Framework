@@ -1,19 +1,3 @@
-
-"""
-Extract fields from the response_metadata column (along with parameters).
-Replace the string value with recomended binary value for risk factor.
-Imputation of missing values with low risk factor.
-
-Usage: preprocessing_metadata.py --input_path=<input_path> --output_path=<output_path>
- 
-Options:
---input_path=<input_path>                    Path to input data
---output_path=<output_path>                  Path for preprocessed file to be saved
-
-Example:
-python src/utils/metadata_extraction.py --input_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
-"""
-
 from docopt import docopt
 import pandas as pd
 
