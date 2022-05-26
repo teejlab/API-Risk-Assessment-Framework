@@ -45,6 +45,12 @@ def preprocessing(df, country_metric_df):
     df = df.merge(
         country_metric_df, left_on="server_location", right_on="Country", how="left"
     )
+    if df['NRI score'] == 0:
+        df['NRI score'] = country_metric_df['NRI score'].mean() # use all 22 countries score
+
+    # if df['pillars_avg'] == 0:
+    #     df['pillars_avg'] = country_metric_df['pillars_avg'].mean() # use all 22 countries score
+
     # Drop the columns that are not needed
     df = df.drop(["server_location"], axis=1)
     # Update the rows with duplicates
@@ -148,7 +154,36 @@ def main(input_path, input_path_country, output_path):
     # Read country metric data
     country_metric_df = pd.read_excel(
         input_path_country, "NRI 2021 - results", usecols="B:C", skiprows=1
-    )
+    ) #later: B:T
+    country_list_teejlab = ["United States",
+                        "Canada",
+                        "Netherlands",
+                        "Ireland",
+                        "Germany",
+                        "Luxembourg",
+                        "Russia",
+                        "Spain",
+                        "United Kingdom",
+                        "Sweden",
+                        "France",
+                        "Lithuania",
+                        "Finland",
+                        "Czech Republic",
+                        "Belgium",
+                        "Singapore",
+                        "India",
+                        "Japan",
+                        "Pakistan",
+                        "Sri Lanka",
+                        "Vietnam",
+                        "Australia"]
+    country_metric_df = country_metric_df[country_metric_df["Country"].isin(country_list_teejlab)]
+    # country_metric_df['pillars_avg'] = (country_metric_df['Country',
+    #                                     'Future Technologies', 
+    #                                     'Governments',
+    #                                     'Trust',
+    #                                     'Regulation'])/4
+    # country_metric_df = country_metric_df[['Country', 'pillars_avg']]
     # To-be-modified once we decide which metrics to use, presently, just the overall score
 
     # Add Columns for PII and FII
