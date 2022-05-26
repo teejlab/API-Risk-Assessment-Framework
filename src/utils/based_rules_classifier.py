@@ -3,14 +3,15 @@ Extract fields from the response_metadata column (along with parameters).
 Replace the string value with recomended binary value for risk factor.
 Imputation of missing values with low risk factor.
 
-Usage: preprocessing_metadata.py --input_path=<input_path> --output_path=<output_path>
+Usage: preprocessing_metadata.py --file_path=<file_path> --rule_path=<rule_path> --output_path=<output_path>
  
 Options:
---input_path=<input_path>                    Path to input data
---output_path=<output_path>                  Path for preprocessed file to be saved
+--file_path=<file_path>                    Path to input data
+--rule_path=<rule_path>                    Path to input data
+--output_path=<output_path>                Path for preprocessed file to be saved
 
 Example:
-python src/utils/based_rules_classifier.py --input_path=data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx --output_path=data/processed/
+python src/utils/based_rules_classifier.py --file_path=data/processed/df_pii.xlsx --rule_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
 """
 
 
@@ -27,6 +28,8 @@ def classify_risk(row, rule_df):
     """
     Check if the row is the same with any row in rule_df
     """
+    # remove api_endpoint_id from row series
+    row = row.drop(labels=["api_endpoint_id"])
     # loop through each row in rule_df
     for i in range(len(rule_df)):
         row_copy = rule_df.iloc[i]
@@ -47,40 +50,39 @@ def main():
     # parse arguments
     args = docopt(__doc__)
     # assign args to variables
-    input_path = args['--input_path']
+    file_path = args['--file_path']
+    rule_path = args['--rule_path']
     output_path = args['--output_path']
     path = Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
 
-    rule_df = pd.read_excel(
-        "data/raw/RiskClassification_Data_Endpoints_V2.xlsx", sheet_name="RiskRules")
+    rule_df = pd.read_excel(rule_path, sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
     rule_df = rule_df.iloc[:, 1:]
+    # remove duplicates
+    rule_df = rule_df.drop_duplicates()
     # change server_location to Amaricas to Americas
     rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
+  
 
-    df = pd.read_excel(input_path, "Core_Endpoint",
-                           usecols="A:R")
+    df = pd.read_excel(file_path)
     # make a copy of api_df
     api_df = df.copy()
-    api_df.rename(columns={
-                'security_test_result (FALSE=Passed; TRUE=Failed)': 'security_test_result'}, inplace=True)
-    api_df = api_df[['api_endpoint_id','authentication', 'security_test_category', 'security_test_result','server_location', 'hosting_isp', 'sample_response']]
-    # classify pii and fii
-    api_df["is_pii"] = api_df["sample_response"].apply(
-        pii_extraction, args=("pii", 0.5,)).astype(bool)
-    api_df["is_fii"] = api_df["sample_response"].apply(
-        pii_extraction, args=("fii", 0.5,)).astype(bool)
+    api_df = api_df[['api_endpoint_id','authentication', 'security_test_category', 'security_test_result','server_location', 'hosting_isp', 'is_pii', 'is_fii']]
+
+    # rename the column "is_pii" to "PII"
+    api_df = api_df.rename(columns={"is_pii": "PII"})
+    # rename the column "is_fii" to "FII"
+    api_df = api_df.rename(columns={"is_fii": "FII"})
     # replace is_pii true to yes and false to no
-    api_df["is_pii"] = api_df["is_pii"].replace(True, "Yes")
-    api_df["is_pii"] = api_df["is_pii"].replace(False, "No")
+    api_df["PII"] = api_df["PII"].replace(True, "Yes")
+    api_df["PII"] = api_df["PII"].replace(False, "No")
     # replace is_fii true to yes and false to no
-    api_df["is_fii"] = api_df["is_fii"].replace(True, "Yes")
-    api_df["is_fii"] = api_df["is_fii"].replace(False, "No")
-    # fill security_test_result nan to 'Pass'
-    api_df["security_test_result"] = api_df["security_test_result"].fillna("Pass")
-
-
+    api_df["FII"] = api_df["FII"].replace(True, "Yes")
+    api_df["FII"] = api_df["FII"].replace(False, "No")
+    # fill security_test_result nan to 'None'
+    api_df["security_test_result"] = api_df["security_test_result"].fillna(
+    "None")
 
     # process column authentication from api_df, replace nan and none with "No Authentication"
     api_df["authentication"] = api_df["authentication"].fillna("No Authentication")

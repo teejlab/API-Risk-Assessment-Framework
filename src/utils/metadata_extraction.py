@@ -116,10 +116,5 @@ def extract_metadata(api_df):
     # replace NaN value with 0
     api_df = api_df.fillna(0)
     
-    # # save api_df to excel
-    # path = Path(output_path)
-    # path.mkdir(parents=True, exist_ok=True)
-    # api_df.to_excel(output_path + "/metadata.xlsx", index=False)
-    # api_df.to_csv(output_path + "/metadata.csv", index=False)
     return api_df
 
