@@ -1,5 +1,3 @@
-# author:
-# date:
 """Reads train csv data from path, preprocess the data, and save the preprocessed data to path.
 Usage: preprocessing.py --input_path=<input_path> --input_path_country=<input_path_country> --output_path=<output_path>
  
@@ -14,21 +12,22 @@ python src/preprocessing.py --input_path=data/raw/RiskClassification_Data_Endpoi
 
 from docopt import docopt
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
-from utils.add_country_and_cat_feats import add_country_and_cat_feats
+from utils.country_n_cat_featuring import add_country_and_cat_feats
 from utils.metadata_extraction import extract_metadata
 from utils.pii_extraction import pii_extraction
 from utils.security_test_feat_creation import security_test_feat_creation
-import os
 import pandas as pd
-import sys
-import re
+from pathlib import Path
 
 opt = docopt(__doc__)
 def main(input_path, input_path_country, output_path):
-    # Read the file
+    path = Path(output_path)
+    path.mkdir(parents=True, exist_ok=True)
+
+    #############
+    # READ DATA #
+    #############
     df = pd.read_excel(input_path, "Core_Endpoint", usecols="A:S")
-    # Rename the columns
     df.rename(
         columns={
             "security_test_result (FALSE=Passed; TRUE=Failed)": "security_test_result"
@@ -36,35 +35,54 @@ def main(input_path, input_path_country, output_path):
         inplace=True,
     )
 
-    # Add Columns for PII and FII
-    df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
-    df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
+    #######################
+    # ADD PII FII FEATURES#
+    #######################
+    # WARNING: This function takes 30+ mins to run
+    # so consider reading it from the processed file
+    path_to_pii = output_path + "/df_pii.xlsx"
+    pii_path = Path(path_to_pii)
+    if not pii_path.is_file():    # delete the file if you want to run it again
+        print("Extracting PII and FII features...")
+        df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
+        df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
+        # save df with pii and fii
+        df.to_excel(output_path + "/df_pii.xlsx", index=False)
+    else:
+        df = pd.read_excel(output_path + "/df_pii.xlsx")
 
-    # save df with pii and fii
-    df.to_excel(output_path + "/df_fii_pii.xlsx", index=False)
-
-    # Add country score and OHE categories
+    ############################################
+    # ADD COUNTRY SCORE AND CATEGORIES FEATURES#
+    ############################################
     df = add_country_and_cat_feats(df, input_path_country)
     df.to_excel(output_path + "/df_country_score.xlsx", index=False)
 
-
-    # Add Security test features
+    #############################
+    # ADD SECURITY TEST FEATURES#
+    #############################
     df = security_test_feat_creation(df)
     df.to_excel(output_path + "/df_security.xlsx", index=False)
 
+    #########################
+    # ADD METADATA FEATURES #
+    #########################
     df = extract_metadata(df)
-
     df.to_excel(output_path + "/df_metadata.xlsx", index=False)
 
-    # Split the data into training and testing sets
+    
+    ############################
+    # SPLIT TRAIN AND SET DATA #
+    ############################
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
-    try:
-        train_df.to_csv(output_path + "/train.csv", index=False)
-        test_df.to_csv(output_path + "/test.csv", index=False)
-    except:
-        os.makedirs(os.path.dirname(output_path))
-        train_df.to_csv(output_path + "/train.csv", index=False)
-        test_df.to_csv(output_path + "/test.csv", index=False)
+    train_df.to_csv(output_path + "/train.csv", index=False)
+    test_df.to_csv(output_path + "/test.csv", index=False)
+    # try:
+    #     train_df.to_csv(output_path + "/train.csv", index=False)
+    #     test_df.to_csv(output_path + "/test.csv", index=False)
+    # except:
+    #     os.makedirs(os.path.dirname(output_path))
+    #     train_df.to_csv(output_path + "/train.csv", index=False)
+    #     test_df.to_csv(output_path + "/test.csv", index=False)
 
 
 if __name__ == "__main__":
