@@ -35,9 +35,9 @@ def main(input_path, input_path_country, output_path):
         inplace=True,
     )
 
-    #######################
-    # ADD PII FII FEATURES#
-    #######################
+    ########################
+    # ADD PII FII FEATURES #
+    ########################
     # WARNING: This function takes 30+ mins to run
     # so consider reading it from the processed file
     path_to_pii = output_path + "/df_pii.xlsx"
@@ -51,15 +51,15 @@ def main(input_path, input_path_country, output_path):
     else:
         df = pd.read_excel(output_path + "/df_pii.xlsx")
 
-    ############################################
-    # ADD COUNTRY SCORE AND CATEGORIES FEATURES#
-    ############################################
+    #############################################
+    # ADD COUNTRY SCORE AND CATEGORIES FEATURES #
+    #############################################
     df = add_country_and_cat_feats(df, input_path_country)
     df.to_excel(output_path + "/df_country_score.xlsx", index=False)
 
-    #############################
-    # ADD SECURITY TEST FEATURES#
-    #############################
+    ##############################
+    # ADD SECURITY TEST FEATURES #
+    ##############################
     df = security_test_feat_creation(df)
     df.to_excel(output_path + "/df_security.xlsx", index=False)
 
@@ -76,14 +76,6 @@ def main(input_path, input_path_country, output_path):
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
     train_df.to_csv(output_path + "/train.csv", index=False)
     test_df.to_csv(output_path + "/test.csv", index=False)
-    # try:
-    #     train_df.to_csv(output_path + "/train.csv", index=False)
-    #     test_df.to_csv(output_path + "/test.csv", index=False)
-    # except:
-    #     os.makedirs(os.path.dirname(output_path))
-    #     train_df.to_csv(output_path + "/train.csv", index=False)
-    #     test_df.to_csv(output_path + "/test.csv", index=False)
-
 
 if __name__ == "__main__":
     main(opt["--input_path"], opt["--input_path_country"], opt["--output_path"])
