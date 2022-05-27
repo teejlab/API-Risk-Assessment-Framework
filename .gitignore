@@ -4,4 +4,5 @@
 geckodriver.log
 eda/geckodriver.log
 .vscode/
+*.pyc
 data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx
