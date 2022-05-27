@@ -34,7 +34,9 @@ def main(input_path, input_path_country, output_path):
         },
         inplace=True,
     )
-    df = df.drop_duplicates()
+    orignial_df = df.drop_duplicates()
+    # make a copy of the dataframe
+    df = orignial_df.copy()
 
     ########################
     # ADD PII FII FEATURES #
@@ -76,10 +78,16 @@ def main(input_path, input_path_country, output_path):
     # ADD RISK LABELS #
     ###################
     # read risk_labeled.xlsx
-    # df_risk_labeled = pd.read_excel("data/processed/risk_labeled.xlsx")
+    df_risk_labeled = pd.read_excel("data/processed/risk_labeled.xlsx")
     # merge df and df_risk_labeled
-    # df = df.merge(df_risk_labeled, how="left", on="id")
-    # df.to_excel(output_path + "/df_full.xlsx", index=False)
+    df = df.merge(df_risk_labeled, how="left", on="api_endpoint_id")
+    df.to_excel(output_path + "/df_full.xlsx", index=False)
+
+    # make a copy of orignial_df, select only api_endpoint_id and security_test_category
+    df_security_test = orignial_df[["api_endpoint_id", "security_test_category"]].copy()
+    # merge df and df_security_test
+    df = df.merge(df_security_test, how="left", on="api_endpoint_id")
+    df.to_excel(output_path + "/df_full_security.xlsx", index=False)
 
     
     ############################

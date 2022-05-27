@@ -56,18 +56,23 @@ def main():
     path = Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
 
+    # read risk rules
     rule_df = pd.read_excel(rule_path, sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
     rule_df = rule_df.iloc[:, 1:]
+    # fill the empty values with "None"
+    rule_df = rule_df.fillna("None")
     # remove duplicates
     rule_df = rule_df.drop_duplicates()
     # change server_location to Amaricas to Americas
     rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
   
-
+    # read the data with fii and pii
     df = pd.read_excel(file_path)
     # make a copy of api_df
     api_df = df.copy()
+    # fill the empty values with "None"
+    api_df = api_df.fillna("None")
     api_df = api_df[['api_endpoint_id','authentication', 'security_test_category', 'security_test_result','server_location', 'hosting_isp', 'is_pii', 'is_fii']]
 
     # rename the column "is_pii" to "PII"
@@ -80,12 +85,8 @@ def main():
     # replace is_fii true to yes and false to no
     api_df["FII"] = api_df["FII"].replace(True, "Yes")
     api_df["FII"] = api_df["FII"].replace(False, "No")
-    # fill security_test_result nan to 'None'
-    api_df["security_test_result"] = api_df["security_test_result"].fillna(
-    "None")
 
     # process column authentication from api_df, replace nan and none with "No Authentication"
-    api_df["authentication"] = api_df["authentication"].fillna("No Authentication")
     api_df["authentication"] = api_df["authentication"].replace(
         "None", "No Authentication")
     # replace all value that not "No Authentication" with "Some Authentication"
@@ -93,8 +94,8 @@ def main():
                                 "No Authentication", "Some Authentication", inplace=True)
 
     # process column security_test_category from api_df, replace nan with "No Test Performed/Available"
-    api_df["security_test_category"] = api_df["security_test_category"].fillna(
-        "No Test Performed/Available")
+    api_df["security_test_category"] = api_df["security_test_category"].replace(
+        "None", "No Test Performed/Available")
     # replace Injections with "SQL Injection"
     api_df["security_test_category"] = api_df["security_test_category"].replace(
         "Injections", "SQL Injection")
@@ -108,18 +109,19 @@ def main():
     # replace true with "Failed"
     api_df["security_test_result"] = api_df["security_test_result"].replace(
         1., "Fail")
-    # fill nan with "Pass"
-    api_df["security_test_result"] = api_df["security_test_result"].fillna("Pass")
     
+
     # process column server_location from api_df, replace nan with "Anywhere"
-    api_df["server_location"] = api_df["server_location"].fillna("Anywhere")
+    api_df["server_location"] = api_df["server_location"].replace(
+        "None", "Anywhere")
     api_df["server_location"] = api_df["server_location"].replace(
         ["United States", "Canada"], "Americas")
     api_df["server_location"] = api_df["server_location"].replace(
-        ["United Kingdom", "Ireland", "Germany", "Spain"], "West Europe")
+        ["United Kingdom", "Ireland", "Germany", "Spain", 
+         "Luxembourg", "Sweden", "France", "Netherlands"], "West Europe")
     # replace everything else with "Others"
     api_df["server_location"] = api_df["server_location"].replace(
-        ["India", "Japan", "Australia",  "Czechia", "Lithuania", "Singapore"], "Others")
+        ["India", "Bangladesh", "Japan", "Australia",  "Czechia", "Lithuania", "Singapore"], "Others")
     
     # process column hosting_isp from api_df, replace value with "Anyone"
     api_df["hosting_isp"] = "Anyone"
@@ -128,17 +130,31 @@ def main():
     api_df["Risk_Label"] = api_df.apply(classify_risk, axis=1, args=(rule_df,))
 
     # save api_df to excel
-    api_df.to_excel(output_path + "/rule_labeled.xlsx", index=False)
+    api_df.to_excel(output_path + "/converted_data_with_risk.xlsx", index=False)
 
-    # select only the columns "api_endpoint_id" and "Risk_Label"
-    api_df = api_df[["api_endpoint_id", "Risk_Label"]]
+    # convert api_df.value_counts() to dataframe
+    # make a deep copy of api_df
+    risk_df = api_df.copy()
+    api_df.drop(columns=["api_endpoint_id"], inplace=True)
+    value_count = api_df.value_counts()
+    # print(value_count)
+    # save value_count to excel
+    value_count.to_excel(output_path + "/risk_rule_count.xlsx")
+
+    # create risk_df on api_df columns "api_endpoint_id" and "Risk_Label"
+    # make a copy of api_df
+    risk_df = risk_df[["api_endpoint_id", "Risk_Label"]]
+    risk_df.to_excel(output_path + "/risk_labeled.xlsx", index=False)
 
     # merge api_df and df
-    df = pd.merge(df, api_df, on="api_endpoint_id", how="left")
+    df = pd.merge(df, risk_df, on="api_endpoint_id", how="left")
+    df.to_excel(output_path + "/original_with_risk.xlsx", index=False)
 
-    # save df to excel
-    df.to_excel(output_path + "/risk_labeled.xlsx", index=False)
-
+    # # convert api_df.value_counts() to dataframe
+    # api_df.drop(columns=["api_endpoint_id"], inplace=True)
+    # value_count = api_df.value_counts()
+    # # save value_count to excel
+    # value_count.to_excel(output_path + "/risk_rule_count.xlsx", index=False)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,8 @@ def security_test_feat_creation(df):
     # Define column types
     categorical_features = ["security_test_category"]
     ordinal_features = ["security_test_result"]
-    # passthrough_features is the list of columns in df minus the categorical and ordinal features
+    # passthrough_features is the list of columns in df 
+    # minus the categorical and ordinal features
     passthrough_features = [
         feature for feature in df.columns 
         if feature not in categorical_features + ordinal_features

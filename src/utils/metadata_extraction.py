@@ -1,8 +1,12 @@
 from docopt import docopt
+from numpy import NaN
 import pandas as pd
 
 
 def extract_metadata(api_df):
+    # fill missing values with {}
+    api_df["response_metadata"] = api_df["response_metadata"].fillna("{}")
+    api_df["parameters"] = api_df["parameters"].fillna("{}")
     # get a list of all response_metadata
     metadata_list = api_df['response_metadata'].tolist()
     # get a list of all parameters
@@ -42,7 +46,11 @@ def extract_metadata(api_df):
     for i in range(len(metadata_list)):
         metadata_fields_count = 0  # keep track of how many fields in each API
         parameters_count = 0  # keep track of how many parameters in each API
-        if metadata_list[i] is not None:
+        # create new columns to store high_risk_security_headers:
+        for header in high_risk_security_headers:
+            api_df.loc[i, header] = NaN
+            # check if the header is in the metadata_list[i]
+            # if metadata_list[i] is not None:
             metadata_dict = eval(metadata_list[i])
             # loop through metadata_dict and extract key value
             for key, value in metadata_dict.items():
@@ -90,17 +98,11 @@ def extract_metadata(api_df):
 
 
     # loop through each row of api_df
+    # to find if the recommended rule is present
     for i in range(len(api_df)):
         # loop through recommend_dict
         for key, value in recommend_dict.items():
-            # check if the cell is not NaN
-            print('=====================')
-            print(f'The location is {i} and the key is {key}')
-            # print row i of api_df
-            print(api_df.loc[i])
-            print(f'The value is {api_df.loc[i, key]}')
             if pd.notnull(api_df.loc[i, key]):
-            # if not pd.isna(api_df.loc[i, key]):
                 # if the cell contain the value in recommend_dict, then assign the value 0, else assign 1
                 api_df.loc[i, key] = 0 if value in api_df.loc[i, key] else 1
     
