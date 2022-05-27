@@ -22,6 +22,9 @@ def add_country_and_cat_feats(df, input_path_country):
     df = df.merge(
         country_metric_df, left_on="server_location", right_on="Country", how="left"
     )
+
+
+
     # Drop the columns that are not needed
     df = df.drop(["server_location"], axis=1)
     # Update the rows with duplicates
@@ -100,6 +103,8 @@ def add_country_and_cat_feats(df, input_path_country):
     for category in categories_list:
         if category not in df.columns:
             df[category] = 0
+    
+
 
     # server_name
     df['server_name'] = df['server_name'].astype(str).str.lower()
@@ -113,6 +118,8 @@ def add_country_and_cat_feats(df, input_path_country):
         else:
             server_name_mapper[server] = 1
     df['server_name'] = df['server_name'].replace(server_name_mapper)
+
+
 
     # Drop the rows with duplicates
     df = df.drop_duplicates()

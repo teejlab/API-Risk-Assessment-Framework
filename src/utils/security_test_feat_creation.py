@@ -58,4 +58,5 @@ def security_test_feat_creation(df):
 
     transformed_df = pd.DataFrame(transformed, columns=feature_names)
 
+    transformed_df = transformed_df.drop_duplicates()
     return transformed_df

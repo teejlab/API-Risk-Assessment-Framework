@@ -64,7 +64,6 @@ def extract_metadata(api_df):
     # to make it simple, if the header is not present, it is considered as not secure
     x_frame_options = 'DENY'
     x_xss_protection = '0'
-    content_security_policy = '0'
     strict_transport_security = 'includeSubDomains'
     expect_ct = 'max-age'
     referrer_policy = 'strict-origin-when-cross-origin'
@@ -89,12 +88,19 @@ def extract_metadata(api_df):
                             'x-aspnet-version']
     good_to_be_present = ['x-ratelimit-limit']
 
+
     # loop through each row of api_df
     for i in range(len(api_df)):
         # loop through recommend_dict
         for key, value in recommend_dict.items():
             # check if the cell is not NaN
-            if not pd.isna(api_df.loc[i, key]):
+            print('=====================')
+            print(f'The location is {i} and the key is {key}')
+            # print row i of api_df
+            print(api_df.loc[i])
+            print(f'The value is {api_df.loc[i, key]}')
+            if pd.notnull(api_df.loc[i, key]):
+            # if not pd.isna(api_df.loc[i, key]):
                 # if the cell contain the value in recommend_dict, then assign the value 0, else assign 1
                 api_df.loc[i, key] = 0 if value in api_df.loc[i, key] else 1
     
@@ -115,6 +121,7 @@ def extract_metadata(api_df):
     
     # replace NaN value with 0
     api_df = api_df.fillna(0)
-    
+
+    api_df = api_df.drop_duplicates()
     return api_df
 

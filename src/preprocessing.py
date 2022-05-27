@@ -34,6 +34,7 @@ def main(input_path, input_path_country, output_path):
         },
         inplace=True,
     )
+    df = df.drop_duplicates()
 
     ########################
     # ADD PII FII FEATURES #
@@ -51,11 +52,13 @@ def main(input_path, input_path_country, output_path):
     else:
         df = pd.read_excel(output_path + "/df_pii.xlsx")
 
+
     #############################################
     # ADD COUNTRY SCORE AND CATEGORIES FEATURES #
     #############################################
     df = add_country_and_cat_feats(df, input_path_country)
     df.to_excel(output_path + "/df_country_score.xlsx", index=False)
+
 
     ##############################
     # ADD SECURITY TEST FEATURES #
@@ -68,6 +71,15 @@ def main(input_path, input_path_country, output_path):
     #########################
     df = extract_metadata(df)
     df.to_excel(output_path + "/df_metadata.xlsx", index=False)
+
+    ###################
+    # ADD RISK LABELS #
+    ###################
+    # read risk_labeled.xlsx
+    # df_risk_labeled = pd.read_excel("data/processed/risk_labeled.xlsx")
+    # merge df and df_risk_labeled
+    # df = df.merge(df_risk_labeled, how="left", on="id")
+    # df.to_excel(output_path + "/df_full.xlsx", index=False)
 
     
     ############################
