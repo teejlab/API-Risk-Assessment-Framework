@@ -18,6 +18,7 @@ from utils.pii_extraction import pii_extraction
 from utils.security_test_feat_creation import security_test_feat_creation
 import pandas as pd
 from pathlib import Path
+import swifter
 
 opt = docopt(__doc__)
 def main(input_path, input_path_country, output_path):
@@ -47,8 +48,10 @@ def main(input_path, input_path_country, output_path):
     pii_path = Path(path_to_pii)
     if not pii_path.is_file():    # delete the file if you want to run it again
         print("Extracting PII and FII features...")
-        df["is_pii"] = df["sample_response"].apply(pii_extraction, args=("pii", 0.5,)).astype(bool)
-        df["is_fii"] = df["sample_response"].apply(pii_extraction, args=("fii", 0.5,)).astype(bool)
+        df["is_pii"] = df["sample_response"].swifter(pii_extraction, 
+            args=("pii", 0.5,)).astype(bool)
+        df["is_fii"] = df["sample_response"].swifter(pii_extraction, 
+            args=("fii", 0.5,)).astype(bool)
         # save df with pii and fii
         df.to_excel(output_path + "/df_pii.xlsx", index=False)
     else:
