@@ -25,7 +25,7 @@ def security_test_feat_creation(df):
     # minus the categorical and ordinal features
     passthrough_features = [
         feature for feature in df.columns 
-        if feature not in categorical_features + ordinal_features
+        if feature not in ordinal_features
     ]
     # Define levels for ordinal encoder
     test_result_levels = [
