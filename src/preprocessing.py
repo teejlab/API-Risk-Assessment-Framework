@@ -65,7 +65,7 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     #############################################
     print(f'Adding country score and OHE categories features...')
     df = add_country_and_cat_feats(df, country_path)
-    df.to_excel(output_path + "/df_country_score.xlsx", index=False)
+    # df.to_excel(output_path + "/df_country_score.xlsx", index=False)
 
 
     ##############################
@@ -73,31 +73,22 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     ##############################
     print(f'Adding security test features...')
     df = security_test_feat_creation(df)
-    df.to_excel(output_path + "/df_security.xlsx", index=False)
+    # df.to_excel(output_path + "/df_security.xlsx", index=False)
 
     #########################
     # ADD METADATA FEATURES #
     #########################
     print(f'Adding metadata features...')
     df = extract_metadata(df)
-    df.to_excel(output_path + "/df_metadata.xlsx", index=False)
+    # df.to_excel(output_path + "/df_metadata.xlsx", index=False)
 
     ###################
     # ADD RISK LABELS #
     ###################
-    # # read risk_labeled.xlsx
-    # df_risk_labeled = pd.read_excel("data/processed/risk_labeled.xlsx")
-    # # merge df and df_risk_labeled
-    # df = df.merge(df_risk_labeled, how="left", on="api_endpoint_id")
     print(f'Adding risk labels...')
     df = create_risk_label(df, risk_rules_path, path_to_pii)
     df.to_excel(output_path + "/df_full.xlsx", index=False)
 
-    # make a copy of orignial_df, select only api_endpoint_id and security_test_category
-    df_security_test = orignial_df[["api_endpoint_id", "security_test_category"]].copy()
-    # merge df and df_security_test
-    df = df.merge(df_security_test, how="left", on="api_endpoint_id")
-    df.to_excel(output_path + "/df_full_security.xlsx", index=False)
 
     
     ############################
