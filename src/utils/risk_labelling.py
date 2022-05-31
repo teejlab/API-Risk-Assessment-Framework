@@ -104,6 +104,9 @@ def create_risk_label(df, risk_rules_path, path_to_pii):
     # make a copy of api_df
     risk_df = api_df[["api_endpoint_id", "Risk_Label"]]
 
+    # to avoid unexpected behavior, we need to drop the duplicates
+    risk_df = risk_df.drop_duplicates()
+
     # merge df and df_risk_labeled
     df = df.merge(risk_df, how="left", on="api_endpoint_id")
 
