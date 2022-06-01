@@ -26,7 +26,7 @@ def add_country_and_cat_feats(df, input_path_country):
 
 
     # Drop the columns that are not needed
-    df = df.drop(["server_location"], axis=1)
+    # df = df.drop(["server_location"], axis=1)
     # Update the rows with duplicates
     df.loc[df["hosting_isp"] == "Amazon.com, Inc.",
            "hosting_isp"] = "Amazon.com"
@@ -52,7 +52,7 @@ def add_country_and_cat_feats(df, input_path_country):
             authentication_mapper[variable] = 0
         else:
             authentication_mapper[variable] = 1
-    df['authentication'] = df['authentication'].replace(authentication_mapper)
+    df['authentication_processed'] = df['authentication'].replace(authentication_mapper)
 
     # Usage Base
     usagebase_list = df.usage_base.unique().tolist()
@@ -64,7 +64,7 @@ def add_country_and_cat_feats(df, input_path_country):
             usagebase_mapper[variable] = 1
         else:
             usagebase_mapper[variable] = 2
-    df['usage_base'] = df['usage_base'].replace(usagebase_mapper)
+    df['usage_base_processed'] = df['usage_base'].replace(usagebase_mapper)
 
     # Categories
     categories_list = ['AI & Data Science',
@@ -107,8 +107,8 @@ def add_country_and_cat_feats(df, input_path_country):
 
 
     # server_name
-    df['server_name'] = df['server_name'].astype(str).str.lower()
-    server_name_list = df.server_name.unique().tolist()
+    df['server_name_processed'] = df['server_name'].astype(str).str.lower()
+    server_name_list = df.server_name_processed.unique().tolist()
     secure_server_keys = {"obscured", 'missing', 'unavailable'}
     server_name_mapper = {}
     for server in server_name_list:
@@ -117,12 +117,13 @@ def add_country_and_cat_feats(df, input_path_country):
             server_name_mapper[server] = 0
         else:
             server_name_mapper[server] = 1
-    df['server_name'] = df['server_name'].replace(server_name_mapper)
+    df['server_name_processed'] = df['server_name_processed'].replace(
+        server_name_mapper)
 
 
 
     # Drop the rows with duplicates
     df = df.drop_duplicates()
-    df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id',
-                 'hosting_city', 'hosting_isp'], axis=1)
+    # df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id',
+    #              'hosting_city', 'hosting_isp'], axis=1)
     return df
