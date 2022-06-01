@@ -10,21 +10,21 @@ def classify_risk(row, rule_df):
     row = row.drop(labels=["api_endpoint_id"])
     # loop through each row in rule_df
     for i in range(len(rule_df)):
-        row_copy = rule_df.iloc[i]
+        rule_copy = rule_df.iloc[i]
         # drop the column "Risk_Label"
-        row_copy = row_copy.drop(["Risk_Label"])
-        if row_copy['server_location'] == 'Anywhere':
-            row_copy['server_location'] = row['server_location']
-        if row_copy['security_test_category'] == 'All Tests Performed/Available':
-            row_copy['security_test_category'] = row['security_test_category']
+        rule_copy = rule_copy.drop(["Risk_Label"])
+        if rule_copy['server_location'] == 'Anywhere':
+            rule_copy['server_location'] = row['server_location']
+        if rule_copy['security_test_category'] == 'All Tests Performed/Available':
+            rule_copy['security_test_category'] = row['security_test_category']
         # check if the row is the same with any row in rule_df
-        if row_copy.equals(row):
+        if row.equals(rule_copy):
             # return the value in column "Risk_Label"
             return rule_df.iloc[i]["Risk_Label"]
     return "Low Risk"
 
 
-def create_risk_label(df, risk_rules_path, path_to_pii):
+def create_risk_label(df, risk_rules_path):
     # read risk rules
     rule_df = pd.read_excel(risk_rules_path, sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
@@ -37,11 +37,11 @@ def create_risk_label(df, risk_rules_path, path_to_pii):
     rule_df["server_location"] = rule_df["server_location"].replace(
         "Amaricas", "Americas")
 
-    # read the data with fii and pii
-    original_df = pd.read_excel(path_to_pii)
-    original_df = original_df.drop_duplicates()
-    # make a copy of api_df
-    api_df = original_df.copy()
+    # # read the data with fii and pii
+    # original_df = pd.read_excel(path_to_pii)
+    # original_df = original_df.drop_duplicates()
+    # # make a copy of api_df
+    api_df = df.copy()
     # fill the empty values with "None"
     api_df = api_df.fillna("None")
     api_df = api_df[['api_endpoint_id', 'authentication', 'security_test_category',
@@ -70,10 +70,10 @@ def create_risk_label(df, risk_rules_path, path_to_pii):
         "None", "No Test Performed/Available")
     # replace Injections with "SQL Injection"
     api_df["security_test_category"] = api_df["security_test_category"].replace(
-        "Injections", "SQL Injection")
+        "SQL Injection", "Injections")
     # replace "Insecure Deserialization" with "No Test Performed/Available"
     api_df["security_test_category"] = api_df["security_test_category"].replace(
-        "Insecure Deserialization", "No Test Performed/Available")
+        "Insecure Deserialization", "All Tests Performed/Available")
 
     # process column security_test_result from api_df, replace false with "Passed"
     api_df["security_test_result"] = api_df["security_test_result"].replace(

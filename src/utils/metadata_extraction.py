@@ -101,8 +101,9 @@ def extract_metadata(api_df):
                 # if the cell contain value, then assign the value 0
                 api_df.loc[api_df.index[i], field] = 0
     
-    # replace NaN value with 0
-    api_df = api_df.fillna(0)
+    # fill the NaN in high_risk_security_headers with 0
+    for header in high_risk_security_headers:
+        api_df[header] = api_df[header].fillna(0)
 
     api_df = api_df.drop_duplicates()
     return api_df

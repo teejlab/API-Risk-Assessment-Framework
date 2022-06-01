@@ -59,13 +59,15 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     else:
         df = pd.read_excel(output_path + "/df_pii.xlsx")
 
+    df = pd.read_excel(output_path + "/df_generated_high_risk.xlsx")
+
 
     #############################################
     # ADD COUNTRY SCORE AND CATEGORIES FEATURES #
     #############################################
     print(f'Adding country score and OHE categories features...')
     df = add_country_and_cat_feats(df, country_path)
-    # df.to_excel(output_path + "/df_country_score.xlsx", index=False)
+    df.to_excel(output_path + "/df_country_score.xlsx", index=False)
 
 
     ##############################
@@ -73,20 +75,20 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     ##############################
     print(f'Adding security test features...')
     df = security_test_feat_creation(df)
-    # df.to_excel(output_path + "/df_security.xlsx", index=False)
+    df.to_excel(output_path + "/df_security.xlsx", index=False)
 
     #########################
     # ADD METADATA FEATURES #
     #########################
     print(f'Adding metadata features...')
     df = extract_metadata(df)
-    # df.to_excel(output_path + "/df_metadata.xlsx", index=False)
+    df.to_excel(output_path + "/df_metadata.xlsx", index=False)
 
     ###################
     # ADD RISK LABELS #
     ###################
     print(f'Adding risk labels...')
-    df = create_risk_label(df, risk_rules_path, path_to_pii)
+    df = create_risk_label(df, risk_rules_path)
     df.to_excel(output_path + "/df_full.xlsx", index=False)
 
 

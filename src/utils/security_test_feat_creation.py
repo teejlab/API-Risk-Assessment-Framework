@@ -19,13 +19,16 @@ def security_test_feat_creation(df):
     """
     # SETTING-UP pre-processor variables
     # Define column types
-    categorical_features = ["security_test_category"]
-    ordinal_features = ["security_test_result"]
+    # make copy of column security_test_category
+    df['security_test_category_processed'] = df['security_test_category']
+    df['security_test_result_processed'] = df['security_test_result']
+    categorical_features = ["security_test_category_processed"]
+    ordinal_features = ["security_test_result_processed"]
     # passthrough_features is the list of columns in df 
     # minus the categorical and ordinal features
     passthrough_features = [
         feature for feature in df.columns 
-        if feature not in ordinal_features
+        if feature not in ordinal_features + categorical_features
     ]
     # Define levels for ordinal encoder
     test_result_levels = [
@@ -55,7 +58,7 @@ def security_test_feat_creation(df):
 
     # Get column names
     ohe_features = list(preprocessor.named_transformers_['pipeline-2'].named_steps['onehotencoder'].get_feature_names())
-    feature_names = passthrough_features + ordinal_features + ohe_features
+    feature_names = passthrough_features  + ordinal_features + ohe_features
 
     transformed_df = pd.DataFrame(transformed, columns=feature_names)
 
