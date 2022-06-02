@@ -8,7 +8,7 @@ Options:
 --output_path=<output_path>             Path for preprocessed file to be saved
 
 Example:
-python src/preprocessing.py --endpoint_path=data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx --country_path=data/raw/nri_2021_dataset.xlsx --risk_rules_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
+python src/preprocessing.py --endpoint_path=data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx --country_path=data/raw/nri_2021_dataset.xlsx --risk_rules_path=data/raw/RiskRules.xlsx --output_path=data/processed/
 """
 
 from docopt import docopt
