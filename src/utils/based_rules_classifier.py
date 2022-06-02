@@ -65,7 +65,7 @@ def main():
     # remove duplicates
     rule_df = rule_df.drop_duplicates()
     # change server_location to Amaricas to Americas
-    rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
+    # rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
   
     # read the data with fii and pii
     df = pd.read_excel(file_path)
