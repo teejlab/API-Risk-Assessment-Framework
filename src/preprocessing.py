@@ -59,7 +59,8 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     else:
         df = pd.read_excel(output_path + "/df_pii.xlsx")
 
-    df = pd.read_excel(output_path + "/df_generated_high_risk.xlsx")
+    # Use this if we need manually add the high risk data
+    # df = pd.read_excel(output_path + "/df_generated_high_risk.xlsx")
 
 
     #############################################
@@ -89,7 +90,17 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     ###################
     print(f'Adding risk labels...')
     df = create_risk_label(df, risk_rules_path)
-    df.to_excel(output_path + "/df_full.xlsx", index=False)
+    # drop duplicates
+    df = df.drop_duplicates()
+    df.to_excel(output_path + "/df_full_v1.xlsx", index=False)
+
+    # drop coulmns that are not needed security_test_category, security_test_result
+    # df.to_excel(output_path + "/df_full_v2.xlsx", index=False)
+
+    # select only the columns that are needed authentication, security_test_category, security_test_result, server_location, hosting_isp, is_pii, is_fii, Risk_Label
+    df = df[["authentication", "Risk_Label"]]
+    # save as tsv file
+    df.to_csv(output_path + "/df_full_v2.tsv", sep="\t", index=False)
 
 
     
