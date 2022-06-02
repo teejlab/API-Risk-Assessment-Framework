@@ -1,3 +1,4 @@
+from numpy import NaN
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 import re
@@ -22,6 +23,10 @@ def add_country_and_cat_feats(df, input_path_country):
     df = df.merge(
         country_metric_df, left_on="server_location", right_on="Country", how="left"
     )
+
+    #imputation of NRI score with mean value
+    df['NRI score'] = df['NRI score'].replace(0, NaN)
+    df['NRI score'] = df['NRI score'].replace(NaN, df['NRI score'].mean())
 
 
 

@@ -21,7 +21,7 @@ def classify_risk(row, rule_df):
         if row.equals(rule_copy):
             # return the value in column "Risk_Label"
             return rule_df.iloc[i]["Risk_Label"]
-    return "Low Risk"
+    return "Low"
 
 
 def create_risk_label(df, risk_rules_path):
@@ -34,8 +34,8 @@ def create_risk_label(df, risk_rules_path):
     # remove duplicates
     rule_df = rule_df.drop_duplicates()
     # change server_location from Amaricas to Americas
-    rule_df["server_location"] = rule_df["server_location"].replace(
-        "Amaricas", "Americas")
+    # rule_df["server_location"] = rule_df["server_location"].replace(
+    #     "Amaricas", "Americas")
 
     # # read the data with fii and pii
     # original_df = pd.read_excel(path_to_pii)
@@ -108,7 +108,8 @@ def create_risk_label(df, risk_rules_path):
     risk_df = risk_df.drop_duplicates()
 
     # merge df and df_risk_labeled
-    df = df.merge(risk_df, how="left", on="api_endpoint_id")
+    # df = df.merge(risk_df, how="left", on="api_endpoint_id")
+    df_full = pd.merge(df, risk_df, left_index=True, right_index=True)
 
-    return df
+    return df_full
 
