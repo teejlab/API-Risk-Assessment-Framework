@@ -23,6 +23,61 @@ from pathlib import Path
 import swifter
 
 opt = docopt(__doc__)
+
+
+def preprocessing(df, name, output_path, risk_rules_path, country_path):
+
+    ########################
+    # ADD PII FII FEATURES #
+    ########################
+    # WARNING: This function takes 30+ mins to run
+    # so consider reading it from the processed file
+    path_to_pii = output_path + "/pii_fii_" + name + ".xlsx"
+    pii_path = Path(path_to_pii)
+    if not pii_path.is_file():    # delete the file if you want to run it again
+        print("Extracting PII and FII features. This will take a while...")
+        df["is_pii"] = df["sample_response"].swifter.apply(pii_extraction, 
+            args=("pii", 0.5,)).astype(bool)
+        df["is_fii"] = df["sample_response"].swifter.apply(pii_extraction,
+            args=("fii", 0.5,)).astype(bool)
+        # save df with pii and fii
+        df.to_excel(path_to_pii, index=False)
+    else:
+        df = pd.read_excel(path_to_pii)
+
+    #############################################
+    # ADD COUNTRY SCORE AND CATEGORIES FEATURES #
+    #############################################
+    print(f'Adding country score and OHE categories features...')
+    df = add_country_and_cat_feats(df, country_path)
+    # df.to_excel(output_path + "/df_country_score.xlsx", index=False)
+
+
+    ##############################
+    # ADD SECURITY TEST FEATURES #
+    ##############################
+    print(f'Adding security test features...')
+    df = security_test_feat_creation(df)
+    # df.to_excel(output_path + "/df_security.xlsx", index=False)
+
+    #########################
+    # ADD METADATA FEATURES #
+    #########################
+    print(f'Adding metadata features...')
+    df = extract_metadata(df)
+    # df.to_excel(output_path + "/df_metadata.xlsx", index=False)
+
+    ###################
+    # ADD RISK LABELS #
+    ###################
+    print(f'Adding risk labels...')
+    df = create_risk_label(df, risk_rules_path)
+    # drop duplicates
+    df = df.drop_duplicates()
+
+    return df
+    
+
 def main(endpoint_path, country_path, risk_rules_path, output_path):
     path = Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
@@ -42,74 +97,18 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     df = orignial_df.copy()
 
     ########################
-    # ADD PII FII FEATURES #
+    # SPLIT TRAIN AND TEST #
     ########################
-    # WARNING: This function takes 30+ mins to run
-    # so consider reading it from the processed file
-    path_to_pii = output_path + "/df_pii.xlsx"
-    pii_path = Path(path_to_pii)
-    if not pii_path.is_file():    # delete the file if you want to run it again
-        print("Extracting PII and FII features. This will take a while...")
-        df["is_pii"] = df["sample_response"].swifter.apply(pii_extraction, 
-            args=("pii", 0.5,)).astype(bool)
-        df["is_fii"] = df["sample_response"].swifter.apply(pii_extraction,
-            args=("fii", 0.5,)).astype(bool)
-        # save df with pii and fii
-        df.to_excel(output_path + "/df_pii.xlsx", index=False)
-    else:
-        df = pd.read_excel(output_path + "/df_pii.xlsx")
+    train, test = train_test_split(df, test_size=0.3, random_state=42)
 
-    # Use this if we need manually add the high risk data
-    # df = pd.read_excel(output_path + "/df_generated_high_risk.xlsx")
+    processed_train = preprocessing(train, 'train', output_path, risk_rules_path, country_path)
+    processed_test = preprocessing(test, 'test', output_path, risk_rules_path, country_path)
 
+    # save the processed data to excel
+    processed_train.to_excel(output_path + "/train.xlsx", index=False)
+    processed_test.to_excel(output_path + "/test.xlsx", index=False)
 
-    #############################################
-    # ADD COUNTRY SCORE AND CATEGORIES FEATURES #
-    #############################################
-    print(f'Adding country score and OHE categories features...')
-    df = add_country_and_cat_feats(df, country_path)
-    df.to_excel(output_path + "/df_country_score.xlsx", index=False)
-
-
-    ##############################
-    # ADD SECURITY TEST FEATURES #
-    ##############################
-    print(f'Adding security test features...')
-    df = security_test_feat_creation(df)
-    df.to_excel(output_path + "/df_security.xlsx", index=False)
-
-    #########################
-    # ADD METADATA FEATURES #
-    #########################
-    print(f'Adding metadata features...')
-    df = extract_metadata(df)
-    df.to_excel(output_path + "/df_metadata.xlsx", index=False)
-
-    ###################
-    # ADD RISK LABELS #
-    ###################
-    print(f'Adding risk labels...')
-    df = create_risk_label(df, risk_rules_path)
-    # drop duplicates
-    df = df.drop_duplicates()
-    df.to_excel(output_path + "/df_full_v1.xlsx", index=False)
-
-    # drop coulmns that are not needed security_test_category, security_test_result
-    # df.to_excel(output_path + "/df_full_v2.xlsx", index=False)
-
-    # select only the columns that are needed authentication, security_test_category, security_test_result, server_location, hosting_isp, is_pii, is_fii, Risk_Label
-    df = df[["authentication", "Risk_Label"]]
-    # save as tsv file
-    df.to_csv(output_path + "/df_full_v2.tsv", sep="\t", index=False)
-
-
-    
-    ############################
-    # SPLIT TRAIN AND SET DATA #
-    ############################
-    train_df, test_df = train_test_split(df, test_size=0.2, random_state=123)
-    train_df.to_csv(output_path + "/train.csv", index=False)
-    test_df.to_csv(output_path + "/test.csv", index=False)
+   
 
 if __name__ == "__main__":
     main(opt["--endpoint_path"], opt["--country_path"],
