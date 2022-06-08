@@ -108,6 +108,39 @@ def main(endpoint_path, country_path, risk_rules_path, output_path):
     processed_train.to_excel(output_path + "/train.xlsx", index=False)
     processed_test.to_excel(output_path + "/test.xlsx", index=False)
 
+    # save the processed data to excel
+    # drop columns : api_endpoint_id, api_id, api_vendor_id, request_id,
+    # method, category, parameters, usage_base, sample_response, tagset, server_location,
+    # hosting_isp, response_metadata, hosting_city
+    columns_to_drop = [
+        "api_endpoint_id",
+        "api_id",
+        "api_vendor_id",
+        "request_id",
+        "method",
+        "category",
+        "parameters",
+        "usage_base",
+        "sample_response",
+        "tagset",
+        "server_location",
+        "hosting_isp",
+        "response_metadata",
+        "hosting_city",
+        "authentication",
+        "security_test_category", 
+        "security_test_result",
+        "server_name",
+        "Country",
+
+    ]
+    processed_train.drop(columns=columns_to_drop, inplace=True)
+    processed_test.drop(columns=columns_to_drop, inplace=True)
+
+    processed_train.to_excel(output_path + "/train_essentials.xlsx", index=False)
+    processed_test.to_excel(output_path + "/test_essentials.xlsx", index=False)
+
+
    
 
 if __name__ == "__main__":
