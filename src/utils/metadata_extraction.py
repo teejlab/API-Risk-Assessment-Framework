@@ -3,10 +3,10 @@ from numpy import NaN
 import pandas as pd
 
 
-def extract_metadata(api_df):
+def extract_metadata(df):
     # fill missing values with {}
-    api_df["response_metadata"] = api_df["response_metadata"].fillna("{}")
-    api_df["parameters"] = api_df["parameters"].fillna("{}")
+    df["response_metadata"] = df["response_metadata"].fillna("{}")
+    df["parameters"] = df["parameters"].fillna("{}")
     
     # list of columns that have high risk security
     high_risk_security_headers = [
@@ -26,26 +26,26 @@ def extract_metadata(api_df):
 
     # loop through api_df and add columns in high_risk_security_headers
     for header in high_risk_security_headers:
-        api_df[header] = NaN
+        df[header] = NaN
     # create new column metadata_fields_count and set to 0
-    api_df["metadata_fields_count"] = 0
-    api_df["parameters_count"] = 0
+    df["metadata_fields_count"] = 0
+    df["parameters_count"] = 0
     
     # loop through sample_response see the key match with high_risk_security_headers
-    for i in range(len(api_df)):
+    for i in range(len(df)):
         meta_count = 0
-        sample_response_dict = eval(api_df['response_metadata'].iloc[i])
-        if api_df['response_metadata'].iloc[i] is not None:
+        sample_response_dict = eval(df['response_metadata'].iloc[i])
+        if df['response_metadata'].iloc[i] is not None:
             # convert sample_response to dictionary
-            sample_response_dict = eval(api_df['response_metadata'].iloc[i])
+            sample_response_dict = eval(df['response_metadata'].iloc[i])
             # loop through sample_response_dict and extract key value
             for key, value in sample_response_dict.items():
                 if key.lower() in high_risk_security_headers:
-                    api_df.loc[api_df.index[i], key.lower()] = value
+                    df.loc[df.index[i], key.lower()] = value
                     meta_count += 1
-        api_df.loc[api_df.index[i],"metadata_fields_count"] = meta_count
-        api_df.loc[api_df.index[i], "parameters_count"] = len(
-            eval(api_df['parameters'].iloc[i]))
+        df.loc[df.index[i],"metadata_fields_count"] = meta_count
+        df.loc[df.index[i], "parameters_count"] = len(
+            eval(df['parameters'].iloc[i]))
 
     # recommend rule for each high risk security header
     # to make it simple, if the header is not present, it is considered as not secure
@@ -78,33 +78,33 @@ def extract_metadata(api_df):
 
     # loop through each row of api_df
     # to find if the recommended rule is present
-    for i in range(len(api_df)):
+    for i in range(len(df)):
         # loop through recommend_dict
         for key, value in recommend_dict.items():
-            if pd.notnull(api_df[key].iloc[i]):
+            if pd.notnull(df[key].iloc[i]):
                 # if the cell contain the value in recommend_dict, then assign the value 0, else assign 1
                 # 0 IS GOOD, 1 IS BAD
-                api_df.loc[api_df.index[i], key] = 0 if value in api_df[key].iloc[i] else 1
+                df.loc[df.index[i], key] = 0 if value in df[key].iloc[i] else 1
     
     # loop through each row of api_df
-    for i in range(len(api_df)):
+    for i in range(len(df)):
         # loop through should_not_be_present
         for field in should_not_be_present:
             # check if the cell is not NaN
-            if not pd.isna(api_df[field].iloc[i]):
+            if not pd.isna(df[field].iloc[i]):
                 # if the cell contain value, then assign the value 1
-                api_df.loc[api_df.index[i], field] = 1
+                df.loc[df.index[i], field] = 1
         # loop through good_to_be_present
         for field in good_to_be_present:
             # check if the cell is not NaN
-            if not pd.isna(api_df[field].iloc[i]):
+            if not pd.isna(df[field].iloc[i]):
                 # if the cell contain value, then assign the value 0
-                api_df.loc[api_df.index[i], field] = 0
+                df.loc[df.index[i], field] = 0
     
     # fill the NaN in high_risk_security_headers with 0
     for header in high_risk_security_headers:
-        api_df[header] = api_df[header].fillna(0)
+        df[header] = df[header].fillna(0)
 
-    api_df = api_df.drop_duplicates()
-    return api_df
+    df = df.drop_duplicates()
+    return df
 
