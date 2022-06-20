@@ -4,6 +4,20 @@ import pandas as pd
 
 
 def extract_metadata(df):
+    '''
+    Extract metadata features from the sample response.
+
+    Parameters:
+    -----------
+    df: pandas.DataFrame
+        The dataframe to be processed
+
+    Returns:
+    --------
+    pandas.DataFrame
+        The dataframe with the metadata features
+        
+    '''
     # fill missing values with {}
     df["response_metadata"] = df["response_metadata"].fillna("{}")
     df["parameters"] = df["parameters"].fillna("{}")
