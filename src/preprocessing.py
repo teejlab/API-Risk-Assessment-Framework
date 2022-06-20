@@ -50,22 +50,18 @@ def preprocessing(df, name, output_path, risk_rules_path, country_path):
     #############################################
     print(f'Adding country score and OHE categories features...')
     df = add_country_and_cat_feats(df, country_path)
-    # df.to_excel(output_path + "/df_country_score.xlsx", index=False)
-
 
     ##############################
     # ADD SECURITY TEST FEATURES #
     ##############################
     print(f'Adding security test features...')
     df = security_test_feat_creation(df)
-    # df.to_excel(output_path + "/df_security.xlsx", index=False)
 
     #########################
     # ADD METADATA FEATURES #
     #########################
     print(f'Adding metadata features...')
     df = extract_metadata(df)
-    # df.to_excel(output_path + "/df_metadata.xlsx", index=False)
 
     ###################
     # ADD RISK LABELS #
