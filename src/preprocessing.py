@@ -139,12 +139,13 @@ def main(endpoint_path, country_path, risk_rules_path, output_path, split_data):
     ################################
     # STEP 2: SPLIT TRAIN AND TEST #
     ################################
-    if split_data:
+    if split_data.lower() == "true":
         train, test = train_test_split(df, test_size=0.3, random_state=42)
         save_preprocessed_data(train, "train", country_path, risk_rules_path, output_path)
         save_preprocessed_data(test, "test", country_path, risk_rules_path, output_path)
     else:
-        save_preprocessed_data(df, "all", output_path)
+        save_preprocessed_data(df, "all", country_path,
+                               risk_rules_path, output_path)
 
 if __name__ == "__main__":
     main(opt["--endpoint_path"], opt["--country_path"],

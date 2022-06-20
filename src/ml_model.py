@@ -9,7 +9,7 @@ Options:
 --save_path=<save_path>             The folder to save the model results to
 
 Example:
-python src/ml_model.py --train_path=data/processed/train_essentials.xlsx --save_path=data/model/
+python src/ml_model.py --train_path=data/processed/preprocessed_train.xlsx --save_path=data/model/
 """
 
 from docopt import docopt
@@ -60,8 +60,15 @@ def main(train_path, save_path):
 
 
     # Data sub-set of features identified using RFE method
-    X_select = X_train[['is_pii', 'is_fii', 'authentication_processed', 'Information & Science',
-                    'x0_Broken Authentication', 'x0_Missing', 'server', 'metadata_fields_count']]
+    X_select = X_train[[
+        'is_pii', 
+        'is_fii', 
+        'authentication_processed', 
+        'Information & Science',
+        'x0_Broken Authentication', 
+        'x0_Missing', 
+        'server', 
+        'metadata_fields_count']]
     pipe_lr_tuned = make_pipeline(
         StandardScaler(), LogisticRegression(C=100.0, solver='liblinear'))
 
