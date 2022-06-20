@@ -26,6 +26,7 @@ def load_model(path):
     -----------
     path : string
         The path to the .joblib file containing the model.
+
     Returns
     -----------
     The loaded model object
@@ -35,6 +36,21 @@ def load_model(path):
 
 
 def main(model_path, predict_path, save_path):
+    '''
+    This function loads the model and performs predictions on the test data.
+    Parameters
+    -----------
+    model_path : string
+        The path to the .joblib file containing the model.
+    predict_path : string
+        The path to the predict csv files.
+    save_path : string
+        The folder to save the model results to
+
+    Returns
+    -----------
+    None
+    '''
     pipe_lr_tuned = load_model(model_path)
     predict_df = pd.read_excel(predict_path)
     X_test, y_test = predict_df.drop(
