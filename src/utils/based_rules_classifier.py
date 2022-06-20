@@ -25,9 +25,21 @@ from pii_extraction import pii_extraction
 
 
 def classify_risk(row, rule_df):
-    """
-    Check if the row is the same with any row in rule_df
-    """
+    '''
+    Classify the risk based on the rule_df
+
+    Parameters:
+    -----------
+    row: pandas.Series
+        The row of the dataframe to be classified
+    rule_df: pandas.DataFrame
+        The rule_df contains the rule to classify the risk
+
+    Returns:
+    --------
+    pandas.Series
+        The row of the dataframe with the risk label
+    '''
     # remove api_endpoint_id from row series
     row = row.drop(labels=["api_endpoint_id"])
     # loop through each row in rule_df
@@ -47,6 +59,9 @@ def classify_risk(row, rule_df):
 
 
 def main():
+    '''
+    This function classify the risk based on the rule_df
+    '''
     # parse arguments
     args = docopt(__doc__)
     # assign args to variables
