@@ -15,23 +15,10 @@ python src/ml_model.py --train_path=data/processed/preprocessed_train.xlsx --sav
 from docopt import docopt
 from pathlib import Path
 import pandas as pd
-import numpy as np
-from joblib import dump, load
-
-from sklearn.dummy import DummyClassifier
+from joblib import dump
 from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.model_selection import (
-    GridSearchCV,
-    RandomizedSearchCV,
-    cross_val_score,
-    cross_validate,
-    train_test_split,
-)
+from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-
 from imblearn.over_sampling import SMOTE
 
 opt = docopt(__doc__)

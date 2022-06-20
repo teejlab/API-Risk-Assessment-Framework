@@ -14,10 +14,8 @@ python src/predict.py --model_path=data/model/model.joblib --predict_path=data/p
 """
 
 from docopt import docopt
-from pathlib import Path
 import pandas as pd
-import numpy as np
-from joblib import dump, load
+from joblib import load
 
 opt = docopt(__doc__)
 
