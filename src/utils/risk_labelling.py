@@ -5,6 +5,21 @@ from pathlib import Path
 def classify_risk(row, rule_df):
     """
     Check if the row is the same with any row in rule_df
+    If yes, return the risk label
+    If no, return "Low Risk"
+
+    Parameters
+    ----------
+    row : pandas.Series
+        A row in the api_df
+    rule_df : pandas.DataFrame
+        A dataframe that contains the risk rules
+
+    Returns
+    -------
+    str
+        The risk label
+
     """
     # remove api_endpoint_id from row series
     row = row.drop(labels=["api_endpoint_id"])
@@ -25,6 +40,21 @@ def classify_risk(row, rule_df):
 
 
 def create_risk_label(df, risk_rules_path):
+    '''
+    Create the risk label for the api_df
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The api_df
+    risk_rules_path : str
+        The path to the risk rules
+
+    Returns
+    -------
+    pandas.DataFrame
+        The api_df with the risk label
+    '''
     # read risk rules
     rule_df = pd.read_excel(risk_rules_path, sheet_name="RiskRules")
     # drop the first column vendor_api_category since we not using it
