@@ -49,7 +49,7 @@ def main(model_path, test_path, save_path):
     # put the predicted labels in a dataframe
     test_df['Risk_Label'] = y_pred
 
-    # # save the test data with the predicted labels
+    # save the test data with the predicted labels
     test_df.to_excel(save_path + 'test_predicted.xlsx', index=False)
     print(f'Test data saved to {save_path}test_predicted.xlsx')
 
