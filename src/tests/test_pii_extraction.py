@@ -23,18 +23,24 @@ def test_wrong_parameters():
  
 def test_normal_text():
     results = pii_extraction("raw_text", type="pii", conf_threshold=0.5)
+
+    # Check if the results are a list
     assert isinstance(
         results, list
     ), "A List should be returned."
 
 def test_json():
     results = pii_extraction("{email:'abc@test.com'}", type="pii", conf_threshold=0.5)
+
+    # Check if the results are a list
     assert isinstance(
         results, list
     ), "A List should be returned."
 
 def test_html():
     results = pii_extraction("<html><body>Test123</body></html>", type="pii", conf_threshold=0.5)
+
+    # Check if the results are a list
     assert isinstance(
         results, list
     ), "A List should be returned."

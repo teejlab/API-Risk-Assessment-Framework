@@ -29,7 +29,7 @@ def pii_extraction(text, type="pii", conf_threshold=0.5):
         The confidence threshold.
     Returns
     -------
-    filtered_results : list
+    results : list
         A list containing the extracted PII.
     """
     # Check if the type is valid
