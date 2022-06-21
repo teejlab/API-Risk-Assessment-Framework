@@ -70,8 +70,8 @@ def main(model_path, predict_path, save_path):
     predict_df['Risk_Label'] = y_pred
 
     # save the test data with the predicted labels
-    predict_df.to_excel(save_path + 'test_predicted.xlsx', index=False)
-    print(f'Test data saved to {save_path}test_predicted.xlsx')
+    predict_df.to_excel(save_path + 'df_predicted.xlsx', index=False)
+    print(f'Test data saved to {save_path}df_predicted.xlsx')
 
 
 if __name__ == "__main__":
