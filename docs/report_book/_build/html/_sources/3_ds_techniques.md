@@ -2,7 +2,7 @@
 
 ## 3.1 Datasets
 
-The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by TeejLab Services to the third-party API endpoint, and all HTTP requests are annotated by the level of severity (i.e. High, Medium, Low, No). The overview of the datasets is shown in Table 1 and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`.
+The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by TeejLab Services to the third-party API endpoint, and all HTTP requests are annotated by the level of severity (i.e. High, Medium, Low, No). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`.
 
 ```{table} : The statistical summary of the Data Endpoints
 :name: table-1
@@ -16,6 +16,7 @@ The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfe
 | Total  | 2,000                 |
 ```
 
+&nbsp;
 
 ```{table} : The detailed description of the columns in the dataset
 :name: table-2
@@ -43,12 +44,12 @@ The dataset provided by TeejLab contains 2,000 observations of Hypertext Transfe
 
 During our EDA, we found out that multiple entries were identical with the exception of the request header field “Date” (i.e. timestamp of message) in the “metadata_response” column. However, this information is not useful for our analysis. Moreover, there were insufficient samples for certain risk labels after data wrangling (See {ref}`Figure 1 <histogram_categorical-fig>`). More data points are required to make any further statistical conclusions.
 
-```{figure} ../../images/histogram_categorical.png
+```{figure} images/histogram_categorical.png
 ---
 height: 150px
 name: histogram_categorical-fig
 ---
-Distribution of the Risk Label
+Distribution of the Risk Label No, Low, Medium, High
 ```
 
 ## 3.3 Feature Engineering
@@ -61,34 +62,30 @@ In the “response_metadata” column, there are several keys to be extracted. I
 
 These transformations can be visualised in {ref}`Figure 2 <NLP_preprocess-fig>`.
 
-```{figure} ../../images/NLP_preprocess.png
+```{figure} images/NLP_preprocess.png
 ---
 height: 250px
 name: NLP_preprocess-fig
 ---
 Feature engineering on API responses
 ```
-
-
-Currently, most rows in “sample_response” contain missing data. As such, while waiting to acquire more data, we will test pre-trained ML models or find a similar corpus to train the model.
-
-
 ## 3.4 Machine Learning Pipeline
 
 Before embarking on machine learning, we will use a 80:20 train-test split. This is to ensure that we do not influence the test data while training the model.
 
 One challenge is the validity of the provided risk labels. We want to be certain that the labels accurately capture the underlying pattern. Thus, we will first employ unsupervised clustering with three components (to mirror the three risk classes) to evaluate if (a)  there are three distinct clusters and (b) if they correspond to the risk labels provided by TeejLab ({ref}`Figure 3 <ML_Pipeline-fig>`). If a huge discrepancy is observed, we will feedback to TeejLab to request for a relook of labels, as they are the subject-matter experts.
 
-Once we have the final input features, we will train supervised classification algorithms. Presently, we are going to train and optimise Random Forest, CatBoot, XGBoost, and Ensemble Models. However, lest the accuracy is less than 80%, we will look out for other Machine Learning or Deep Learning Models.
+Once we have the final input features, we will train supervised classification algorithms. We will first train and optimize the following classification models: Random Forest, CatBoot, XGBoost. This is due to ease of implementation. However, lest the accuracy is less than 80%, we will look out for other Machine Learning or Deep Learning Models.
 
 In this problem, it is very critical to identify the high risk APIs accurately. Hence, we are using Recall as the primary evaluation metric. However, as we want to avoid low risk APIs to show up as high risk, we will also look at f1-score and accuracy.
 
 Based on metrics scores, we will select the best performing model and build an integrated Machine Learning pipeline for predicting risk classification on new data. This pipeline will be used for evaluating performance on the test data.
 
-```{figure} ../../images/ML_Pipeline.jpg
+```{figure} images/ML_Pipeline.png
 ---
 height: 500px
 name: ML_Pipeline-fig
 ---
 Machine Learning pipeline
 ```
+
