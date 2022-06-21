@@ -29,9 +29,23 @@ def pii_extraction(text, type="pii", conf_threshold=0.5):
         The confidence threshold.
     Returns
     -------
-    filtered_results : list
+    results : list
         A list containing the extracted PII.
     """
+    # Check if the type is valid
+    if not isinstance(type, str):
+        raise TypeError("`type` should be a string")
+    # Check if the type is valid
+    if type != "pii" and type != "fii":
+        raise ValueError("`type` should be either 'pii' or 'fii'")
+
+    # Check if the confidence threshold is valid
+    if not isinstance(conf_threshold, float) and not isinstance(conf_threshold, int):
+        raise TypeError("`conf_threshold` should be either integer or float")
+    # Check if the confidence threshold is between 0 and 1
+    if conf_threshold < 0 or conf_threshold > 1:
+        raise ValueError("`conf_threshold` should be between 0 and 1")
+
     results = []
     text = str(text)
     # Check if the text is html or xml
