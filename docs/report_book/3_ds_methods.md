@@ -73,15 +73,26 @@ A major challenge was the imbalanced nature of data, particularly with regard to
 
 For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.
 
-Hence, we used the `imblearn` package for Oversampling. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (Figure 3).
+Hence, we used the `imblearn` package for ***Oversampling***. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling ({ref}`Fig. 3 <oversampling-fig>`).
+
+```{figure} images/oversampling.jpg
+---
+height: 150px
+name: oversampling-fig
+---
+Transformation of imbalanced training data set to a balanced one
+```
+
 
 ## 3.4 Evaluation Metric and Acceptance Criteria
 
 As per our discussion with the partner, we understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk.
 
-Thus, we selected Recall as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
+Thus, we selected ***Recall*** [^footnote] as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
 
 It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
+
+[^footnote]: It is the number of true positives divided by the number of true positives plus the number of false negatives". In our case, it is the ratio of the number of cases correctly identified as High Risk compared to the sum of the cases correctly identified as High Risk and the number of cases incorrectly identified as High Risk when it is actually Low or Medium Risk.
 
 ## 3.5 Feature Engineering
 
@@ -132,4 +143,12 @@ For each of these models, they were initially trained using the processed data s
 
 To improve the scores, we review the information being captured by the input features. We transformed all the existing columns and created new features as per Section 3.5. The final features resulted in improvement in model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.
 
-However, the process of feature engineering caused an increase in dimensionality to 53. Recursive Feature Elimination (RFE) was employed to select the most important features instead of RFE with Cross Validation (RFECV) or SelectFromModel() which is a feature selection method based on feature importance. This was because it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while SelectFromModel() only reduced the dimensionality by one. The RFE model identified eight variables that gave the same high performance level while reducing the dimensionality. The improvement of the Recall score is provided in Figure 7.
+However, the process of feature engineering caused an increase in dimensionality to 53. Recursive Feature Elimination (RFE) was employed to select the most important features instead of RFE with Cross Validation (RFECV) or SelectFromModel() which is a feature selection method based on feature importance. This was because it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while SelectFromModel() only reduced the dimensionality by one. The RFE model identified eight variables that gave the same high performance level while reducing the dimensionality. The improvement of the Recall score is provided in {ref}`Fig. 7 <evaluation-fig>`.
+
+```{figure} images/evaluation.jpg
+---
+height: 350px
+name: evaluation-fig
+---
+Improvement of training and testing recall scores via Featuring Engineering and Feature Selection.
+```
