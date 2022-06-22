@@ -5,6 +5,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
 from sklearn.pipeline import make_pipeline
 
+
 def security_test_feat_creation(df):
     """
     Create security test features.
@@ -27,7 +28,7 @@ def security_test_feat_creation(df):
     df['security_test_result_processed'] = df['security_test_result']
     categorical_features = ["security_test_category_processed"]
     ordinal_features = ["security_test_result_processed"]
-    # passthrough_features is the list of columns in df 
+    # passthrough_features is the list of columns in df
     # minus the categorical and ordinal features
     passthrough_features = [
         feature for feature in df.columns 
