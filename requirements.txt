@@ -16,3 +16,4 @@ catboost==1.0.6
 xgboost==1.6.1
 imbalanced-learn==0.9.1
 kmodes==0.12.1
+spacy==3.3.0
