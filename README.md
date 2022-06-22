@@ -39,7 +39,7 @@ We have included links to the relevant scripts and notebooks for easy navigation
     └── README.md               # README
 
 ## Usage
-1. Clone the repo to your machine
+1. Clone the repository to your machine
 2. Set up the environment using the instructions below.
 3. The python scripts can be found in the `src` folder
 4. The raw and processed data can be found in the `data` folder
