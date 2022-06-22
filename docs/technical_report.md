@@ -8,7 +8,6 @@
 - Jacqueline Chong
 - Son Chau
 
-<hr>
 
 ## Introduction
 APIs have been present for decades and are set to grow exponentially, in part due to regulations (in public health or finance) or by industry interoperability (in telecommunications) or disruption (in media or retail) (Wang and McLarty 2021). As a cybersecurity company focused on API management at a global scale, TeejLab aims to tackle this key industry challenge of quantifying business risk at the API level. A manual inspection or a rules-based approach is insufficient to accurately capture various aspects of risk, such as security, legal, similarity, and data sovereignty. It is time and labour intensive to inspect every feature and assign a risk label to an API endpoint, let alone quantities of API endpoint in the range of thousands or millions. This process is also static, and would require constant revision to the rules as domain knowledge increases. In addition to those listed previously, the legal aspect is related to the level of protection for users for data use and distribution. Similarity aspect refers to how much user data APIs in the same category are requesting, where one that is requesting for too much data is deemed as less secure.
@@ -44,7 +43,6 @@ Hence, we used the `imblearn` package for Oversampling. It was a technique that 
 
 ### Feature Engineering
 From the 17 variables provided to us by TeejLab, most of the rows were categorical or text features. As such, in order to draw out more information, it was essential for us to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test. All the relevant code can be found in [this document](https://github.com/teejlab/API-Risk-Assessment-Framework/tree/main/src/utils)
-
 </br>
 </br>
 
