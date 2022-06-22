@@ -28,7 +28,4 @@ data/processed/df_predicted.xlxs: data/processed/preprocessed_test.xlsx
 clean:
 	rm -rf data/processed/*
 	rm -rf data/model/*
-
-	rm -rf docs/report/images/histogram_categorical.png
-
 	rm -rf docs/report_book/_build/*
