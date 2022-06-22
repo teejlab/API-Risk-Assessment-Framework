@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Introduction &#8212; API Risks Proposal Report</title>
+    <title>4. Data Product and Results &#8212; API Risks Proposal Report</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3. Data Science Methods" href="3_ds_methods.html" />
-    <link rel="prev" title="1. Executive Summary" href="1_summary.html" />
+    <link rel="next" title="5. Conclusion and Recommendation" href="5_conclusion.html" />
+    <link rel="prev" title="3. Data Science Methods" href="3_ds_methods.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -99,8 +99,8 @@ const thebe_selector_output = ".output, .cell_output"
    1. Executive Summary
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_introduction.html">
    2. Introduction
   </a>
  </li>
@@ -109,8 +109,8 @@ const thebe_selector_output = ".output, .cell_output"
    3. Data Science Methods
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_data_product.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    4. Data Product and Results
   </a>
  </li>
@@ -170,7 +170,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/2_introduction.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/4_data_product.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -190,7 +190,7 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2_introduction.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4_data_product.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -217,13 +217,18 @@ const thebe_selector_output = ".output, .cell_output"
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#capstone-partners-needs">
-   2.1 Capstone Partner’s Needs
+  <a class="reference internal nav-link" href="#data-pipeline">
+   4.1 Data Pipeline
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#scope-of-project">
-   2.2 Scope of Project
+  <a class="reference internal nav-link" href="#auxiliary-script">
+   4.2 Auxiliary Script
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#improvements">
+   4.3 Improvements
   </a>
  </li>
 </ul>
@@ -236,7 +241,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2. Introduction</h1>
+                <h1>4. Data Product and Results</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -247,13 +252,18 @@ const thebe_selector_output = ".output, .cell_output"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#capstone-partners-needs">
-   2.1 Capstone Partner’s Needs
+  <a class="reference internal nav-link" href="#data-pipeline">
+   4.1 Data Pipeline
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#scope-of-project">
-   2.2 Scope of Project
+  <a class="reference internal nav-link" href="#auxiliary-script">
+   4.2 Auxiliary Script
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#improvements">
+   4.3 Improvements
   </a>
  </li>
 </ul>
@@ -265,15 +275,23 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
-<h1>2. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="capstone-partners-needs">
-<h2>2.1 Capstone Partner’s Needs<a class="headerlink" href="#capstone-partners-needs" title="Permalink to this headline">¶</a></h2>
-<p>APIs have been present for decades and are set to grow exponentially, in part due to regulations (in public health or finance) or by industry interoperability (in telecommunications) or disruption (in media or retail)  <span id="id1"><sup><a class="reference internal" href="citation.html#id2" title="Tiffany Xingyu Wang and Matt McLarty. Apis aren't just for tech companies. Apr 2021. URL: https://hbr.org/2021/04/apis-arent-just-for-tech-companies.">2</a></sup></span>. As a cybersecurity company focused on API management at a global scale, TeejLab aims to tackle this key industry challenge of <em><strong>quantifying business risk at the API level</strong></em>. A manual inspection or a rules-based approach is insufficient to accurately capture various aspects of risk, such as <em>security, legal, similarity, and data sovereignty</em>. It is time and labour intensive to inspect every feature and assign a risk label to an API endpoint, let alone quantities of API endpoint in the range of thousands or millions. This process is also static, and would require constant revision to the rules as domain knowledge increases. In addition to those listed previously, the legal aspect is related to the level of protection for users for data use and distribution. Similarity aspect refers to how much user data APIs in the same category are requesting, where one that is requesting for too much data is deemed as less secure.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="data-product-and-results">
+<h1>4. Data Product and Results<a class="headerlink" href="#data-product-and-results" title="Permalink to this headline">¶</a></h1>
+<p>The above is the method and technique employed to respond to the objective of the project: to quantify the risk of the endpoints of each API based on security and data sovereignty markers. To ensure that TeejLab can use our result and deploy an additional column titled “Endpoint Security” on their platform, the following data product will be handed over.</p>
+<div class="section" id="data-pipeline">
+<h2>4.1 Data Pipeline<a class="headerlink" href="#data-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The data product will include scripts for the preprocessing and machine learning pipeline. The process is documented with the expectation that Teejlab can reproduce the results with minimal guidance. The data product is accompanied with a Jupyter notebook for how to interpret the results. To elaborate further, the processed data sets will be the output of the preprocessing pipeline, while the model and prediction will be the output of the machine learning pipeline.</p>
+<p>This pipeline is modular, making it easy for TeejLab to add new scripts and commands as the domain knowledge evolves. Our pipeline also offers TeejLab the ability to schedule different aspects of the pipeline to be run distinctly or as a whole.</p>
 </div>
-<div class="section" id="scope-of-project">
-<h2>2.2 Scope of Project<a class="headerlink" href="#scope-of-project" title="Permalink to this headline">¶</a></h2>
-<p>Based on the dataset provided and time limitation, our team has narrowed the scope to focus on creating a machine learning pipeline to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. More specifically, our project aims to create a well-annotated python script for each stage - (1) data pre-processing and feature engineering, and (2) machine learning.</p>
+<div class="section" id="auxiliary-script">
+<h2>4.2 Auxiliary Script<a class="headerlink" href="#auxiliary-script" title="Permalink to this headline">¶</a></h2>
+<p>In addition, we converted TeejLab’s rules into a script to automatically label the risk class of each data point at the request of Teejlab. The script will look for specific words or phrases within the API content and label it based on the rule. If or when the domain knowledge changes, TeejLab will be able to adjust the rules accordingly.</p>
+<p>With this said, both the preprocessing pipeline and the API risk label script will need to be rerun should a new training dataset be used.</p>
+</div>
+<div class="section" id="improvements">
+<h2>4.3 Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h2>
+<p>To be able to integrate with Teejlab’s existing software, the interface has to be user-friendly and easy to maintain. Also, it must be scalable for future growth. Due to time constraints and limited resources, this integration would need to be conducted by TeejLab’s team.</p>
+<p>There are other areas of improvement regarding our model. For instance, we can leverage machine learning tools to create a model or script that is able to be constantly updated and adjusted based on the new data. However, as this project is at the conception stage of this domain, our model will serve as a starting point for TeejLab to further enhance it as domain knowledge broadens.</p>
 </div>
 </div>
 
@@ -302,17 +320,17 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="1_summary.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="3_ds_methods.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">1. Executive Summary</p>
+            <p class="prev-next-title">3. Data Science Methods</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="3_ds_methods.html" title="next page">
+    <a class='right-next' id="next-link" href="5_conclusion.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">3. Data Science Methods</p>
+        <p class="prev-next-title">5. Conclusion and Recommendation</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
