@@ -9,8 +9,7 @@ Options:
 --save_path=<save_path>             The folder to save the model results to
 
 Example:
-python src/create_model.py --train_path=data/processed/preprocessed_train.xlsx
---save_path=data/model/
+python src/create_model.py --train_path=data/processed/preprocessed_train.xlsx --save_path=data/model/
 """
 
 from docopt import docopt

@@ -1,8 +1,5 @@
-"""Reads train csv data from path, preprocess the data,
-and save the preprocessed data to path.
-Usage: preprocessing.py --endpoint_path=<endpoint_path> 
---country_path=<country_path> --risk_rules_path=<risk_rules_path> 
---output_path=<output_path> --split_data=<split_data>
+"""Reads train csv data from path, preprocess the data, and save the preprocessed data to path.
+Usage: preprocessing.py --endpoint_path=<endpoint_path> --country_path=<country_path> --risk_rules_path=<risk_rules_path> --output_path=<output_path> --split_data=<split_data>
  
 Options:
 --endpoint_path=<endpoint_path>       Path to input data

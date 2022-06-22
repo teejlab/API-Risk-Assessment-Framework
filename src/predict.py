@@ -1,5 +1,5 @@
 """
-This script trains ML model on the pre-processed train data.
+This script trains ML model on the pre-processed train data. 
 The train files must be named X_train.csv and y_train.csv
 
 Usage: predict.py --model_path=<model_path> --predict_path=<predict_path>
@@ -11,8 +11,7 @@ Options:
 --save_path=<save_path>              The folder to save the model results to
 
 Example:
-python src/predict.py --model_path=data/model/model.joblib --predict_path=data/
-processed/preprocessed_test.xlsx --save_path=data/processed/
+python src/predict.py --model_path=data/model/model.joblib --predict_path=data/processed/preprocessed_test.xlsx --save_path=data/processed/
 """
 
 from docopt import docopt
