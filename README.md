@@ -5,7 +5,7 @@ This project is part of UBC MDS' capstone project where the contributors collabo
 
 ## Proposal
 
-Our proposal can be found via [here](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/proposal_book/_build/pdf/book.pdf).
+Our proposal can be found [here](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/proposal_book/_build/pdf/book.pdf).
 
 ## Final Report
 Our final report can be found [here](https://teejlab.github.io/API-Risk-Assessment-Framework/intro.html). 
@@ -14,8 +14,32 @@ Our final report can be found [here](https://teejlab.github.io/API-Risk-Assessme
 For a high level summary of our project, and to understand our decision making choices, please refer to the [technical report](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md).
 We have included links to the relevant scripts and notebooks for easy navigation within the repository. 
 
+## Top-level Directory Layout
+    .
+    ├── data                    # Data files
+    │   ├── model                  # Model file
+    │   ├── preprocessed           # Preprocessed Dataset
+    │   └── raw                    # Raw Dataset
+    ├── docs                    # Final Proposal and Report
+    │   ├── proposal_book          # Final Proposal
+    │   └── report_book            # Final Report
+    ├── notebooks               # Jupyter Notebook files 
+    │   ├── eda                  # Notebooks for EDA
+    │   └── ml                   # Notebooks for ML Models
+    ├── src                     # Source files
+    │   ├── utils                  # Utility Functions
+    │   └── test                   # Automated tests
+    ├── reference_material      # Reference Materials
+    ├── LICENSE                 # LICENSE File
+    ├── requirements.txt        # Dependencies for CI/CD Workflow
+    ├── Makefile                # Automated Script
+    ├── CODE_OF_CONDUCT.md      # Code of Conduct File
+    ├── CONTRIBUTING.md         # Contributing File
+    ├── env.yml                 # Conda Environment File
+    └── README.md               # README
+
 ## Usage
-1. Clone the repository in your machine
+1. Clone the repository to your machine
 2. Set up the environment using the instructions below.
 3. The python scripts can be found in the `src` folder
 4. The raw and processed data can be found in the `data` folder
