@@ -3,7 +3,8 @@ Extract fields from the response_metadata column (along with parameters).
 Replace the string value with recomended binary value for risk factor.
 Imputation of missing values with low risk factor.
 
-Usage: preprocessing_metadata.py --file_path=<file_path> --rule_path=<rule_path> --output_path=<output_path>
+Usage: preprocessing_metadata.py --file_path=<file_path> --rule_path=<rule_path>
+--output_path=<output_path>
  
 Options:
 --file_path=<file_path>                    Path to input data
@@ -11,7 +12,9 @@ Options:
 --output_path=<output_path>                Path for preprocessed file to be saved
 
 Example:
-python src/utils/based_rules_classifier.py --file_path=data/processed/df_pii.xlsx --rule_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx --output_path=data/processed/
+python src/utils/based_rules_classifier.py --file_path=data/processed/
+df_pii.xlsx --rule_path=data/raw/RiskClassification_Data_Endpoints_V2.xlsx
+--output_path=data/processed/
 """
 
 
@@ -84,14 +87,21 @@ def main():
     rule_df = rule_df.drop_duplicates()
     # change server_location to Amaricas to Americas
     # rule_df["server_location"] = rule_df["server_location"].replace("Amaricas", "Americas")
-  
+
     # read the data with fii and pii
     df = pd.read_excel(file_path)
     # make a copy of api_df
     api_df = df.copy()
     # fill the empty values with "None"
     api_df = api_df.fillna("None")
-    api_df = api_df[['api_endpoint_id','authentication', 'security_test_category', 'security_test_result','server_location', 'hosting_isp', 'is_pii', 'is_fii']]
+    api_df = api_df[['api_endpoint_id',
+                     'authentication',
+                     'security_test_category',
+                     'security_test_result',
+                     'server_location',
+                     'hosting_isp',
+                     'is_pii',
+                     'is_fii']]
 
     # rename the column "is_pii" to "PII"
     api_df = api_df.rename(columns={"is_pii": "PII"})
@@ -104,14 +114,16 @@ def main():
     api_df["FII"] = api_df["FII"].replace(True, "Yes")
     api_df["FII"] = api_df["FII"].replace(False, "No")
 
-    # process column authentication from api_df, replace nan and none with "No Authentication"
+    # process column authentication from api_df, 
+    # replace nan and none with "No Authentication"
     api_df["authentication"] = api_df["authentication"].replace(
         "None", "No Authentication")
     # replace all value that not "No Authentication" with "Some Authentication"
-    api_df["authentication"].mask(api_df["authentication"] !=
-                                "No Authentication", "Some Authentication", inplace=True)
+    api_df["authentication"].mask(api_df["authentication"] != "No Authentication",
+                                  "Some Authentication", inplace=True)
 
-    # process column security_test_category from api_df, replace nan with "No Test Performed/Available"
+    # process column security_test_category from api_df,
+    # replace nan with "No Test Performed/Available"
     api_df["security_test_category"] = api_df["security_test_category"].replace(
         "None", "No Test Performed/Available")
     # replace Injections with "SQL Injection"
@@ -127,7 +139,6 @@ def main():
     # replace true with "Failed"
     api_df["security_test_result"] = api_df["security_test_result"].replace(
         1., "Fail")
-    
 
     # process column server_location from api_df, replace nan with "Anywhere"
     api_df["server_location"] = api_df["server_location"].replace(

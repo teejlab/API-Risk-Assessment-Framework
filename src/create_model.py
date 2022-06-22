@@ -25,6 +25,7 @@ from sklearn.feature_selection import RFE
 
 opt = docopt(__doc__)
 
+
 # Smote function
 def create_smote(X, y, k_neighbors):
     '''
@@ -37,7 +38,7 @@ def create_smote(X, y, k_neighbors):
         The training labels.
     k_neighbors : int
         The number of neighbors to use in the SMOTE algorithm.
-    
+
     Returns
     -----------
     X_smote : pandas.DataFrame
@@ -74,6 +75,7 @@ def get_features_selection(X_train, y_train):
     feature_list = list(rfe_selected_feats)
     return feature_list
 
+
 def main(train_path, save_path):
     '''
     This function trains the model and saves it to the given path.
@@ -88,7 +90,7 @@ def main(train_path, save_path):
     -----------
     None
     '''
-    print(f'Training model...')
+    print('Training model...')
     path = Path(save_path)
     path.mkdir(parents=True, exist_ok=True)
 
@@ -103,19 +105,19 @@ def main(train_path, save_path):
     # Balance training data
     X_train, y_train = create_smote(X_train, y_train, 2)
 
-
     # Data sub-set of features identified using RFE method
     select_features = get_features_selection(X_train, y_train)
     X_select = X_train[select_features]
-        
+
     pipe_lr_tuned = make_pipeline(
         StandardScaler(), LogisticRegression(C=100.0, solver='liblinear'))
 
     pipe_lr_tuned.fit(X_select, y_train)
-    
+
     # Save the model
     dump(pipe_lr_tuned, f"{path}/{path.name}.joblib")
     print(f'Model saved to {path}/{path.name}.joblib')
+
 
 if __name__ == "__main__":
     main(opt["--train_path"], opt["--save_path"])
