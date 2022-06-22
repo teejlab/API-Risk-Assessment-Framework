@@ -1,21 +1,21 @@
 # API-Risk-Assessment-Framework
-This project quantifies the risk of the endpoint of each API based on security and data sovereignty markers. In this repository, we have included a well-annotated python script for (1) the data preprocessing and feature engineering, along with the (2) machine learning pipeline. These can be found in the `src` folder. 
+This project quantifies the risk of the endpoint of each API based on security and data sovereignty markers. In this repository, we have included a well-annotated python script for (1) the data preprocessing and feature engineering, along with the (2) machine learning pipeline. These can be found in the `src` folder.
 
 This project is part of UBC MDS' capstone project where the contributors collaborated with TeejLab.
 
 ## Proposal
 
-Our proposal can be found via [here](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/report_book/_build/pdf/book.pdf).
+Our proposal can be found via [here](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/proposal_book/_build/pdf/book.pdf).
 
 ## Final Report
-Our final report can be found [here](include link). 
+Our final report can be found [here](https://teejlab.github.io/API-Risk-Assessment-Framework/intro.html). 
 
 ## Technical Report
 For a high level summary of our project, and to understand our decision making choices, please refer to the [technical report](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md).
 We have included links to the relevant scripts and notebooks for easy navigation within the repository. 
 
 ## Usage
-1. Clone the repo in your machine
+1. Clone the repository in your machine
 2. Set up the environment using the instructions below.
 3. The python scripts can be found in the `src` folder
 4. The raw and processed data can be found in the `data` folder
@@ -38,4 +38,4 @@ conda activate api-risk-env
 | Son Chau             | \@SonQBChau           |
 
 ## License
-(insert mit license sticker)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/readme/LICENSE)
