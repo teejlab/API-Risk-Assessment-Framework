@@ -42,7 +42,7 @@ The dataset provided by TeejLab contains around 2,000 observations of Hypertext 
 
 ## 3.2 Summary of the Exploratory Data Analysis (EDA)
 
-We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See {ref}`Figure 1 <risk_label-fig>` below). This will result in the training model reading too much into the four instances that are labelled as high risk. The training model will remember the patterns. To tackle this, we used Synthetic Minority Oversampling Technique (SMOTE) to generate more new samples.
+We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See {ref}`Fig. 1 <risk_label-fig>` below). This will result in the training model reading too much into the four instances that are labelled as high risk. The training model will remember the patterns. To tackle this, we used Synthetic Minority Oversampling Technique (SMOTE) to generate more new samples.
 
 
 ```{figure} images/risk_label.jpg
@@ -53,11 +53,11 @@ name: risk_label-fig
 Histogram of the Risk Label highlighting severe class imbalance
 ```
 
-The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. For example, we used NLP techniques to analyze the unstructured data such as API header and get the metadata fields to count (See {ref}`Figure 2 <metadata_field_counts-fig>` below).
+The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. For example, we used NLP techniques to analyze the unstructured data such as API header and get the metadata fields to count (See {ref}`Fig. 2 <metadata_field_counts-fig>` below).
 
 ```{figure} images/metadata_field_counts.jpg
 ---
-height: 150px
+height: 400px
 name: metadata_field_counts-fig
 ---
 Histogram of Metadata Fields Count, a feature extracted from the text column “API response”
@@ -81,19 +81,44 @@ As per our discussion with the partner, we understood that it is critical to cor
 
 Thus, we selected Recall as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
 
-It was agreed that Acceptance Criteria would be: Recall >= 0.9.
+It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
 
 ## 3.5 Feature Engineering
 
 As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
 
-PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises (Impervia 2021). It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, PresidioAnalyzer was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using PresidioAnalyzer on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint (Figure 4).
+PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises (Impervia 2021). It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, PresidioAnalyzer was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using PresidioAnalyzer on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint ({ref}`Fig. 4 <metadata_field_counts-fig>`).
 
-Second, we had to quantify the exposure of sensitive information and its frequency. This sensitive information was present in two columns - “parameter” and “response_metadata”. The former refer to request data while the latter refer to HTTP response headers. To quantify exposure, we counted the number of keys exposed per API endpoint (See Figure 5 below). In addition, there were specific security response headers, that if exposed, could lead to a security breach. As such, we extracted 12 security response keys, and engineered twelve additional binary columns (present or absent) (Figure 5). See Appendix A for the list and description of the 12 keys.
+```{figure} images/pii_fii.jpg
+---
+height: 600px
+name: pii_fii-fig
+---
+Extraction of PII and FII from API Response to create two new columns
+```
+
+Second, we had to quantify the exposure of sensitive information and its frequency. This sensitive information was present in two columns - “parameter” and “response_metadata”. The former refer to request data while the latter refer to HTTP response headers. To quantify exposure, we counted the number of keys exposed per API endpoint (See Figure 5 below). In addition, there were specific security response headers, that if exposed, could lead to a security breach. As such, we extracted 12 security response keys, and engineered twelve additional binary columns (present or absent) ({ref}`Fig. 5 <count_keys-fig>`). See Appendix A for the list and description of the 12 keys.
+
+```{figure} images/count_keys.jpg
+---
+height: 600px
+name: count_keys-fig
+---
+Extraction of exposure frequency in parameter and metadata response column
+```
 
 Third, we had to quantify the risk associated with the server location. Other than ensuring high loading speeding if they are situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index (Network Readiness Index 2021). It is an annual index that quantifies the impact of digital technology.
 
-Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risk. Ideally, each endpoint would contain all five security tests which TeejLab deems as crucial. However, it would be unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed (Figure 6).
+Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risk. Ideally, each endpoint would contain all five security tests which TeejLab deems as crucial. However, it would be unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed ({ref}`Fig. 6 <count_keys-fig>`).
+
+```{figure} images/imputation.jpg
+---
+height: 600px
+name: imputation-fig
+---
+An example of the processed data when the input is “Injection test failed”
+```
+
 
 ## 3.6 Supervised Learning
 
