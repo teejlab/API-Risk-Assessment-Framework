@@ -417,7 +417,7 @@ const thebe_selector_output = ".output, .cell_output"
 <h2>3.2 Summary of the Exploratory Data Analysis (EDA)<a class="headerlink" href="#summary-of-the-exploratory-data-analysis-eda" title="Permalink to this headline">¶</a></h2>
 <p>We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See <a class="reference internal" href="#risk-label-fig"><span class="std std-ref">Fig. 1</span></a> below). This will result in the training model reading too much into the four instances that are labelled as high risk. The training model will remember the patterns. To tackle this, we used Synthetic Minority Oversampling Technique (SMOTE) to generate more new samples.</p>
 <div class="figure align-default" id="risk-label-fig">
-<a class="reference internal image-reference" href="_images/risk_label.jpg"><img alt="_images/risk_label.jpg" src="_images/risk_label.jpg" style="height: 150px;" /></a>
+<a class="reference internal image-reference" href="_images/risk_label.jpg"><img alt="_images/risk_label.jpg" src="_images/risk_label.jpg" style="height: 100px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Histogram of the Risk Label highlighting severe class imbalance</span><a class="headerlink" href="#risk-label-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. For example, we used NLP techniques to analyze the unstructured data such as API header and get the metadata fields to count (See <a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 2</span></a> below).</p>
@@ -437,7 +437,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.</p>
 <p>Hence, we used the <code class="docutils literal notranslate"><span class="pre">imblearn</span></code> package for <em><strong>Oversampling</strong></em>. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (<a class="reference internal" href="#oversampling-fig"><span class="std std-ref">Fig. 3</span></a>).</p>
 <div class="figure align-default" id="oversampling-fig">
-<a class="reference internal image-reference" href="_images/oversampling.jpg"><img alt="_images/oversampling.jpg" src="_images/oversampling.jpg" style="height: 150px;" /></a>
+<a class="reference internal image-reference" href="_images/oversampling.jpg"><img alt="_images/oversampling.jpg" src="_images/oversampling.jpg" style="height: 100px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Transformation of imbalanced training data set to a balanced one</span><a class="headerlink" href="#oversampling-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
