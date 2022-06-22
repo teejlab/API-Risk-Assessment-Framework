@@ -19,6 +19,11 @@ def plot_clustering(train_file, output_path):
     -------
     None
     """
+    # Check if the input format is valid
+    if not isinstance(train_file, str):
+        raise TypeError("`train_file` should be a string")
+    if not isinstance(output_path, str):
+        raise TypeError("`output_path` should be a string")
     # Load the data
     df = pd.read_excel(train_file)
     # Separate the Target and the Features
@@ -231,5 +236,3 @@ def _center_columns(df, columns):
 
     return df
 
-
-plot_clustering("data/processed/df_full.xlsx")

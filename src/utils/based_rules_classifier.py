@@ -19,8 +19,6 @@ from docopt import docopt
 import pandas as pd
 from pathlib import Path
 
-from pii_extraction import pii_extraction
-
 # write the rule to classify the Risk_Label based on rule_df
 
 
