@@ -10,6 +10,10 @@ Our proposal can be found via [here](https://github.com/teejlab/API-Risk-Assessm
 ## Final Report
 Our final report can be found [here](include link). 
 
+## Technical Report
+For a high level summary of our project, and to understand our decision making choices, please refer to the [technical report](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md).
+We have included links to the relevant scripts and notebooks for easy navigation within the repository. 
+
 ## Usage
 1. Clone the repo in your machine
 2. Set up the environment using the instructions below.
@@ -22,13 +26,7 @@ You can install all the dependencies you need using conda:
 ```
 # Create and activate the environment
 conda env create -f env.yml
-conda activate api-risk
-
-# Install Presidio python package
-pip install presidio_analyzer
-
-# Presidio analyzer requires a spaCy language model
-python -m spacy download en_core_web_lg
+conda activate api-risk-env
 ```
 ## Contributing
 
