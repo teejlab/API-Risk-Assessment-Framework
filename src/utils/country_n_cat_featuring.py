@@ -9,11 +9,18 @@ def add_country_and_cat_feats(df, input_path_country):
     ----------
     df : Pandas Dataframe
         The file to be preprocessed
+    input_path_country : str
+        The path to the file containing the country information
     Returns
     -------
     preprocessed_df : Pandas Dataframe
         A preprocessed dataframe
     """
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("`df` should be a valid Pandas Series")
+    if not isinstance(input_path_country, str):
+        raise TypeError("`input_path_country` should be a string")
+        
     # Read country metric data
     country_metric_df = pd.read_excel(
         input_path_country, "NRI 2021 - results", usecols="B:C", skiprows=1

@@ -18,7 +18,7 @@ def extract_metadata(df):
         The dataframe with the metadata features
         
     '''
-    # Check if the type is valid
+    # Check if the df is valid
     if not isinstance(df, pd.DataFrame):
         raise TypeError("`df` should be a valid Pandas DataFrame")
         
