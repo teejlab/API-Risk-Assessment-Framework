@@ -22,7 +22,7 @@ data/processed/df_predicted.xlxs: data/processed/preprocessed_test.xlsx
 # 	jupyter-book build docs/report_book/ --builder pdfhtml
 
 # Generate report in HTML
-book.html : data/processed/df_predicted.xlsx
+book.html : data/processed/df_predicted.xlxs
 	jupyter-book build docs/report_book/
 
 clean:
