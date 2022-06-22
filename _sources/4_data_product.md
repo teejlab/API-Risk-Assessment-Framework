@@ -1,10 +1,10 @@
 # 4. Data Product and Results
 
-The above is the method and technique employed to respond to the objective of the project: to quantify the risk of the endpoints of each API based on security and data sovereignty markers. To ensure that TeejLab can use our result and deploy an additional column titled “Endpoint Security” on their platform, the following data product will be handed over.
+The above is the method and technique employed to respond to the objective of the project: ***to quantify the risk of the endpoints of each API based on security and data sovereignty markers***. To ensure that TeejLab can use our result and deploy an additional column titled “Endpoint Security” on their platform, the following data product will be handed over.
 
 ## 4.1 Data Pipeline
 
-The data product will include scripts for the preprocessing and machine learning pipeline. The process is documented with the expectation that Teejlab can reproduce the results with minimal guidance. The data product is accompanied with a Jupyter notebook for how to interpret the results. To elaborate further, the processed data sets will be the output of the preprocessing pipeline, while the model and prediction will be the output of the machine learning pipeline.
+The data product will include scripts for the ***preprocessing*** and ***machine learning*** pipeline. The process is documented with the expectation that Teejlab can reproduce the results with minimal guidance. The data product is accompanied with a Jupyter notebook for how to interpret the results. To elaborate further, the processed data sets will be the output of the preprocessing pipeline, while the model and prediction will be the output of the machine learning pipeline.
 
 This pipeline is modular, making it easy for TeejLab to add new scripts and commands as the domain knowledge evolves. Our pipeline also offers TeejLab the ability to schedule different aspects of the pipeline to be run distinctly or as a whole.
 
