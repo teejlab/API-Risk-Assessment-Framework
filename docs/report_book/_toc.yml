@@ -6,6 +6,7 @@ root: intro
 chapters:
 - file: 1_summary
 - file: 2_introduction
-- file: 3_ds_techniques
-- file: 4_timeline
+- file: 3_ds_methods
+- file: 4_data_product
+- file: 5_conclusion
 - file: citation
