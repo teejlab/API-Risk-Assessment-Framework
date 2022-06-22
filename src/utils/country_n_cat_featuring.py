@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 import re
 
+
 def add_country_and_cat_feats(df, input_path_country):
     """Read the file, and preprocess the data.
     Parameters
@@ -20,7 +21,7 @@ def add_country_and_cat_feats(df, input_path_country):
         raise TypeError("`df` should be a valid Pandas Series")
     if not isinstance(input_path_country, str):
         raise TypeError("`input_path_country` should be a string")
-        
+
     # Read country metric data
     country_metric_df = pd.read_excel(
         input_path_country, "NRI 2021 - results", usecols="B:C", skiprows=1
@@ -28,14 +29,13 @@ def add_country_and_cat_feats(df, input_path_country):
 
     # Merge country_metric data with input data
     df = df.merge(
-        country_metric_df, left_on="server_location", right_on="Country", how="left"
+        country_metric_df, left_on="server_location",
+        right_on="Country", how="left"
     )
 
-    #imputation of NRI score with mean value
+    # Imputation of NRI score with mean value
     df['NRI score'] = df['NRI score'].replace(0, NaN)
     df['NRI score'] = df['NRI score'].replace(NaN, df['NRI score'].mean())
-
-
 
     # Drop the columns that are not needed
     # df = df.drop(["server_location"], axis=1)
@@ -115,8 +115,6 @@ def add_country_and_cat_feats(df, input_path_country):
     for category in categories_list:
         if category not in df.columns:
             df[category] = 0
-    
-
 
     # server_name
     df['server_name_processed'] = df['server_name'].astype(str).str.lower()
@@ -132,10 +130,9 @@ def add_country_and_cat_feats(df, input_path_country):
     df['server_name_processed'] = df['server_name_processed'].replace(
         server_name_mapper)
 
-
-
     # Drop the rows with duplicates
     df = df.drop_duplicates()
     # df = df.drop(['category', 'tagset', 'api_id', 'api_vendor_id',
     #              'hosting_city', 'hosting_isp'], axis=1)
+    
     return df

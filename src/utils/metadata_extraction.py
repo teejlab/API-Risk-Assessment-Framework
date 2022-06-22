@@ -16,16 +16,16 @@ def extract_metadata(df):
     --------
     pandas.DataFrame
         The dataframe with the metadata features
-        
+
     '''
     # Check if the df is valid
     if not isinstance(df, pd.DataFrame):
         raise TypeError("`df` should be a valid Pandas DataFrame")
-        
+
     # fill missing values with {}
     df["response_metadata"] = df["response_metadata"].fillna("{}")
     df["parameters"] = df["parameters"].fillna("{}")
-    
+
     # list of columns that have high risk security
     high_risk_security_headers = [
         'x-frame-options',
@@ -48,7 +48,7 @@ def extract_metadata(df):
     # create new column metadata_fields_count and set to 0
     df["metadata_fields_count"] = 0
     df["parameters_count"] = 0
-    
+
     # loop through sample_response see the key match with high_risk_security_headers
     for i in range(len(df)):
         meta_count = 0
@@ -93,7 +93,6 @@ def extract_metadata(df):
                             'x-aspnet-version']
     good_to_be_present = ['x-ratelimit-limit']
 
-
     # loop through each row of api_df
     # to find if the recommended rule is present
     for i in range(len(df)):
@@ -103,7 +102,7 @@ def extract_metadata(df):
                 # if the cell contain the value in recommend_dict, then assign the value 0, else assign 1
                 # 0 IS GOOD, 1 IS BAD
                 df.loc[df.index[i], key] = 0 if value in df[key].iloc[i] else 1
-    
+
     # loop through each row of api_df
     for i in range(len(df)):
         # loop through should_not_be_present
@@ -118,11 +117,11 @@ def extract_metadata(df):
             if not pd.isna(df[field].iloc[i]):
                 # if the cell contain value, then assign the value 0
                 df.loc[df.index[i], field] = 0
-    
-    # fill the NaN in high_risk_security_headers with 0
+
+    # Fill the NaN in high_risk_security_headers with 0
     for header in high_risk_security_headers:
         df[header] = df[header].fillna(0)
 
     df = df.drop_duplicates()
-    return df
 
+    return df
