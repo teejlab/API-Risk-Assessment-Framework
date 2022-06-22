@@ -47,7 +47,7 @@ def plot_clustering(train_file, output_path):
         kproto = KPrototypes(n_clusters=num_clusters, init="Cao", n_init=10, n_jobs=-1)
         kproto.fit_predict(X_train, categorical=categorical_idx)
         cost.append(kproto.cost_)
-        
+
     # Plot the elbow curve
     plt.plot(K, cost, "bx-")
     plt.xlabel("No. of clusters")

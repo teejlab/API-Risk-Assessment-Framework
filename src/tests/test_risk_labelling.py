@@ -2,6 +2,7 @@ from utils.risk_labelling import classify_risk, create_risk_label
 import pandas as pd
 from pytest import raises
 
+
 def test_wrong_parameters():
     # Test if the function raises an error when the df is not a dataframe
     with raises(TypeError):

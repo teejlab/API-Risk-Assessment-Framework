@@ -113,7 +113,7 @@ def _pii_extraction_from_json(objs, type="pii", conf_threshold=0.5):
         return []
     if isinstance(objs, str):
         return _pii_extraction_from_text(objs, type, conf_threshold)
-    
+
     filtered_results = []
     # Check if the object is a list
     if isinstance(objs, list):
