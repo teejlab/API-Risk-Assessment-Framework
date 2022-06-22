@@ -1,5 +1,5 @@
 # all: book.html
-all: data/processed/df_predicted.xlxs
+all: book.html
 
 # Preprocessing the data	
 data/processed/preprocessed_train.xlsx data/processed/preprocessed_test.xlsx: data/raw/RiskClassification_Data_Endpoints_V4_Shared1.xlsx
@@ -22,8 +22,8 @@ data/processed/df_predicted.xlxs: data/processed/preprocessed_test.xlsx
 # 	jupyter-book build docs/report_book/ --builder pdfhtml
 
 # Generate report in HTML
-# book.html : book.pdf
-# 	jupyter-book build docs/report_book/
+book.html : data/processed/df_predicted.xlsx
+	jupyter-book build docs/report_book/
 
 clean:
 	rm -rf data/processed/*

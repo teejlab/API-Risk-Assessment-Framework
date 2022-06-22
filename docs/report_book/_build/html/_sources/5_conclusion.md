@@ -1,6 +1,6 @@
 # 5. Conclusion and Recommendation
 
-In this project, we set out to create a tool to quantify the risk of the endpoints of each API based on security and data sovereignty markers. To this end, the team has been successful in creating a model that is not only highly interpretable. More importantly, it scores highly in the acceptance criteria (Recall) - attaining a recall score of 0.99 for both the train and test set.
+In this project, we set out to create a tool to ***quantify the risk of the endpoints of each API based on security and data sovereignty markers***. To this end, the team has been successful in creating a model that is not only highly interpretable. More importantly, it scores highly in the acceptance criteria (Recall) - attaining a recall score of 0.99 for both the train and test set.
 
 Despite the team’s success, we decided to further investigate about the validity of the risk labels. To re-emphasise, API security is a completely novel field and thus there is no absolute or ground truth to their labels. As such, we attempted an unsupervised learning technique.
 
@@ -8,7 +8,7 @@ Despite the team’s success, we decided to further investigate about the validi
 
 Currently, risk labeling is subject to the capstone partner’s expertise. However, data can be clustered in many ways, and there exist a large body of algorithms designed to reveal underlying patterns.
 
-We have built a visual analytics tool using Factor analysis of mixed data (FAMD) and Tensorflow Embedding Projector that helps analyze the similarity between the data points. As seen in {ref}`Fig. 8 <pca_risk_label-fig>`, we have found that the data points were not distinct in the 3D plane, indicating that the risk labels might not be sufficiently reliable.  
+We have built a visual analytics tool using Factor analysis of mixed data (FAMD) and Tensorflow Embedding Projector {cite}`daniel_smilkov` that helps analyze the similarity between the data points. As seen in {ref}`Fig. 8 <pca_risk_label-fig>`, we have found that the data points were not distinct in the 3D plane, indicating that the risk labels might not be sufficiently reliable.  
 
 ```{figure} images/pca_risk_label.jpg
 ---
