@@ -1,6 +1,11 @@
-# Proposal Report
+# Final Report
 
 ## An Analytical Framework for Quantifying API Risks
+
+### Capstone Partners: 
+TeejLab and UBC Saunder
+### Mentor(s): 
+Gittu George and Gene Lee
 
 ### Contributors
 
