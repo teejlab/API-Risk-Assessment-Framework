@@ -21,6 +21,10 @@ def classify_risk(row, rule_df):
         The risk label
 
     """
+    if not isinstance(row, pd.Series):
+        raise TypeError("`type` should be a valid Pandas Series")
+    if not isinstance(rule_df, pd.DataFrame):
+        raise TypeError("`rule_df` should be a pandas DataFrame")
     # remove api_endpoint_id from row series
     row = row.drop(labels=["api_endpoint_id"])
     # loop through each row in rule_df

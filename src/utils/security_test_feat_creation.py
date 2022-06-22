@@ -17,6 +17,9 @@ def security_test_feat_creation(df):
     transformed_df : pandas df
         A list containing the extracted PII.
     """
+    # Check if the df is valid
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("`df` should be a valid Pandas DataFrame")
     # SETTING-UP pre-processor variables
     # Define column types
     # make copy of column security_test_category

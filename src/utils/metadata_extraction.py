@@ -18,6 +18,10 @@ def extract_metadata(df):
         The dataframe with the metadata features
         
     '''
+    # Check if the df is valid
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("`df` should be a valid Pandas DataFrame")
+        
     # fill missing values with {}
     df["response_metadata"] = df["response_metadata"].fillna("{}")
     df["parameters"] = df["parameters"].fillna("{}")
