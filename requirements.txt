@@ -1,0 +1,9 @@
+altair==4.2.0
+altair-saver==0.5.0
+docopt==0.6.2
+ghp-import==2.1.0
+pyppeteer==1.0.2
+jupyter-book==0.12.3
+openpyxl==3.0.9
+pandas==1.4.2
+scikit-learn==1.0.2
