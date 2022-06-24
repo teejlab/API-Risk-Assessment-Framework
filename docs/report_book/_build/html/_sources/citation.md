@@ -1,5 +1,0 @@
-# Citation
-
-```{bibliography}
-:style: unsrt
-```
