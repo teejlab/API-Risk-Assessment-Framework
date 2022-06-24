@@ -55,11 +55,9 @@ conda activate api-risk-env
 ## Makefile
 (to be added by Son - including how to run code for each part i.e. rules, preprocessing, predict)
 A. To run all scripts (preprocessing, create_model, and predict):
-```
-```
+
 B. To run ...
-```
-```
+
 C. 
 D. ...
 
