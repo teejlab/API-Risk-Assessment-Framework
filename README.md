@@ -119,7 +119,27 @@ To predict:
     
 ```
 python src/predict.py --model_path=<path_to_model> --predict_path=<path_to_predict_file> --save_path=<path_to_save>
-``` 
+```
+
+Generate the proposal:
+
+```
+jupyter-book build docs/proposal_book/ --builder pdfhtml
+```
+
+Generate the final report:
+    
+```
+jupyter-book build docs/report_book/ --builder pdfhtml
+```
+
+Builf Github Pages:
+Navigate to the `docs/report_book/` folder and run the following command:
+
+```
+```
+ghp-import -n -p -f _build/html
+```
 
 
 ## Contributing
