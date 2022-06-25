@@ -69,18 +69,58 @@ conda activate api-risk-env
 ​
 
 ## Makefile
+Makefile is a script that automates the process of training and testing the models with predefined parameters, in addition to generating the final report.
 
-(to be added by Son - including how to run code for each part i.e. rules, preprocessing, predict)
-A. To run all scripts (preprocessing, create_model, and predict):
+To run all scripts:
 
 ```
+make all
 ```
 
-B. To run ...
+To run preprocessing only:
+
+```
+make <path_to_preprocessing_file>
+```
+
+To create the model only:
+
+```
+make <path_to_model>
+```
+
+To predict only:
+
+```
+make <path_to_predict_file>
+```
+
+To generate the report only:
+
+```
+make <path_to_report>
+```
+
+## Alternatively, you can run the scripts individually:
+
+To run preprocessing:
+    
+```
+python src/preprocessing.py --endpoint_path=<path_to_endpoint> --country_path=<path_to_country>--risk_rules_path=<path_to_risk_rules> --output_path=<path_to_output> --split_data=<bool>
+```
 ​
-C.
-D. ...
-​
+To create the model:
+    
+```
+python src/create_model.py --train_path=<path_to_train_file> --save_path=<path_to_save_file>
+```
+
+To predict:
+    
+```
+python src/predict.py --model_path=<path_to_model> --predict_path=<path_to_predict_file> --save_path=<path_to_save>
+``` 
+
 
 ## Contributing
 
