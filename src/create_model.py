@@ -2,14 +2,14 @@
 This script trains ML model on the pre-processed train data.
 The train files must be named X_train.csv and y_train.csv
 
-Usage: create_model.py --train_path=<train_path> --save_path=<save_path>
+Usage: create_model.py --train_path=<train_path> --create_save_path=<create_save_path>
 
 Options:
---train_path=<train_path>            The path to the training csv files.
---save_path=<save_path>             The folder to save the model results to
+--train_path=<train_path>                         The path to the training csv files.
+--create_save_path=<create_save_path>             The folder to save the model results to
 
 Example:
-python src/create_model.py --train_path=data/processed/preprocessed_train.xlsx --save_path=data/model/
+python src/create_model.py --train_path=data/processed/preprocessed_train.xlsx --create_save_path=models/
 """
 
 from docopt import docopt
@@ -73,17 +73,21 @@ def get_features_selection(X_train, y_train):
     rfe_fs = pipe_dt_rfe.named_steps["rfe"].support_
     rfe_selected_feats = X_train.columns[rfe_fs]
     feature_list = list(rfe_selected_feats)
+    # save the selected features
+    with open(f"data/processed/features.txt", "w") as f:
+        for item in feature_list:
+            f.write("%s\n" % item)
     return feature_list
 
 
-def main(train_path, save_path):
+def main(train_path, create_save_path):
     '''
     This function trains the model and saves it to the given path.
     Parameters
     -----------
     train_path : string
         The path to the training csv files.
-    save_path : string
+    create_save_path : string
         The path to the save the model.
 
     Returns
@@ -91,7 +95,7 @@ def main(train_path, save_path):
     None
     '''
     print('Training model...')
-    path = Path(save_path)
+    path = Path(create_save_path)
     path.mkdir(parents=True, exist_ok=True)
 
     #############
@@ -115,9 +119,9 @@ def main(train_path, save_path):
     pipe_lr_tuned.fit(X_select, y_train)
 
     # Save the model
-    dump(pipe_lr_tuned, f"{path}/{path.name}.joblib")
-    print(f'Model saved to {path}/{path.name}.joblib')
+    dump(pipe_lr_tuned, f"{path}/model.joblib")
+    print(f'Model saved to {path}/model.joblib')
 
 
 if __name__ == "__main__":
-    main(opt["--train_path"], opt["--save_path"])
+    main(opt["--train_path"], opt["--create_save_path"])
