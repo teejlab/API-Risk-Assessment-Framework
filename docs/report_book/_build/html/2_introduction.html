@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3. Data Science Techniques" href="3_ds_techniques.html" />
+    <link rel="next" title="3. Data Science Methods" href="3_ds_methods.html" />
     <link rel="prev" title="1. Executive Summary" href="1_summary.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -89,7 +89,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Proposal Report
+   Final Report
   </a>
  </li>
 </ul>
@@ -105,18 +105,28 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3_ds_techniques.html">
-   3. Data Science Techniques
+  <a class="reference internal" href="3_ds_methods.html">
+   3. Data Science Methods
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="4_timeline.html">
-   4. Timeline
+  <a class="reference internal" href="4_data_product.html">
+   4. Data Product and Results
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="5_conclusion.html">
+   5. Conclusion and Recommendation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="citation.html">
    Citation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix.html">
+   Appendix A: Feature Engineering
   </a>
  </li>
 </ul>
@@ -201,6 +211,24 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#capstone-partners-needs">
+   2.1 Capstone Partner’s Needs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scope-of-project">
+   2.2 Scope of Project
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -213,6 +241,24 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#capstone-partners-needs">
+   2.1 Capstone Partner’s Needs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scope-of-project">
+   2.2 Scope of Project
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -221,8 +267,14 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
 <h1>2. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>APIs have been present for decades and are set to grow exponentially, in part due to regulations (in public health or finance) or by industry interoperability (in telecommunications) or disruption (in media or retail) <span id="id1"><sup><a class="reference internal" href="citation.html#id2" title="Tiffany Xingyu Wang and Matt McLarty. Apis aren't just for tech companies. Apr 2021. URL: https://hbr.org/2021/04/apis-arent-just-for-tech-companies.">2</a></sup></span>. As a cybersecurity company focused on API management at a global scale, TeejLab aims to tackle this key industry challenge of <em><strong>quantifying business risk at the API level</strong></em>. A manual inspection or a rules-based approach is insufficient to accurately capture various aspects of risk, such as <em>security, legal, similarity, and data sovereignty</em>. In addition to those listed previously, the legal aspect is related to the level of protection for users for data use and distribution. Finally, similarity refers to how much user data APIs in the same category are requesting, where one that is requesting for too much data is deemed as less secure.</p>
-<p>Based on the dataset provided and time limitations, our team has narrowed the scope to focus on creating a machine learning pipeline to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. Our final data product that we will present to TeejLab is a well-annotated python script for each stage - (1) data pre-processing and feature engineering, and (2) machine learning. As this is an unchartered field of research, our team also aims to create a framework for API risk assessment.</p>
+<div class="section" id="capstone-partners-needs">
+<h2>2.1 Capstone Partner’s Needs<a class="headerlink" href="#capstone-partners-needs" title="Permalink to this headline">¶</a></h2>
+<p>APIs have been present for decades and are set to grow exponentially, in part due to regulations (in public health or finance) or by industry interoperability (in telecommunications) or disruption (in media or retail)  <span id="id1"><sup><a class="reference internal" href="citation.html#id2" title="Tiffany Xingyu Wang and Matt McLarty. Apis aren't just for tech companies. Apr 2021. URL: https://hbr.org/2021/04/apis-arent-just-for-tech-companies.">2</a></sup></span>. As a cybersecurity company focused on API management at a global scale, TeejLab aims to tackle this key industry challenge of <em><strong>quantifying business risk at the API level</strong></em>. A manual inspection or a rules-based approach is insufficient to accurately capture various aspects of risk, such as <em>security, legal, similarity, and data sovereignty</em>. It is time and labour intensive to inspect every feature and assign a risk label to an API endpoint, let alone quantities of API endpoint in the range of thousands or millions. This process is also static, and would require constant revision to the rules as domain knowledge increases. In addition to those listed previously, the legal aspect is related to the level of protection for users for data use and distribution. <em>Similarity aspect</em> refers to how much user data APIs in the same category are requesting, where one that is requesting for too much data is deemed as less secure.</p>
+</div>
+<div class="section" id="scope-of-project">
+<h2>2.2 Scope of Project<a class="headerlink" href="#scope-of-project" title="Permalink to this headline">¶</a></h2>
+<p>Based on the dataset provided and time limitation, our team has narrowed the scope to focus on creating a machine learning pipeline to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. More specifically, our project aims to create a well-annotated python script for each stage - (1) data pre-processing and feature engineering, and (2) machine learning.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -257,10 +309,10 @@ const thebe_selector_output = ".output, .cell_output"
             <p class="prev-next-title">1. Executive Summary</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="3_ds_techniques.html" title="next page">
+    <a class='right-next' id="next-link" href="3_ds_methods.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">3. Data Science Techniques</p>
+        <p class="prev-next-title">3. Data Science Methods</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

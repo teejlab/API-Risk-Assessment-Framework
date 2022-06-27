@@ -50,7 +50,7 @@ From the 17 variables provided to us by TeejLab, most of the rows were categoric
 We attempted the following algorithms:
 - Logistic Regression
 - Tree-based Models: Decision Tree, Random Forest, XGBoost, CatBoost
-- K-Nearest Neighbors (KNN) and Support Vector Machines (SVM)
+- K-Nearest Neighbors (KNN) and Support Vector Machines (SVM).
 
 The process of testing each algorithm can be found in these two notebooks: (1) [Logistic Regression, KNN, SVM](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/notebooks/ml/1_logisticregression_knn_svn.ipynb) and (2) [Tree-based Models](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/notebooks/ml/2_treebasedmodels.ipynb).
 

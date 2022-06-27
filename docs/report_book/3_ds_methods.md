@@ -47,7 +47,7 @@ We identified two key issues after performing EDA. The first was insufficient da
 
 ```{figure} images/risk_label.jpg
 ---
-height: 150px
+height: 100px
 name: risk_label-fig
 ---
 Histogram of the Risk Label highlighting severe class imbalance
@@ -77,7 +77,7 @@ Hence, we used the `imblearn` package for ***Oversampling***. It was a technique
 
 ```{figure} images/oversampling.jpg
 ---
-height: 150px
+height: 100px
 name: oversampling-fig
 ---
 Transformation of imbalanced training data set to a balanced one
