@@ -42,7 +42,7 @@ The dataset provided by TeejLab contains around 2,000 observations of Hypertext 
 
 ## 3.2 Summary of the Exploratory Data Analysis (EDA)
 
-We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See {ref}`Fig. 1 <risk_label-fig>` below). This will result in the training model reading too much into the four instances that are labelled as high risk. The training model will remember the patterns. To tackle this, we used Synthetic Minority Oversampling Technique (SMOTE) to generate more new samples.
+We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See {ref}`Fig. 1 <risk_label-fig>` below). This will result in the training model reading too much into the four instances that are labeled as high risk. The training model will remember the patterns. This will be described in further detail in [Section 3.3.](#section_3_3)
 
 
 ```{figure} images/risk_label.jpg
@@ -63,7 +63,7 @@ name: metadata_field_counts-fig
 Histogram of Metadata Fields Count, a feature extracted from the text column “API response”
 ```
 
-## 3.3  Data Augmentation
+## 3.3  Data Augmentation<a name="section_3_3"></a>
 
 A major challenge was the imbalanced nature of data, particularly with regard to the class of interest (High Risk). We had only four observations of the High Risk API class in our training set which was insufficient for the models to learn how to predict this class effectively. We attempted these approaches:
 
