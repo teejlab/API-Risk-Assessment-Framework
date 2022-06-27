@@ -59,7 +59,7 @@ Ultimately, we chose to use Logistic Regression as it offered us high interpreta
 In addition to selecting the models, we also reduced the dimensionality of the features. From 53 features (due to feature engineering), we were able to reduce the number of features required to eight. The team attempted several algorithms, namely
 - Recursive Feature Elimination (RFE)
 - Recursive Feature Elimination with Cross-validation (RFECV)
-- SelectFromModel().
+- SelectFromModel()
 
 RFE is a backward selection method which recursively considers a smaller feature set, RFECV works similarly but eliminates features based on validation scores, while SelectFromModel selects the relevant features based on feature importance. We ultimately chose RFE as it was the most consistent and resulted in the greatest dimensionality reduction from 53 to eight. The process of testing each algorithm can be found in this [notebook](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/notebooks/ml/3_feature_selection.ipynb).
 
