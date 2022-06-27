@@ -2,7 +2,7 @@
 
 ## 3.1 Available Data
 
-The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by *TeejLab Services* to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.
+The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by *TeejLab Services* to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 18 features, four of which are to identify the API, nine are categorical variables, four are text variables, one is binary and the target is an ordinal variable.
 
 ```{table} : The statistical summary of the dataset
 :name: table-1
@@ -98,7 +98,7 @@ It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
 
 ## 3.5 Feature Engineering<a name="section_3_5"></a>
 
-As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
+As mentioned above, the dataset consists of 18 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
 
 PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises {cite}`learning_center_2019`. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, *PresidioAnalyzer* was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using *PresidioAnalyzer* on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint ({ref}`Fig. 3 <metadata_field_counts-fig>`).
 

@@ -2,7 +2,7 @@
 
 ## 3.1 Available Data
 
-The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by *TeejLab Services* to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.
+The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by *TeejLab Services* to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 18 features, four of which are to identify the API, nine are categorical variables, four are text variables, one is binary and the target is an ordinal variable.
 
 ```{table} : The statistical summary of the dataset
 :name: table-1
@@ -19,25 +19,27 @@ The dataset provided by TeejLab contains around 2,000 observations of Hypertext 
 
 ```{table} : The detailed description of the columns in the dataset
 :name: table-2
-| **Column**                 | **Type**        | **Description**                                            |
-|------------------------|-------------|--------------------------------------------------------|
-| api_endpoint_id        | Categorical | Unique id of API Endpoint                              |
-| api_id                 | Categorical | Unique id of API Service                               |
-| api_vendor_id          | Categorical | Unique id of API Vendor                                |
-| api_vendor             | Categorical | Name of API Vendor                                     |
-| api                    | Categorical | Name of API                                            |
-| category               | Categorical | Category of API                                        |
-| usage_base             | Categorical | Type of the pricing model of API                       |
-| sample_response        | Text        | Sample HTTP Response in JSON format                    |
-| authentication         | Categorical | Authentication method used (e.g. OAuth2.0, Path, None) |
-| security_test_category | Categorical | Category of security vulnerability test                |
-| security_test_result   | Binary      | Result of security vulnerability test                  |
-| server_location        | Categorical | Location of server host                                |
-| hosting_isp            | Categorical | Internet service provider (ISP) that runs  website     |
-| server_name            | Categorical | Name and the version of web server used in API         |
-| response_metadata      | Categorical | API Response Header                                    |
-| hosting_city           | Text        | Location of web hosting                                |
-| Risk label             | Ordinal     | Severity level of risk (target label)                  |
+| **No.** | **Column**                 | **Type**        | **Description**                                            |
+|-----|------------------------|-------------|--------------------------------------------------------|
+| 1 | api_endpoint_id        | Categorical | Unique id of API Endpoint                              |
+| 2 | api_id                 | Categorical | Unique id of API Service                               |
+| 3 | api_vendor_id          | Categorical | Unique id of API Vendor                                |
+| 4 | request_id             | Categorical | Unique id of API request                               |
+| 5 | method                 | Categorical | Category of HTTP method request                        |
+| 6 | category               | Categorical | Category of API                                        |
+| 7 | parameters             | Text        | Variable parts of a resource that determines the type of action you want to take on the resource                                        |
+| 8 | usage_base             | Categorical | Type of the pricing model of API                       |
+| 9 | sample_response        | Text        | Sample HTTP Response in JSON format                    |
+| 10 | authentication         | Categorical | Authentication method used (e.g. OAuth2.0, Path, None) |
+| 11 | tagset         | Text | Keys of sample response |
+| 12 | security_test_category | Categorical | Category of security vulnerability test                |
+| 13 | security_test_result   | Binary      | Result of security vulnerability test                  |
+| 14 | server_location        | Categorical | Location of server host                                |
+| 15 | hosting_isp            | Categorical | Internet service provider (ISP) that runs  website     |
+| 16 | server_name            | Categorical | Name and the version of web server used in API         |
+| 17 | response_metadata      | Categorical | API Response Header                                    |
+| 18 | hosting_city           | Text        | Location of web hosting                                |
+| 19 | Risk label             | Ordinal     | Severity level of risk (target label)                  |
 ```
 
 ## 3.2 Summary of the Exploratory Data Analysis (EDA)
@@ -96,7 +98,7 @@ It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
 
 ## 3.5 Feature Engineering<a name="section_3_5"></a>
 
-As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
+As mentioned above, the dataset consists of 18 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
 
 PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises {cite}`learning_center_2019`. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, *PresidioAnalyzer* was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using *PresidioAnalyzer* on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint ({ref}`Fig. 3 <metadata_field_counts-fig>`).
 

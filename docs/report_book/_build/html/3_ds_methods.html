@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Data Science Methods &#8212; API Risks Proposal Report</title>
+    <title>3. Data Science Methods &#8212; API Risks Final Report</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -78,7 +78,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <h1 class="site-logo" id="site-title">API Risks Proposal Report</h1>
+      <h1 class="site-logo" id="site-title">API Risks Final Report</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -317,7 +317,7 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>3. Data Science Methods<a class="headerlink" href="#data-science-methods" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="available-data">
 <h2>3.1 Available Data<a class="headerlink" href="#available-data" title="Permalink to this headline">¶</a></h2>
-<p>The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by <em>TeejLab Services</em> to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in <a class="reference internal" href="#table-1"><span class="std std-ref">Table 1</span></a> and the detailed description of the dataset is introduced in <a class="reference internal" href="#table-2"><span class="std std-ref">Table 2</span></a>. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.</p>
+<p>The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by <em>TeejLab Services</em> to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in <a class="reference internal" href="#table-1"><span class="std std-ref">Table 1</span></a> and the detailed description of the dataset is introduced in <a class="reference internal" href="#table-2"><span class="std std-ref">Table 2</span></a>. There are 18 features, four of which are to identify the API, nine are categorical variables, four are text variables, one is binary and the target is an ordinal variable.</p>
 <table class="colwidths-auto table" id="table-1">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text">: The statistical summary of the dataset</span><a class="headerlink" href="#table-1" title="Permalink to this table">¶</a></caption>
 <thead>
@@ -344,77 +344,105 @@ const thebe_selector_output = ".output, .cell_output"
 <table class="colwidths-auto table" id="table-2">
 <caption><span class="caption-number">Table 2 </span><span class="caption-text">: The detailed description of the columns in the dataset</span><a class="headerlink" href="#table-2" title="Permalink to this table">¶</a></caption>
 <thead>
-<tr class="row-odd"><th class="head"><p><strong>Column</strong></p></th>
+<tr class="row-odd"><th class="head"><p><strong>No.</strong></p></th>
+<th class="head"><p><strong>Column</strong></p></th>
 <th class="head"><p><strong>Type</strong></p></th>
 <th class="head"><p><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>api_endpoint_id</p></td>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>api_endpoint_id</p></td>
 <td><p>Categorical</p></td>
 <td><p>Unique id of API Endpoint</p></td>
 </tr>
-<tr class="row-odd"><td><p>api_id</p></td>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>api_id</p></td>
 <td><p>Categorical</p></td>
 <td><p>Unique id of API Service</p></td>
 </tr>
-<tr class="row-even"><td><p>api_vendor_id</p></td>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>api_vendor_id</p></td>
 <td><p>Categorical</p></td>
 <td><p>Unique id of API Vendor</p></td>
 </tr>
-<tr class="row-odd"><td><p>api_vendor</p></td>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>request_id</p></td>
 <td><p>Categorical</p></td>
-<td><p>Name of API Vendor</p></td>
+<td><p>Unique id of API request</p></td>
 </tr>
-<tr class="row-even"><td><p>api</p></td>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>method</p></td>
 <td><p>Categorical</p></td>
-<td><p>Name of API</p></td>
+<td><p>Category of HTTP method request</p></td>
 </tr>
-<tr class="row-odd"><td><p>category</p></td>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>category</p></td>
 <td><p>Categorical</p></td>
 <td><p>Category of API</p></td>
 </tr>
-<tr class="row-even"><td><p>usage_base</p></td>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>parameters</p></td>
+<td><p>Text</p></td>
+<td><p>Variable parts of a resource that determines the type of action you want to take on the resource</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>usage_base</p></td>
 <td><p>Categorical</p></td>
 <td><p>Type of the pricing model of API</p></td>
 </tr>
-<tr class="row-odd"><td><p>sample_response</p></td>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>sample_response</p></td>
 <td><p>Text</p></td>
 <td><p>Sample HTTP Response in JSON format</p></td>
 </tr>
-<tr class="row-even"><td><p>authentication</p></td>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>authentication</p></td>
 <td><p>Categorical</p></td>
 <td><p>Authentication method used (e.g. OAuth2.0, Path, None)</p></td>
 </tr>
-<tr class="row-odd"><td><p>security_test_category</p></td>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>tagset</p></td>
+<td><p>Text</p></td>
+<td><p>Keys of sample response</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>security_test_category</p></td>
 <td><p>Categorical</p></td>
 <td><p>Category of security vulnerability test</p></td>
 </tr>
-<tr class="row-even"><td><p>security_test_result</p></td>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>security_test_result</p></td>
 <td><p>Binary</p></td>
 <td><p>Result of security vulnerability test</p></td>
 </tr>
-<tr class="row-odd"><td><p>server_location</p></td>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>server_location</p></td>
 <td><p>Categorical</p></td>
 <td><p>Location of server host</p></td>
 </tr>
-<tr class="row-even"><td><p>hosting_isp</p></td>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>hosting_isp</p></td>
 <td><p>Categorical</p></td>
 <td><p>Internet service provider (ISP) that runs  website</p></td>
 </tr>
-<tr class="row-odd"><td><p>server_name</p></td>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>server_name</p></td>
 <td><p>Categorical</p></td>
 <td><p>Name and the version of web server used in API</p></td>
 </tr>
-<tr class="row-even"><td><p>response_metadata</p></td>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>response_metadata</p></td>
 <td><p>Categorical</p></td>
 <td><p>API Response Header</p></td>
 </tr>
-<tr class="row-odd"><td><p>hosting_city</p></td>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>hosting_city</p></td>
 <td><p>Text</p></td>
 <td><p>Location of web hosting</p></td>
 </tr>
-<tr class="row-even"><td><p>Risk label</p></td>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>Risk label</p></td>
 <td><p>Ordinal</p></td>
 <td><p>Severity level of risk (target label)</p></td>
 </tr>
@@ -457,7 +485,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="feature-engineering-a-name-section-3-5-a">
 <h2>3.5 Feature Engineering<a name="section_3_5"></a><a class="headerlink" href="#feature-engineering-a-name-section-3-5-a" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.</p>
+<p>As mentioned above, the dataset consists of 18 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.</p>
 <p>PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises <span id="id2"><sup><a class="reference internal" href="citation.html#id4" title="What is personally identifiable information: pii data security: imperva. Dec 2019. URL: https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/.">3</a></sup></span>. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, <em>PresidioAnalyzer</em> was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using <em>PresidioAnalyzer</em> on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint (<a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 3</span></a>).</p>
 <div class="figure align-default" id="pii-fii-fig">
 <a class="reference internal image-reference" href="_images/pii_fii.jpg"><img alt="_images/pii_fii.jpg" src="_images/pii_fii.jpg" style="height: 600px;" /></a>

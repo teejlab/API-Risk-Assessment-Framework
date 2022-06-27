@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API Risks Proposal Report</title>
+    <title>Final Report &#8212; API Risks Final Report</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Executive Summary" href="1_summary.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -69,8 +70,73 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-2 bd-sidebar site-navigation show single-page" id="site-navigation">
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">API Risks Final Report</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
+   Final Report
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_summary.html">
+   1. Executive Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_introduction.html">
+   2. Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3_ds_methods.html">
+   3. Data Science Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_data_product.html">
+   4. Data Product and Results
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="5_conclusion.html">
+   5. Conclusion and Recommendation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="citation.html">
+   Citation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix.html">
+   Appendix A: Feature Engineering
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -85,7 +151,33 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
         <div class="col pl-md-4 topbar-main">
             
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
             
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
             <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -123,40 +215,27 @@ const thebe_selector_output = ".output, .cell_output"
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-1_summary">
-   1. Executive Summary
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-analytical-framework-for-quantifying-api-risks">
+   An Analytical Framework for Quantifying API Risks
   </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-2_introduction">
-   2. Introduction
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-3_ds_methods">
-   3. Data Science Methods
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-4_data_product">
-   4. Data Product and Results
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-5_conclusion">
-   5. Conclusion and Recommendation
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-citation">
-   Citation
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-appendix">
-   Appendix A: Feature Engineering
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#capstone-partners">
+     Capstone Partners:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mentor-s">
+     Mentor(s):
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributors">
+     Contributors
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -178,40 +257,27 @@ const thebe_selector_output = ".output, .cell_output"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-1_summary">
-   1. Executive Summary
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-analytical-framework-for-quantifying-api-risks">
+   An Analytical Framework for Quantifying API Risks
   </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-2_introduction">
-   2. Introduction
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-3_ds_methods">
-   3. Data Science Methods
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-4_data_product">
-   4. Data Product and Results
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-5_conclusion">
-   5. Conclusion and Recommendation
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-citation">
-   Citation
-  </a>
- </li>
- <li class="toctree-l1 toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="intro.html#document-appendix">
-   Appendix A: Feature Engineering
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#capstone-partners">
+     Capstone Partners:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mentor-s">
+     Mentor(s):
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributors">
+     Contributors
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -245,359 +311,6 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="toctree-wrapper compound">
-<span id="document-1_summary"></span><div class="tex2jax_ignore mathjax_ignore section" id="executive-summary">
-<h2>1. Executive Summary<a class="headerlink" href="#executive-summary" title="Permalink to this headline">¶</a></h2>
-<p>Application Programming Interface (API) is a set of definitions and protocols for building and integrating application software <span id="id1"><sup><a class="reference internal" href="intro.html#id3" title="What is an api? Oct 2017. URL: https://www.redhat.com/en/topics/api/what-are-application-programming-interfaces.">1</a></sup></span>. Due to the heightened focus on data privacy and security, there is an increased risk of using APIs. TeejLab is a research-driven cybersecurity company, aimed at helping organisations with the evolving challenges of the API economy.</p>
-<p>Presently, risk is quantified via manual inspection or a rules-based approach. This method is only suitable if we are dealing with few API endpoints and with few features to consider. However, it will prove to be insurmountable and laborious as we scale up the endpoints by several fold, and as we introduce more features - requiring more time and labour to manually label each endpoint. Therefore, we aim to create a machine learning model to quantify risk at each API endpoint based on security and data sovereignty markers.</p>
-<p>More tangibly, we created a data pipeline for both preprocessing and machine learning, and documentation on use of these scripts. This will allow Teejlab to iterate on the present code, add additional security aspects into the machine learning pipeline, and aid in their long-term goal of incorporating an “endpoint security” column on their platform to provide their clientele an additional metric on the API.</p>
-</div>
-<span id="document-2_introduction"></span><div class="tex2jax_ignore mathjax_ignore section" id="introduction">
-<h2>2. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="capstone-partners-needs">
-<h3>2.1 Capstone Partner’s Needs<a class="headerlink" href="#capstone-partners-needs" title="Permalink to this headline">¶</a></h3>
-<p>APIs have been present for decades and are set to grow exponentially, in part due to regulations (in public health or finance) or by industry interoperability (in telecommunications) or disruption (in media or retail)  <span id="id1"><sup><a class="reference internal" href="intro.html#id2" title="Tiffany Xingyu Wang and Matt McLarty. Apis aren't just for tech companies. Apr 2021. URL: https://hbr.org/2021/04/apis-arent-just-for-tech-companies.">2</a></sup></span>. As a cybersecurity company focused on API management at a global scale, TeejLab aims to tackle this key industry challenge of <em><strong>quantifying business risk at the API level</strong></em>. A manual inspection or a rules-based approach is insufficient to accurately capture various aspects of risk, such as <em>security, legal, similarity, and data sovereignty</em>. Security refers to how vulnerable the endpoint is to attack, such as the exposure of personal identifiable information (PII) or financial identifiable information (FII), and how stringent the hosting countries’ bylaws are for privacy policy. <em>Legal aspect</em> is related to the level of protection for users for data use and distribution. <em>Similarity</em> refers to how much user data APIs in the same category are requesting, where one that is requesting for too much data is deemed as less secure. Finally, data sovereignty refers to governance of data, which is at risk if they fail certain security tests, such as injection attacks, or if the endpoints are accessible to users.</p>
-<p>It is time and labour intensive to inspect every feature and assign a risk label to an API endpoint, let alone quantities of API endpoint in the range of thousands or millions. This process is also static, and would require constant revision to the rules as domain knowledge increases.</p>
-</div>
-<div class="section" id="scope-of-project">
-<h3>2.2 Scope of Project<a class="headerlink" href="#scope-of-project" title="Permalink to this headline">¶</a></h3>
-<p>Based on the dataset provided and time limitation, our team has narrowed the scope to focus on creating a machine learning pipeline to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. More specifically, our project aims to create a well-annotated python script for each stage - (1) data pre-processing and feature engineering, and (2) machine learning.</p>
-</div>
-</div>
-<span id="document-3_ds_methods"></span><div class="tex2jax_ignore mathjax_ignore section" id="data-science-methods">
-<h2>3. Data Science Methods<a class="headerlink" href="#data-science-methods" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="available-data">
-<h3>3.1 Available Data<a class="headerlink" href="#available-data" title="Permalink to this headline">¶</a></h3>
-<p>The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by <em>TeejLab Services</em> to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in <a class="reference internal" href="#table-1"><span class="std std-ref">Table 1</span></a> and the detailed description of the dataset is introduced in <a class="reference internal" href="#table-2"><span class="std std-ref">Table 2</span></a>. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.</p>
-<table class="colwidths-auto docutils align-default" id="table-1">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">: The statistical summary of the dataset</span><a class="headerlink" href="#table-1" title="Permalink to this table">¶</a></caption>
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>Label</strong></p></th>
-<th class="head"><p><strong>Number of the samples</strong></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>High</p></td>
-<td><p>4</p></td>
-</tr>
-<tr class="row-odd"><td><p>Medium</p></td>
-<td><p>876</p></td>
-</tr>
-<tr class="row-even"><td><p>Low</p></td>
-<td><p>961</p></td>
-</tr>
-<tr class="row-odd"><td><p>Total</p></td>
-<td><p>1,841</p></td>
-</tr>
-</tbody>
-</table>
-<p> </p>
-<table class="colwidths-auto docutils align-default" id="table-2">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">: The detailed description of the columns in the dataset</span><a class="headerlink" href="#table-2" title="Permalink to this table">¶</a></caption>
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>Column</strong></p></th>
-<th class="head"><p><strong>Type</strong></p></th>
-<th class="head"><p><strong>Description</strong></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>api_endpoint_id</p></td>
-<td><p>Categorical</p></td>
-<td><p>Unique id of API Endpoint</p></td>
-</tr>
-<tr class="row-odd"><td><p>api_id</p></td>
-<td><p>Categorical</p></td>
-<td><p>Unique id of API Service</p></td>
-</tr>
-<tr class="row-even"><td><p>api_vendor_id</p></td>
-<td><p>Categorical</p></td>
-<td><p>Unique id of API Vendor</p></td>
-</tr>
-<tr class="row-odd"><td><p>api_vendor</p></td>
-<td><p>Categorical</p></td>
-<td><p>Name of API Vendor</p></td>
-</tr>
-<tr class="row-even"><td><p>api</p></td>
-<td><p>Categorical</p></td>
-<td><p>Name of API</p></td>
-</tr>
-<tr class="row-odd"><td><p>category</p></td>
-<td><p>Categorical</p></td>
-<td><p>Category of API</p></td>
-</tr>
-<tr class="row-even"><td><p>usage_base</p></td>
-<td><p>Categorical</p></td>
-<td><p>Type of the pricing model of API</p></td>
-</tr>
-<tr class="row-odd"><td><p>sample_response</p></td>
-<td><p>Text</p></td>
-<td><p>Sample HTTP Response in JSON format</p></td>
-</tr>
-<tr class="row-even"><td><p>authentication</p></td>
-<td><p>Categorical</p></td>
-<td><p>Authentication method used (e.g. OAuth2.0, Path, None)</p></td>
-</tr>
-<tr class="row-odd"><td><p>security_test_category</p></td>
-<td><p>Categorical</p></td>
-<td><p>Category of security vulnerability test</p></td>
-</tr>
-<tr class="row-even"><td><p>security_test_result</p></td>
-<td><p>Binary</p></td>
-<td><p>Result of security vulnerability test</p></td>
-</tr>
-<tr class="row-odd"><td><p>server_location</p></td>
-<td><p>Categorical</p></td>
-<td><p>Location of server host</p></td>
-</tr>
-<tr class="row-even"><td><p>hosting_isp</p></td>
-<td><p>Categorical</p></td>
-<td><p>Internet service provider (ISP) that runs  website</p></td>
-</tr>
-<tr class="row-odd"><td><p>server_name</p></td>
-<td><p>Categorical</p></td>
-<td><p>Name and the version of web server used in API</p></td>
-</tr>
-<tr class="row-even"><td><p>response_metadata</p></td>
-<td><p>Categorical</p></td>
-<td><p>API Response Header</p></td>
-</tr>
-<tr class="row-odd"><td><p>hosting_city</p></td>
-<td><p>Text</p></td>
-<td><p>Location of web hosting</p></td>
-</tr>
-<tr class="row-even"><td><p>Risk label</p></td>
-<td><p>Ordinal</p></td>
-<td><p>Severity level of risk (target label)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="summary-of-the-exploratory-data-analysis-eda">
-<h3>3.2 Summary of the Exploratory Data Analysis (EDA)<a class="headerlink" href="#summary-of-the-exploratory-data-analysis-eda" title="Permalink to this headline">¶</a></h3>
-<p>We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See <a class="reference internal" href="#risk-label-fig"><span class="std std-ref">Fig. 1</span></a> below). This will result in the training model reading too much into the four instances that are labeled as high risk. The training model will remember the patterns. This will be described in further detail in <a class="reference external" href="#section_3_3">Section 3.3.</a></p>
-<div class="figure align-default" id="risk-label-fig">
-<a class="reference internal image-reference" href="_images/risk_label.jpg"><img alt="_images/risk_label.jpg" src="_images/risk_label.jpg" style="height: 100px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Histogram of the Risk Label highlighting severe class imbalance</span><a class="headerlink" href="#risk-label-fig" title="Permalink to this image">¶</a></p>
-</div>
-<p>The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. This will be described in further detail in <a class="reference external" href="#section_3_5">Section 3.5.</a></p>
-<div class="figure align-default" id="metadata-field-counts-fig">
-<a class="reference internal image-reference" href="_images/metadata_field_counts.jpg"><img alt="_images/metadata_field_counts.jpg" src="_images/metadata_field_counts.jpg" style="height: 400px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Histogram of Metadata Fields Count, a feature extracted from the text column “API response”</span><a class="headerlink" href="#metadata-field-counts-fig" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="data-augmentation-a-name-section-3-3-a">
-<h3>3.3  Data Augmentation<a name="section_3_3"></a><a class="headerlink" href="#data-augmentation-a-name-section-3-3-a" title="Permalink to this headline">¶</a></h3>
-<p>A major challenge was the imbalanced nature of data, particularly with regard to the class of interest (High Risk). We had only four observations of the High Risk API class in our training set which was insufficient for the models to learn how to predict this class effectively. We attempted these approaches:</p>
-<ul class="simple">
-<li><p>Synthetic Data generation</p></li>
-<li><p>Bootstrapping</p></li>
-<li><p>Oversampling (SMOTE)</p></li>
-</ul>
-<p>For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.</p>
-<p>Hence, we used the <code class="docutils literal notranslate"><span class="pre">imblearn</span></code> package for <em><strong>Oversampling</strong></em>. It is a technique that generates new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (<a class="reference internal" href="#oversampling-fig"><span class="std std-ref">Fig. 2</span></a>).</p>
-<div class="figure align-default" id="oversampling-fig">
-<a class="reference internal image-reference" href="_images/oversampling.jpg"><img alt="_images/oversampling.jpg" src="_images/oversampling.jpg" style="height: 100px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Transformation of imbalanced training data set to a balanced one</span><a class="headerlink" href="#oversampling-fig" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="evaluation-metric-and-acceptance-criteria">
-<h3>3.4 Evaluation Metric and Acceptance Criteria<a class="headerlink" href="#evaluation-metric-and-acceptance-criteria" title="Permalink to this headline">¶</a></h3>
-<p>As per our discussion with TeejLab, we understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk.</p>
-<p>Thus, we selected <em><strong>Recall</strong></em> <a class="footnote-reference brackets" href="#footnote" id="id1">1</a> as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.</p>
-<p>It was agreed that <em><strong>Acceptance Criteria would be: Recall &gt;= 0.9.</strong></em></p>
-</div>
-<div class="section" id="feature-engineering-a-name-section-3-5-a">
-<h3>3.5 Feature Engineering<a name="section_3_5"></a><a class="headerlink" href="#feature-engineering-a-name-section-3-5-a" title="Permalink to this headline">¶</a></h3>
-<p>As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.</p>
-<p>PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises <span id="id2"><sup><a class="reference internal" href="intro.html#id4" title="What is personally identifiable information: pii data security: imperva. Dec 2019. URL: https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/.">3</a></sup></span>. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, <em>PresidioAnalyzer</em> was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using <em>PresidioAnalyzer</em> on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint (<a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 3</span></a>).</p>
-<div class="figure align-default" id="pii-fii-fig">
-<a class="reference internal image-reference" href="_images/pii_fii.jpg"><img alt="_images/pii_fii.jpg" src="_images/pii_fii.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Extraction of PII and FII from API Response to create two new columns</span><a class="headerlink" href="#pii-fii-fig" title="Permalink to this image">¶</a></p>
-</div>
-<p>Second, we had to quantify the exposure of sensitive information. This sensitive information was present in two columns - “parameter” and “response_metadata”. These columns have a format similar to a python dictionary (key-value pairs). The former refers to request data while the latter refers to HTTP response headers.</p>
-<p>To quantify exposure, we counted the number of keys exposed per API endpoint (See <a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 4</span></a> below). In addition, there were specific security response keys that, if exposed, could lead to a security breach. As such, we extracted 12 security response keys, and created binary columns of whether each of these 12 keys were present or absent (bottom right of <a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 4</span></a>). See Appendix A for the list and description of the 12 keys.</p>
-<div class="figure align-default" id="count-keys-fig">
-<a class="reference internal image-reference" href="_images/count_keys.jpg"><img alt="_images/count_keys.jpg" src="_images/count_keys.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Extraction of exposure frequency in parameter and metadata response column</span><a class="headerlink" href="#count-keys-fig" title="Permalink to this image">¶</a></p>
-</div>
-<p>Third, we had to quantify the risk associated with the server location (country). Apart from ensuring high loading speed of the API endpoint if it is situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index <span id="id3"><sup><a class="reference internal" href="intro.html#id5" title="Network readiness index 2021. URL: https://networkreadinessindex.org/.">4</a></sup></span>. It is an annual index that quantifies the impact of digital technology.</p>
-<p>Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risks. Ideally, each endpoint would contain all five security tests (as seen in Fig 5) which TeejLab deems as crucial. However, it is unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed (<a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 5</span></a>).</p>
-<div class="figure align-default" id="imputation-fig">
-<a class="reference internal image-reference" href="_images/imputation.jpg"><img alt="_images/imputation.jpg" src="_images/imputation.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">An example of the processed data when the input is “Injection test failed”</span><a class="headerlink" href="#imputation-fig" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="supervised-learning">
-<h3>3.6 Supervised Learning<a class="headerlink" href="#supervised-learning" title="Permalink to this headline">¶</a></h3>
-<p>As the risk labels (target column) were provided by TeejLab, we approached this problem as a Supervised Machine Learning task. We attempted the following algorithms:</p>
-<ul class="simple">
-<li><p>Logistic Regression</p></li>
-<li><p>Tree-based Models: Decision Tree, Random Forest, XGBoost, CatBoost</p></li>
-<li><p>K-Nearest Neighbors (KNN) and Support Vector Machines (SVM)</p></li>
-</ul>
-<p>For each of these models, they were initially trained using the processed data set without any feature engineering. However, the maximum recall value was 0.75. Hyperparameter optimization did not lead to any significant improvement in performance of models. At this stage, Logistic Regression was selected for integration into the prediction pipeline. This is due to its high interpretability and its performance was on par with more complex models. (Refer to the unbolded section of <a class="reference internal" href="#evaluation-fig"><span class="std std-ref">Fig. 6</span></a> for comparison). Please refer to the <a class="reference external" href="https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md">technical report</a> for more details.</p>
-<p>To improve the scores, we reviewed the information being captured by the input features, transformed all existing columns and created new features as described in <a class="reference external" href="#section_3_5">Section 3.5.</a>. This resulted in an improvement in the model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.</p>
-<p>Due to feature engineering, the feature set increased from 17 to 53. Thus, we employed feature selection to reduce the dimensionality yet ensuring that our recall score remains high. We attempted the following algorithms:</p>
-<ul class="simple">
-<li><p>Recursive Feature Elimination (RFE)</p></li>
-<li><p>RFE with Cross Validation (RFECV)</p></li>
-<li><p>SelectFromModel()</p></li>
-</ul>
-<p>RFE is a backward selection method which recursively considers a smaller feature set, RFECV works similarly but eliminates features based on validation scores, while SelectFromModel selects the relevant features based on feature importance. We ultimately chose RFE as it was the most consistent and resulted in the greatest dimensionality reduction from 53 to eight. The improvement of recall score is provided in <a class="reference internal" href="#evaluation-fig"><span class="std std-ref">Fig. 6</span></a>.</p>
-<div class="figure align-default" id="evaluation-fig">
-<a class="reference internal image-reference" href="_images/evaluation.jpg"><img alt="_images/evaluation.jpg" src="_images/evaluation.jpg" style="height: 350px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Improvement of training and testing recall scores via Featuring Engineering and Feature Selection.</span><a class="headerlink" href="#evaluation-fig" title="Permalink to this image">¶</a></p>
-</div>
-<hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="footnote"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>It is the number of true positives divided by the number of true positives plus the number of false negatives”. In our case, it is the ratio of the number of cases correctly identified as High Risk compared to the sum of the cases correctly identified as High Risk and the number of cases incorrectly identified as High Risk when it is actually Low or Medium Risk.</p>
-</dd>
-</dl>
-</div>
-</div>
-<span id="document-4_data_product"></span><div class="tex2jax_ignore mathjax_ignore section" id="data-product-and-results">
-<h2>4. Data Product and Results<a class="headerlink" href="#data-product-and-results" title="Permalink to this headline">¶</a></h2>
-<p>The above is the method and technique employed to respond to the objective of the project: <em><strong>to quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. To ensure that TeejLab can use our result and deploy an additional column titled “Endpoint Security” on their platform, the following data product will be handed over.</p>
-<div class="section" id="data-pipeline">
-<h3>4.1 Data Pipeline<a class="headerlink" href="#data-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>The data product will include scripts for the <em><strong>preprocessing</strong></em> and <em><strong>machine learning</strong></em> pipeline. The process is documented with the expectation that Teejlab can reproduce the results with minimal guidance. The data product is accompanied with a Jupyter notebook for how to interpret the results. To elaborate further, the processed data sets will be the output of the preprocessing pipeline, while the model and prediction will be the output of the machine learning pipeline.</p>
-<p>This pipeline is modular, making it easy for TeejLab to add new scripts and commands as the domain knowledge evolves. Our pipeline also offers TeejLab the ability to schedule different aspects of the pipeline to be run distinctly or as a whole.</p>
-</div>
-<div class="section" id="auxiliary-script">
-<h3>4.2 Auxiliary Script<a class="headerlink" href="#auxiliary-script" title="Permalink to this headline">¶</a></h3>
-<p>In addition, we converted TeejLab’s rules into a script to automatically label the risk class of each data point at the request of Teejlab. The script will look for specific words or phrases within the API content and label it based on the rule. If or when the domain knowledge changes, TeejLab will be able to adjust the rules accordingly.</p>
-<p>As the target labels are defined by the rules in this auxiliary script, should there be new rules, the API risk label scripts will need to be rerun.</p>
-</div>
-<div class="section" id="improvements">
-<h3>4.3 Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
-<p>To be able to integrate with Teejlab’s existing software, the interface has to be user-friendly and easy to maintain. Also, it must be scalable for future growth. Due to time constraints and limited resources, this integration would need to be conducted by TeejLab’s team.</p>
-<p>There are other areas of improvement regarding our model. For instance, we can leverage machine learning tools to create a model or script that is able to be constantly updated and adjusted based on the new data. However, as this project is at the conception stage of this domain, our model will serve as a starting point for TeejLab to further enhance it as domain knowledge broadens.</p>
-</div>
-</div>
-<span id="document-5_conclusion"></span><div class="tex2jax_ignore mathjax_ignore section" id="conclusion-and-recommendation">
-<h2>5. Conclusion and Recommendation<a class="headerlink" href="#conclusion-and-recommendation" title="Permalink to this headline">¶</a></h2>
-<p>In this project, we set out to create a tool to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. To this end, the team has been successful in creating a model that is not only highly interpretable. More importantly, it scores highly in the acceptance criteria (Recall) - attaining a recall score of 0.99 for both the train and test set.</p>
-<p>Despite the team’s success, we decided to further investigate the validity of the risk labels. To re-emphasise, API security is a completely novel field and thus there is no absolute or ground truth to their labels. As such, we attempted an unsupervised learning technique.</p>
-<div class="section" id="unsupervised-learning">
-<h3>5.1 Unsupervised Learning<a class="headerlink" href="#unsupervised-learning" title="Permalink to this headline">¶</a></h3>
-<p>Currently, risk labeling is subject to the capstone partner’s expertise. However, data can be clustered in many ways, and there exist a large body of algorithms designed to reveal underlying patterns.</p>
-<p>We have built a visual analytics tool using Factor analysis of mixed data (FAMD) and Tensorflow Embedding Projector <span id="id1"><sup><a class="reference internal" href="intro.html#id6" title="Nikhil Thorat Daniel Smilkov. URL: https://projector.tensorflow.org/.">5</a></sup></span> that helps analyze the similarity between the data points. As seen in <a class="reference internal" href="#pca-risk-label-fig"><span class="std std-ref">Fig. 7</span></a>, we have found that the data points were not distinct in the 3D plane, indicating that the risk labels might not be sufficiently reliable.</p>
-<div class="figure align-default" id="pca-risk-label-fig">
-<a class="reference internal image-reference" href="_images/pca_risk_label.jpg"><img alt="_images/pca_risk_label.jpg" src="_images/pca_risk_label.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">PCA Visualization of Current Risk Label showing no distinct clusters between low and medium risk labels</span><a class="headerlink" href="#pca-risk-label-fig" title="Permalink to this image">¶</a></p>
-</div>
-<p>Using K-prototypes clustering algorithm, the team attempted to group similar data points according to their metadata. Visually, this algorithm provides more distinguishable clusters that are more equally distributed with clear boundaries (See <a class="reference internal" href="#pca-clustering-fig"><span class="std std-ref">Fig. 8</span></a> below). We can also inspect all the attributes of each data point and compare the similarity within the intra-cluster and inter-cluster boundary (See <a class="reference internal" href="#pca-metadata-fig"><span class="std std-ref">Fig. 9</span></a> below).</p>
-<div class="figure align-default" id="pca-clustering-fig">
-<a class="reference internal image-reference" href="_images/pca_clustering.jpg"><img alt="_images/pca_clustering.jpg" src="_images/pca_clustering.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">PCA Visualization of Cluster Label showing three distinct clusters along the vertical axis</span><a class="headerlink" href="#pca-clustering-fig" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-default" id="pca-metadata-fig">
-<a class="reference internal image-reference" href="_images/pca_metadata.jpg"><img alt="_images/pca_metadata.jpg" src="_images/pca_metadata.jpg" style="height: 600px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">PCA Visualization of Cluster Label with metadata</span><a class="headerlink" href="#pca-metadata-fig" title="Permalink to this image">¶</a></p>
-</div>
-<p>In conclusion, our team is highly satisfied with the data product that we will be handing over to TeejLab. While we are aware that some improvements are required before deployment, the team has been most proud of extracting hidden features, quantifying the value of categorical features, and highlighting areas of improvement where our partner has overlooked. This is ultimately a small step in the right direction in this uncharted domain.</p>
-</div>
-</div>
-<span id="document-citation"></span><div class="tex2jax_ignore mathjax_ignore section" id="citation">
-<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
-<div class="docutils container" id="id1">
-<dl class="citation">
-<dt class="label" id="id3"><span class="brackets">1</span></dt>
-<dd><p>What is an api? Oct 2017. URL: <a class="reference external" href="https://www.redhat.com/en/topics/api/what-are-application-programming-interfaces">https://www.redhat.com/en/topics/api/what-are-application-programming-interfaces</a>.</p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>Tiffany Xingyu Wang and Matt McLarty. Apis aren't just for tech companies. Apr 2021. URL: <a class="reference external" href="https://hbr.org/2021/04/apis-arent-just-for-tech-companies">https://hbr.org/2021/04/apis-arent-just-for-tech-companies</a>.</p>
-</dd>
-<dt class="label" id="id4"><span class="brackets">3</span></dt>
-<dd><p>What is personally identifiable information: pii data security: imperva. Dec 2019. URL: <a class="reference external" href="https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/">https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/</a>.</p>
-</dd>
-<dt class="label" id="id5"><span class="brackets">4</span></dt>
-<dd><p>Network readiness index 2021. URL: <a class="reference external" href="https://networkreadinessindex.org/">https://networkreadinessindex.org/</a>.</p>
-</dd>
-<dt class="label" id="id6"><span class="brackets">5</span></dt>
-<dd><p>Nikhil Thorat Daniel Smilkov. URL: <a class="reference external" href="https://projector.tensorflow.org/">https://projector.tensorflow.org/</a>.</p>
-</dd>
-</dl>
-</div>
-</div>
-<span id="document-appendix"></span><div class="tex2jax_ignore mathjax_ignore section" id="appendix-a-feature-engineering">
-<h2>Appendix A: Feature Engineering<a class="headerlink" href="#appendix-a-feature-engineering" title="Permalink to this headline">¶</a></h2>
-<p>Tags defined for PII and FII</p>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>Personally Identifiable Information (PII) tags</strong></p></th>
-<th class="head"><p><strong>Financially Identifiable Information (FII) tags</strong></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PERSON</p></td>
-<td><p>CREDIT_CARD</p></td>
-</tr>
-<tr class="row-odd"><td><p>LOCATION</p></td>
-<td><p>CRYPTO</p></td>
-</tr>
-<tr class="row-even"><td><p>NRP</p></td>
-<td><p>IBAN_CODE</p></td>
-</tr>
-<tr class="row-odd"><td><p>EMAIL_ADDRESS</p></td>
-<td><p>US_BANK_NUMBER</p></td>
-</tr>
-<tr class="row-even"><td><p>MEDICAL_LICENSE</p></td>
-<td><p>US_ITIN</p></td>
-</tr>
-<tr class="row-odd"><td><p>IP_ADDRESS</p></td>
-<td><p>US_SSN</p></td>
-</tr>
-</tbody>
-</table>
-<p>Description of High Risk Security Headers
-These descriptions are incorporated from Cheat Sheet (<a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html</a>)</p>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>High Risk Security Headers</strong></p></th>
-<th class="head"><p><strong>Description</strong></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>x-frame-options</p></td>
-<td><p>It can be used to indicate whether or not a browser should be allowed to render a page in a <code class="docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;iframe&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;embed&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.</p></td>
-</tr>
-<tr class="row-odd"><td><p>x-xss-protection</p></td>
-<td><p>It is a feature of Internet Explorer, Chrome, and Safari that stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.</p></td>
-</tr>
-<tr class="row-even"><td><p>strict-transport-security</p></td>
-<td><p>It lets a website tell browsers that it should only be accessed using HTTPS, instead of using HTTP.</p></td>
-</tr>
-<tr class="row-odd"><td><p>expect-ct</p></td>
-<td><p>It lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.</p></td>
-</tr>
-<tr class="row-even"><td><p>referrer-policy</p></td>
-<td><p>It controls how much referrer information (sent via the Referer header) should be included with requests.</p></td>
-</tr>
-<tr class="row-odd"><td><p>content-type</p></td>
-<td><p>It is used to indicate the original media type of the resource (before any content encoding is applied for sending).</p></td>
-</tr>
-<tr class="row-even"><td><p>set-cookie</p></td>
-<td><p>It is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.</p></td>
-</tr>
-<tr class="row-odd"><td><p>access-control-allow-origin</p></td>
-<td><p>It indicates whether the response can be shared with requesting code from the given origin.</p></td>
-</tr>
-<tr class="row-even"><td><p>server</p></td>
-<td><p>It describes the software used by the origin server that handled the request — that is, the server that generated the response.</p></td>
-</tr>
-<tr class="row-odd"><td><p>x-powered-by</p></td>
-<td><p>It describes the technologies used by the webserver. This information exposes the server to attackers. Using the information in this header, attackers can find vulnerabilities easier.</p></td>
-</tr>
-<tr class="row-even"><td><p>x-aspnet-version</p></td>
-<td><p>It provides information about the .NET version.</p></td>
-</tr>
-<tr class="row-odd"><td><p>x-ratelimit-limit</p></td>
-<td><p>The maximum number of requests available in the current time frame.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 
@@ -626,6 +339,13 @@ These descriptions are incorporated from Cheat Sheet (<a class="reference extern
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="1_summary.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">1. Executive Summary</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             
         </div>
