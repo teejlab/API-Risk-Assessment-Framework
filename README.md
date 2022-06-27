@@ -66,7 +66,18 @@ conda env create -f env.yml
 conda activate api-risk-env
 ```
 
-​
+## Jupyter Notebook
+
+To run the jupyter notebooks for analysis, please make sure you have install all the depenencies in the section [Environment set up](https://github.com/teejlab/API-Risk-Assessment-Framework#environment-set-up) and run the following command
+
+```
+jupyter lab
+```
+
+Once the Jupyter Server is running, go to http://localhost:8888/ and navigate to the directory `/notebooks`.
+
+
+
 
 ## Makefile
 Makefile is a script that automates the process of training and testing the models with predefined parameters, in addition to generating the final report.
