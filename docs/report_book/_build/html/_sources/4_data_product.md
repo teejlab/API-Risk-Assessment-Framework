@@ -12,7 +12,7 @@ This pipeline is modular, making it easy for TeejLab to add new scripts and comm
 
 In addition, we converted TeejLab’s rules into a script to automatically label the risk class of each data point at the request of Teejlab. The script will look for specific words or phrases within the API content and label it based on the rule. If or when the domain knowledge changes, TeejLab will be able to adjust the rules accordingly.
 
-With this said, both the preprocessing pipeline and the API risk label script will need to be rerun should a new training dataset be used.
+As the target labels are defined by the rules in this auxiliary script, should there be new rules, the API risk label scripts will need to be rerun.
 
 ## 4.3 Improvements
 
