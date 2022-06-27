@@ -146,7 +146,11 @@ jupyter-book build docs/report_book/ --builder pdfhtml
 
 Build Github Pages:
 
-Navigate to the `docs/report_book/` folder and run the following command:
+```
+jupyter-book build docs/report_book/
+```
+
+Then navigate to the `docs/report_book/` folder and run the following command:
 
 
 ```
