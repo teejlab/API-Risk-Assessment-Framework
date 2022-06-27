@@ -2,7 +2,7 @@
 
 ## 3.1 Available Data
 
-The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by TeejLab Services to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.
+The dataset provided by TeejLab contains around 2,000 observations of Hypertext Transfer Protocol (HTTP) Requests via third-party APIs. Each row of data represents the full HTTP request made by *TeejLab Services* to the third-party API endpoint, which are also annotated with the level of severity (i.e. High, Medium, Low). The overview of the datasets is shown in {ref}`Table 1 <table-1>` and the detailed description of the dataset is introduced in {ref}`Table 2 <table-2>`. There are 17 features, five of which are to identify the API, eight are categorical variables, three are text variables, one is binary and the target is an ordinal variable.
 
 ```{table} : The statistical summary of the dataset
 :name: table-1
@@ -47,7 +47,7 @@ We identified two key issues after performing EDA. The first was insufficient da
 
 ```{figure} images/risk_label.jpg
 ---
-height: 150px
+height: 100px
 name: risk_label-fig
 ---
 Histogram of the Risk Label highlighting severe class imbalance
@@ -73,21 +73,32 @@ A major challenge was the imbalanced nature of data, particularly with regard to
 
 For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.
 
-Hence, we used the `imblearn` package for Oversampling. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (Figure 3).
+Hence, we used the `imblearn` package for ***Oversampling***. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling ({ref}`Fig. 3 <oversampling-fig>`).
+
+```{figure} images/oversampling.jpg
+---
+height: 100px
+name: oversampling-fig
+---
+Transformation of imbalanced training data set to a balanced one
+```
+
 
 ## 3.4 Evaluation Metric and Acceptance Criteria
 
 As per our discussion with the partner, we understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk.
 
-Thus, we selected Recall as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
+Thus, we selected ***Recall*** [^footnote] as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
 
 It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
+
+[^footnote]: It is the number of true positives divided by the number of true positives plus the number of false negatives". In our case, it is the ratio of the number of cases correctly identified as High Risk compared to the sum of the cases correctly identified as High Risk and the number of cases incorrectly identified as High Risk when it is actually Low or Medium Risk.
 
 ## 3.5 Feature Engineering
 
 As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
 
-PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises (Impervia 2021). It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, PresidioAnalyzer was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using PresidioAnalyzer on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint ({ref}`Fig. 4 <metadata_field_counts-fig>`).
+PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises {cite}`learning_center_2019`. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, *PresidioAnalyzer* was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using *PresidioAnalyzer* on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint ({ref}`Fig. 4 <metadata_field_counts-fig>`).
 
 ```{figure} images/pii_fii.jpg
 ---
@@ -107,7 +118,7 @@ name: count_keys-fig
 Extraction of exposure frequency in parameter and metadata response column
 ```
 
-Third, we had to quantify the risk associated with the server location. Other than ensuring high loading speeding if they are situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index (Network Readiness Index 2021). It is an annual index that quantifies the impact of digital technology.
+Third, we had to quantify the risk associated with the server location. Other than ensuring high loading speeding if they are situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index {cite}`network_readiness_index`. It is an annual index that quantifies the impact of digital technology.
 
 Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risk. Ideally, each endpoint would contain all five security tests which TeejLab deems as crucial. However, it would be unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed ({ref}`Fig. 6 <count_keys-fig>`).
 
@@ -130,6 +141,14 @@ As the risk labels (target column) were provided by TeejLab, we approached this 
 
 For each of these models, they were initially trained using the processed data set without any feature engineering. However, the maximum recall value was 0.75. Hyperparameter optimization did not lead to any significant improvement in performance of models. At this stage, Logistic Regression was selected for integration into the prediction pipeline. This is due to its high interpretability and its performance was on par with more complex models.
 
-To improve the scores, we review the information being captured by the input features. We transformed all the existing columns and created new features as per Section 3.5. The final features resulted in improvement in model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.
+To improve the scores, we review the information being captured by the input features. We transformed all the existing columns and created new features as per ***Section 3.5***. The final features resulted in improvement in model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.
 
-However, the process of feature engineering caused an increase in dimensionality to 53. Recursive Feature Elimination (RFE) was employed to select the most important features instead of RFE with Cross Validation (RFECV) or SelectFromModel() which is a feature selection method based on feature importance. This was because it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while SelectFromModel() only reduced the dimensionality by one. The RFE model identified eight variables that gave the same high performance level while reducing the dimensionality. The improvement of the Recall score is provided in Figure 7.
+However, the process of feature engineering caused an increase in dimensionality to 53. Recursive Feature Elimination (RFE) was employed to select the most important features instead of RFE with Cross Validation (RFECV) or *SelectFromModel()* which is a feature selection method based on feature importance. This was because it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while *SelectFromModel()* only reduced the dimensionality by one. The RFE model identified eight variables that gave the same high performance level while reducing the dimensionality. The improvement of the Recall score is provided in {ref}`Fig. 7 <evaluation-fig>`.
+
+```{figure} images/evaluation.jpg
+---
+height: 350px
+name: evaluation-fig
+---
+Improvement of training and testing recall scores via Featuring Engineering and Feature Selection.
+```
