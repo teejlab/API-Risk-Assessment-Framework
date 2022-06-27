@@ -227,8 +227,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-augmentation">
+  <a class="reference internal nav-link" href="#data-augmentation-a-name-section-3-3-a">
    3.3  Data Augmentation
+   <a name="section_3_3">
+   </a>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -237,8 +239,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#feature-engineering">
+  <a class="reference internal nav-link" href="#feature-engineering-a-name-section-3-5-a">
    3.5 Feature Engineering
+   <a name="section_3_5">
+   </a>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -277,8 +281,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-augmentation">
+  <a class="reference internal nav-link" href="#data-augmentation-a-name-section-3-3-a">
    3.3  Data Augmentation
+   <a name="section_3_3">
+   </a>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -287,8 +293,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#feature-engineering">
+  <a class="reference internal nav-link" href="#feature-engineering-a-name-section-3-5-a">
    3.5 Feature Engineering
+   <a name="section_3_5">
+   </a>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -415,19 +423,19 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="summary-of-the-exploratory-data-analysis-eda">
 <h2>3.2 Summary of the Exploratory Data Analysis (EDA)<a class="headerlink" href="#summary-of-the-exploratory-data-analysis-eda" title="Permalink to this headline">¶</a></h2>
-<p>We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See <a class="reference internal" href="#risk-label-fig"><span class="std std-ref">Fig. 1</span></a> below). This will result in the training model reading too much into the four instances that are labelled as high risk. The training model will remember the patterns. To tackle this, we used Synthetic Minority Oversampling Technique (SMOTE) to generate more new samples.</p>
+<p>We identified two key issues after performing EDA. The first was insufficient data points for high-risk labels (See <a class="reference internal" href="#risk-label-fig"><span class="std std-ref">Fig. 1</span></a> below). This will result in the training model reading too much into the four instances that are labeled as high risk. The training model will remember the patterns. This will be described in further detail in <a class="reference external" href="#section_3_3">Section 3.3.</a></p>
 <div class="figure align-default" id="risk-label-fig">
 <a class="reference internal image-reference" href="_images/risk_label.jpg"><img alt="_images/risk_label.jpg" src="_images/risk_label.jpg" style="height: 100px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Histogram of the Risk Label highlighting severe class imbalance</span><a class="headerlink" href="#risk-label-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. For example, we used NLP techniques to analyze the unstructured data such as API header and get the metadata fields to count (See <a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 2</span></a> below).</p>
+<p>The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. This will be described in further detail in <a class="reference external" href="#section_3_5">Section 3.5.</a></p>
 <div class="figure align-default" id="metadata-field-counts-fig">
 <a class="reference internal image-reference" href="_images/metadata_field_counts.jpg"><img alt="_images/metadata_field_counts.jpg" src="_images/metadata_field_counts.jpg" style="height: 400px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Histogram of Metadata Fields Count, a feature extracted from the text column “API response”</span><a class="headerlink" href="#metadata-field-counts-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<div class="section" id="data-augmentation">
-<h2>3.3  Data Augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-augmentation-a-name-section-3-3-a">
+<h2>3.3  Data Augmentation<a name="section_3_3"></a><a class="headerlink" href="#data-augmentation-a-name-section-3-3-a" title="Permalink to this headline">¶</a></h2>
 <p>A major challenge was the imbalanced nature of data, particularly with regard to the class of interest (High Risk). We had only four observations of the High Risk API class in our training set which was insufficient for the models to learn how to predict this class effectively. We attempted these approaches:</p>
 <ul class="simple">
 <li><p>Synthetic Data generation</p></li>
@@ -435,7 +443,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>Oversampling (SMOTE)</p></li>
 </ul>
 <p>For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.</p>
-<p>Hence, we used the <code class="docutils literal notranslate"><span class="pre">imblearn</span></code> package for <em><strong>Oversampling</strong></em>. It was a technique that generated new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (<a class="reference internal" href="#oversampling-fig"><span class="std std-ref">Fig. 3</span></a>).</p>
+<p>Hence, we used the <code class="docutils literal notranslate"><span class="pre">imblearn</span></code> package for <em><strong>Oversampling</strong></em>. It is a technique that generates new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling (<a class="reference internal" href="#oversampling-fig"><span class="std std-ref">Fig. 2</span></a>).</p>
 <div class="figure align-default" id="oversampling-fig">
 <a class="reference internal image-reference" href="_images/oversampling.jpg"><img alt="_images/oversampling.jpg" src="_images/oversampling.jpg" style="height: 100px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Transformation of imbalanced training data set to a balanced one</span><a class="headerlink" href="#oversampling-fig" title="Permalink to this image">¶</a></p>
@@ -443,25 +451,26 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="evaluation-metric-and-acceptance-criteria">
 <h2>3.4 Evaluation Metric and Acceptance Criteria<a class="headerlink" href="#evaluation-metric-and-acceptance-criteria" title="Permalink to this headline">¶</a></h2>
-<p>As per our discussion with the partner, we understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk.</p>
+<p>As per our discussion with TeejLab, we understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk.</p>
 <p>Thus, we selected <em><strong>Recall</strong></em> <a class="footnote-reference brackets" href="#footnote" id="id1">1</a> as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.</p>
 <p>It was agreed that <em><strong>Acceptance Criteria would be: Recall &gt;= 0.9.</strong></em></p>
 </div>
-<div class="section" id="feature-engineering">
-<h2>3.5 Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="feature-engineering-a-name-section-3-5-a">
+<h2>3.5 Feature Engineering<a name="section_3_5"></a><a class="headerlink" href="#feature-engineering-a-name-section-3-5-a" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned above, the dataset consists of 17 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.</p>
-<p>PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises <span id="id2"><sup><a class="reference internal" href="citation.html#id4" title="What is personally identifiable information: pii data security: imperva. Dec 2019. URL: https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/.">3</a></sup></span>. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, <em>PresidioAnalyzer</em> was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using <em>PresidioAnalyzer</em> on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint (<a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 4</span></a>).</p>
+<p>PII and FII are crucial pieces of personal and financial information that can be used to identify, contact or even locate an individual or enterprises <span id="id2"><sup><a class="reference internal" href="citation.html#id4" title="What is personally identifiable information: pii data security: imperva. Dec 2019. URL: https://www.imperva.com/learn/data-security/personally-identifiable-information-pii/.">3</a></sup></span>. It is imperative that they are transmitted and stored securely. The team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, <em>PresidioAnalyzer</em> was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using <em>PresidioAnalyzer</em> on the “sample_response” column and defining the pieces of information to pick up on for PII and FII (See Appendix A), we created two binary columns of whether PII and/or FII is exposed by the API endpoint (<a class="reference internal" href="#metadata-field-counts-fig"><span class="std std-ref">Fig. 3</span></a>).</p>
 <div class="figure align-default" id="pii-fii-fig">
 <a class="reference internal image-reference" href="_images/pii_fii.jpg"><img alt="_images/pii_fii.jpg" src="_images/pii_fii.jpg" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Extraction of PII and FII from API Response to create two new columns</span><a class="headerlink" href="#pii-fii-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Second, we had to quantify the exposure of sensitive information and its frequency. This sensitive information was present in two columns - “parameter” and “response_metadata”. The former refer to request data while the latter refer to HTTP response headers. To quantify exposure, we counted the number of keys exposed per API endpoint (See Figure 5 below). In addition, there were specific security response headers, that if exposed, could lead to a security breach. As such, we extracted 12 security response keys, and engineered twelve additional binary columns (present or absent) (<a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 5</span></a>). See Appendix A for the list and description of the 12 keys.</p>
+<p>Second, we had to quantify the exposure of sensitive information. This sensitive information was present in two columns - “parameter” and “response_metadata”. These columns have a format similar to a python dictionary (key-value pairs). The former refers to request data while the latter refers to HTTP response headers.</p>
+<p>To quantify exposure, we counted the number of keys exposed per API endpoint (See <a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 4</span></a> below). In addition, there were specific security response keys that, if exposed, could lead to a security breach. As such, we extracted 12 security response keys, and created binary columns of whether each of these 12 keys were present or absent (bottom right of <a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 4</span></a>). See Appendix A for the list and description of the 12 keys.</p>
 <div class="figure align-default" id="count-keys-fig">
 <a class="reference internal image-reference" href="_images/count_keys.jpg"><img alt="_images/count_keys.jpg" src="_images/count_keys.jpg" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Extraction of exposure frequency in parameter and metadata response column</span><a class="headerlink" href="#count-keys-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Third, we had to quantify the risk associated with the server location. Other than ensuring high loading speeding if they are situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index <span id="id3"><sup><a class="reference internal" href="citation.html#id5" title="Network readiness index 2021. URL: https://networkreadinessindex.org/.">4</a></sup></span>. It is an annual index that quantifies the impact of digital technology.</p>
-<p>Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risk. Ideally, each endpoint would contain all five security tests which TeejLab deems as crucial. However, it would be unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed (<a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 6</span></a>).</p>
+<p>Third, we had to quantify the risk associated with the server location (country). Apart from ensuring high loading speed of the API endpoint if it is situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index <span id="id3"><sup><a class="reference internal" href="citation.html#id5" title="Network readiness index 2021. URL: https://networkreadinessindex.org/.">4</a></sup></span>. It is an annual index that quantifies the impact of digital technology.</p>
+<p>Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risks. Ideally, each endpoint would contain all five security tests (as seen in Fig 5) which TeejLab deems as crucial. However, it is unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed (<a class="reference internal" href="#count-keys-fig"><span class="std std-ref">Fig. 5</span></a>).</p>
 <div class="figure align-default" id="imputation-fig">
 <a class="reference internal image-reference" href="_images/imputation.jpg"><img alt="_images/imputation.jpg" src="_images/imputation.jpg" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">An example of the processed data when the input is “Injection test failed”</span><a class="headerlink" href="#imputation-fig" title="Permalink to this image">¶</a></p>
@@ -475,9 +484,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>Tree-based Models: Decision Tree, Random Forest, XGBoost, CatBoost</p></li>
 <li><p>K-Nearest Neighbors (KNN) and Support Vector Machines (SVM)</p></li>
 </ul>
-<p>For each of these models, they were initially trained using the processed data set without any feature engineering. However, the maximum recall value was 0.75. Hyperparameter optimization did not lead to any significant improvement in performance of models. At this stage, Logistic Regression was selected for integration into the prediction pipeline. This is due to its high interpretability and its performance was on par with more complex models.</p>
-<p>To improve the scores, we review the information being captured by the input features. We transformed all the existing columns and created new features as per <em><strong>Section 3.5</strong></em>. The final features resulted in improvement in model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.</p>
-<p>However, the process of feature engineering caused an increase in dimensionality to 53. Recursive Feature Elimination (RFE) was employed to select the most important features instead of RFE with Cross Validation (RFECV) or <em>SelectFromModel()</em> which is a feature selection method based on feature importance. This was because it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while <em>SelectFromModel()</em> only reduced the dimensionality by one. The RFE model identified eight variables that gave the same high performance level while reducing the dimensionality. The improvement of the Recall score is provided in <a class="reference internal" href="#evaluation-fig"><span class="std std-ref">Fig. 7</span></a>.</p>
+<p>For each of these models, they were initially trained using the processed data set without any feature engineering. However, the maximum recall value was 0.75. Hyperparameter optimization did not lead to any significant improvement in performance of models. At this stage, Logistic Regression was selected for integration into the prediction pipeline. This is due to its high interpretability and its performance was on par with more complex models. (Refer to the unbolded section of <a class="reference internal" href="#evaluation-fig"><span class="std std-ref">Fig. 6</span></a> for comparison). Please refer to the <a class="reference external" href="https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md">technical report</a> for more details.</p>
+<p>To improve the scores, we reviewed the information being captured by the input features, transformed all existing columns and created new features as described in <a class="reference external" href="#section_3_5">Section 3.5.</a>. This resulted in an improvement in the model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.</p>
+<p>Due to feature engineering, the feature set increased from 17 to 53. Thus, we employed feature selection to reduce the dimensionality yet ensuring that our recall score remains high. We attempted the following algorithms:</p>
+<ul class="simple">
+<li><p>Recursive Feature Elimination (RFE)</p></li>
+<li><p>RFE with Cross Validation (RFECV)</p></li>
+<li><p>SelectFromModel()</p></li>
+</ul>
+<p>RFE is a backward selection method which recursively considers a smaller feature set, RFECV works similarly but eliminates features based on validation scores, while SelectFromModel selects the relevant features based on feature importance. We ultimately chose RFE as it was the most consistent and resulted in the greatest dimensionality reduction from 53 to eight. The improvement of recall score is provided in <a class="reference internal" href="#evaluation-fig"><span class="std std-ref">Fig. 6</span></a>.</p>
 <div class="figure align-default" id="evaluation-fig">
 <a class="reference internal image-reference" href="_images/evaluation.jpg"><img alt="_images/evaluation.jpg" src="_images/evaluation.jpg" style="height: 350px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Improvement of training and testing recall scores via Featuring Engineering and Feature Selection.</span><a class="headerlink" href="#evaluation-fig" title="Permalink to this image">¶</a></p>
