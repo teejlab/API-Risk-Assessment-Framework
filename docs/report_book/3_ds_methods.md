@@ -19,25 +19,27 @@ The dataset provided by TeejLab contains around 2,000 observations of Hypertext 
 
 ```{table} : The detailed description of the columns in the dataset
 :name: table-2
-| **Column**                 | **Type**        | **Description**                                            |
-|------------------------|-------------|--------------------------------------------------------|
-| api_endpoint_id        | Categorical | Unique id of API Endpoint                              |
-| api_id                 | Categorical | Unique id of API Service                               |
-| api_vendor_id          | Categorical | Unique id of API Vendor                                |
-| api_vendor             | Categorical | Name of API Vendor                                     |
-| api                    | Categorical | Name of API                                            |
-| category               | Categorical | Category of API                                        |
-| usage_base             | Categorical | Type of the pricing model of API                       |
-| sample_response        | Text        | Sample HTTP Response in JSON format                    |
-| authentication         | Categorical | Authentication method used (e.g. OAuth2.0, Path, None) |
-| security_test_category | Categorical | Category of security vulnerability test                |
-| security_test_result   | Binary      | Result of security vulnerability test                  |
-| server_location        | Categorical | Location of server host                                |
-| hosting_isp            | Categorical | Internet service provider (ISP) that runs  website     |
-| server_name            | Categorical | Name and the version of web server used in API         |
-| response_metadata      | Categorical | API Response Header                                    |
-| hosting_city           | Text        | Location of web hosting                                |
-| Risk label             | Ordinal     | Severity level of risk (target label)                  |
+| **No.** | **Column**                 | **Type**        | **Description**                                            |
+|-----|------------------------|-------------|--------------------------------------------------------|
+| 1 | api_endpoint_id        | Categorical | Unique id of API Endpoint                              |
+| 2 | api_id                 | Categorical | Unique id of API Service                               |
+| 3 | api_vendor_id          | Categorical | Unique id of API Vendor                                |
+| 4 | request_id             | Categorical | Unique id of API request                               |
+| 5 | method                 | Categorical | Category of HTTP method request                        |
+| 6 | category               | Categorical | Category of API                                        |
+| 7 | parameters             | Text        | Variable parts of a resource that determines the type of action you want to take on the resource                                        |
+| 8 | usage_base             | Categorical | Type of the pricing model of API                       |
+| 9 | sample_response        | Text        | Sample HTTP Response in JSON format                    |
+| 10 | authentication         | Categorical | Authentication method used (e.g. OAuth2.0, Path, None) |
+| 11 | tagset         | Text | Keys of sample response |
+| 12 | security_test_category | Categorical | Category of security vulnerability test                |
+| 13 | security_test_result   | Binary      | Result of security vulnerability test                  |
+| 14 | server_location        | Categorical | Location of server host                                |
+| 15 | hosting_isp            | Categorical | Internet service provider (ISP) that runs  website     |
+| 16 | server_name            | Categorical | Name and the version of web server used in API         |
+| 17 | response_metadata      | Categorical | API Response Header                                    |
+| 18 | hosting_city           | Text        | Location of web hosting                                |
+| 19 | Risk label             | Ordinal     | Severity level of risk (target label)                  |
 ```
 
 ## 3.2 Summary of the Exploratory Data Analysis (EDA)
