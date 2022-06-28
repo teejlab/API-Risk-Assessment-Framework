@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Conclusion and Recommendation &#8212; API Risks Proposal Report</title>
+    <title>5. Conclusion and Recommendation &#8212; API Risks Final Report</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -78,7 +78,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <h1 class="site-logo" id="site-title">API Risks Proposal Report</h1>
+      <h1 class="site-logo" id="site-title">API Risks Final Report</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -258,16 +258,16 @@ const thebe_selector_output = ".output, .cell_output"
   <div class="tex2jax_ignore mathjax_ignore section" id="conclusion-and-recommendation">
 <h1>5. Conclusion and Recommendation<a class="headerlink" href="#conclusion-and-recommendation" title="Permalink to this headline">¶</a></h1>
 <p>In this project, we set out to create a tool to <em><strong>quantify the risk of the endpoints of each API based on security and data sovereignty markers</strong></em>. To this end, the team has been successful in creating a model that is not only highly interpretable. More importantly, it scores highly in the acceptance criteria (Recall) - attaining a recall score of 0.99 for both the train and test set.</p>
-<p>Despite the team’s success, we decided to further investigate about the validity of the risk labels. To re-emphasise, API security is a completely novel field and thus there is no absolute or ground truth to their labels. As such, we attempted an unsupervised learning technique.</p>
+<p>Despite the team’s success, we decided to further investigate the validity of the risk labels. To re-emphasise, API security is a completely novel field and thus there is no absolute or ground truth to their labels. As such, we attempted an unsupervised learning technique.</p>
 <div class="section" id="unsupervised-learning">
 <h2>5.1 Unsupervised Learning<a class="headerlink" href="#unsupervised-learning" title="Permalink to this headline">¶</a></h2>
 <p>Currently, risk labeling is subject to the capstone partner’s expertise. However, data can be clustered in many ways, and there exist a large body of algorithms designed to reveal underlying patterns.</p>
-<p>We have built a visual analytics tool using Factor analysis of mixed data (FAMD) and Tensorflow Embedding Projector <span id="id1"><sup><a class="reference internal" href="citation.html#id6" title="Nikhil Thorat Daniel Smilkov. URL: https://projector.tensorflow.org/.">5</a></sup></span> that helps analyze the similarity between the data points. As seen in <a class="reference internal" href="#pca-risk-label-fig"><span class="std std-ref">Fig. 8</span></a>, we have found that the data points were not distinct in the 3D plane, indicating that the risk labels might not be sufficiently reliable.</p>
+<p>We have built a visual analytics tool using Factor analysis of mixed data (FAMD) and Tensorflow Embedding Projector <span id="id1"><sup><a class="reference internal" href="citation.html#id6" title="Nikhil Thorat Daniel Smilkov. URL: https://projector.tensorflow.org/.">5</a></sup></span> that helps analyze the similarity between the data points. As seen in <a class="reference internal" href="#pca-risk-label-fig"><span class="std std-ref">Fig. 7</span></a>, we have found that the data points were not distinct in the 3D plane, indicating that the risk labels might not be sufficiently reliable.</p>
 <div class="figure align-default" id="pca-risk-label-fig">
 <a class="reference internal image-reference" href="_images/pca_risk_label.jpg"><img alt="_images/pca_risk_label.jpg" src="_images/pca_risk_label.jpg" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">PCA Visualization of Current Risk Label showing no distinct clusters between low and medium risk labels</span><a class="headerlink" href="#pca-risk-label-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Using K-prototypes clustering algorithm, the team attempted to group similar data points according to their metadata. Visually, this algorithm provides more distinguishable clusters that are more equally distributed with clear boundaries (See <a class="reference internal" href="#pca-clustering-fig"><span class="std std-ref">Fig. 9</span></a> below). We can also inspect all the attributes of each data point and compare the similarity within the intra-cluster and inter-cluster boundary (See <a class="reference internal" href="#pca-metadata-fig"><span class="std std-ref">Fig. 10</span></a> below).</p>
+<p>Using K-prototypes clustering algorithm, the team attempted to group similar data points according to their metadata. Visually, this algorithm provides more distinguishable clusters that are more equally distributed with clear boundaries (See <a class="reference internal" href="#pca-clustering-fig"><span class="std std-ref">Fig. 8</span></a> below). We can also inspect all the attributes of each data point and compare the similarity within the intra-cluster and inter-cluster boundary (See <a class="reference internal" href="#pca-metadata-fig"><span class="std std-ref">Fig. 9</span></a> below).</p>
 <div class="figure align-default" id="pca-clustering-fig">
 <a class="reference internal image-reference" href="_images/pca_clustering.jpg"><img alt="_images/pca_clustering.jpg" src="_images/pca_clustering.jpg" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">PCA Visualization of Cluster Label showing three distinct clusters along the vertical axis</span><a class="headerlink" href="#pca-clustering-fig" title="Permalink to this image">¶</a></p>

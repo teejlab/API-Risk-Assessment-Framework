@@ -91,25 +91,25 @@ make all
 To run preprocessing only:
 
 ```
-make <path_to_preprocessing_file>
+make data/processed/preprocessed_train.xlsx
 ```
 
 To create the model only:
 
 ```
-make <path_to_model>
+make models/model.joblib
 ```
 
 To predict only:
 
 ```
-make <path_to_predict_file>
+make data/processed/df_predicted.xlxs
 ```
 
 To generate the report only:
 
 ```
-make <path_to_report>
+make book.html
 ```
 
 ## Alternatively, you can run the scripts individually:
@@ -144,10 +144,15 @@ Generate the final report:
 jupyter-book build docs/report_book/ --builder pdfhtml
 ```
 
-Builf Github Pages:
-Navigate to the `docs/report_book/` folder and run the following command:
+Build Github Pages:
 
 ```
+jupyter-book build docs/report_book/
+```
+
+Then navigate to the `docs/report_book/` folder and run the following command:
+
+
 ```
 ghp-import -n -p -f _build/html
 ```
