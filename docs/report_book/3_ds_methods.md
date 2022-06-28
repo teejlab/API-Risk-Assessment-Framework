@@ -57,15 +57,8 @@ Histogram of the Risk Label highlighting severe class imbalance
 
 The second issue was that there might be some features hidden from the raw data. Feature engineering techniques are necessary to augment the value of existing data and improve the performance of our machine learning models. This will be described in further detail in [Section 3.5.](#section_3_5)
 
-```{figure} images/metadata_field_counts.jpg
----
-height: 400px
-name: metadata_field_counts-fig
----
-Histogram of Metadata Fields Count, a feature extracted from the text column “API response”
-```
-
-## 3.3  Data Augmentation<a name="section_3_3"></a>
+<a name="section_3_3"></a>
+## 3.3  Data Augmentation
 
 A major challenge was the imbalanced nature of data, particularly with regard to the class of interest (High Risk). We had only four observations of the High Risk API class in our training set which was insufficient for the models to learn how to predict this class effectively. We attempted these approaches:
 
@@ -73,7 +66,7 @@ A major challenge was the imbalanced nature of data, particularly with regard to
 - Bootstrapping
 - Oversampling (SMOTE)
 
-For Synthetic Data generation, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as response data and response metadata. For Bootstrapping, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.
+For *Synthetic Data generation*, while it is able to generate new numerical data, the nature of the technique did not allow us to generate columns for text data, such as *response data* and *response metadata*. For *Bootstrapping*, while it was easy to implement, and the overall data size did increase, the underlying distribution and imbalance in Risk labels was not handled.
 
 Hence, we used the `imblearn` package for ***Oversampling***. It is a technique that generates new data by ‘clustering’ the data points based on the risk labels and generating new samples based on their ‘neighbours’ information. This technique gave a balanced dataset with sufficient representation of High risk class for further modeling ({ref}`Fig. 2 <oversampling-fig>`).
 
@@ -92,11 +85,12 @@ As per our discussion with TeejLab, we understood that it is critical to correct
 
 Thus, we selected ***Recall*** [^footnote] as the primary evaluation metric to optimize the models and to maximize the correct identification of High Risk labels. We also considered f1-score as the secondary evaluation metric to ensure that not too many data points were incorrectly classified.
 
-It was agreed that ***Acceptance Criteria would be: Recall >= 0.9.***
+It was agreed that ***Acceptance Criteria would be: Recall $\geq$ 0.9.***
 
 [^footnote]: It is the number of true positives divided by the number of true positives plus the number of false negatives". In our case, it is the ratio of the number of cases correctly identified as High Risk compared to the sum of the cases correctly identified as High Risk and the number of cases incorrectly identified as High Risk when it is actually Low or Medium Risk.
 
-## 3.5 Feature Engineering<a name="section_3_5"></a>
+<a name="section_3_5"></a>
+## 3.5 Feature Engineering
 
 As mentioned above, the dataset consists of 18 variables, which include identity numbers, strings and text. Based on our domain understanding, it is essential to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test.
 
@@ -124,7 +118,7 @@ Extraction of exposure frequency in parameter and metadata response column
 
 Third, we had to quantify the risk associated with the server location (country). Apart from ensuring high loading speed of the API endpoint if it is situated near the user, the infrastructure, technology and the governance associated with the country could also impact the API’s security. As a proxy, our team has used the Network Readiness Index {cite}`network_readiness_index`. It is an annual index that quantifies the impact of digital technology.
 
-Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risks. Ideally, each endpoint would contain all five security tests (as seen in Fig 5) which TeejLab deems as crucial. However, it is unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed ({ref}`Fig. 5 <count_keys-fig>`).
+Finally, API exposes application logic and sensitive data, and has unique vulnerabilities and security risks. Ideally, each endpoint would contain all five security tests (as seen in {ref}`Fig. 5 <count_keys-fig>`) which TeejLab deems as crucial. However, it is unreasonable for third parties such as TeejLab to request for a temporary shutdown of these API. Based on our discussion with TeejLab, we determined that should a test not be present, it would be deemed as low risk as there was no concern warranting a request for a security test. To capture the subtle difference between a test that passed and a test that was missing, we assigned a value of 0.5 to denote that the specific test was missing, 0 to denote that specific test was employed and passed, and 1 to denote that specific test was employed and failed ({ref}`Fig. 5 <count_keys-fig>`).
 
 ```{figure} images/imputation.jpg
 ---
@@ -145,7 +139,7 @@ As the risk labels (target column) were provided by TeejLab, we approached this 
 
 For each of these models, they were initially trained using the processed data set without any feature engineering. However, the maximum recall value was 0.75. Hyperparameter optimization did not lead to any significant improvement in performance of models. At this stage, Logistic Regression was selected for integration into the prediction pipeline. This is due to its high interpretability and its performance was on par with more complex models. (Refer to the unbolded section of {ref}`Fig. 6 <evaluation-fig>` for comparison). Please refer to the [technical report](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md) for more details.
 
-To improve the scores, we reviewed the information being captured by the input features, transformed all existing columns and created new features as described in [Section 3.5.](#section_3_5). This resulted in an improvement in the model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.
+To improve the scores, we reviewed the information being captured by the input features, transformed all existing columns and created new features as described in [Section 3.5](#section_3_5). This resulted in an improvement in the model performance by more than 20% (a high recall score of 0.99), which exceeded the partner’s expectations.
 
 Due to feature engineering, the feature set increased from 17 to 53. Thus, we employed feature selection to reduce the dimensionality yet ensuring that our recall score remains high. We attempted the following algorithms:
 - Recursive Feature Elimination (RFE)
@@ -162,3 +156,4 @@ name: evaluation-fig
 ---
 Improvement of training and testing recall scores via Featuring Engineering and Feature Selection.
 ```
+
