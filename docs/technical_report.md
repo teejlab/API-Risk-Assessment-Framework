@@ -43,7 +43,10 @@ Hence, we used the `imblearn` package for Oversampling. It was a technique that 
 
 ### Feature Engineering
 From the 18 variables provided to us by TeejLab, most of the rows were categorical or text features. As such, in order to draw out more information, it was essential for us to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test. All the relevant code can be found in [this document](https://github.com/teejlab/API-Risk-Assessment-Framework/tree/main/src/utils).
-</br>
+
+For PII and FII extraction, the team attempted several techniques to extract this information, including Amazon’s Comprehend, PyPi’s piianalyzer package, and Microsoft’s PresidioAnalyzer. However, PresidioAnalyzer was ultimately chosen as it had high accuracy, was transferable between both PII and FII and was cost-free. By using PresidioAnalyzer on the “sample_response” column and defining the pieces of information to pick up on for PII and FII, we created two binary columns of whether PII and/or FII is exposed by the API endpoint. 
+
+As for the rest of the techniques, more details can be found in our [final report](https://teejlab.github.io/API-Risk-Assessment-Framework/3_ds_methods.html#).
 </br>
 
 ### Supervised Learning
@@ -62,6 +65,13 @@ In addition to selecting the models, we also reduced the dimensionality of the f
 - SelectFromModel().
 
 In the end, we used RFE as it was the most consistent and resulted in a great dimensionality reduction. RFECV selected different quantities and selection of features each time, while SelectFromModel() only reduced the dimensionality by one. The process of testing each algorithm can be found in this [notebook](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/notebooks/ml/3_feature_selection.ipynb).
+
+
+### Clustering
+There is no ground truth for API risks and the classification is currently based on partner's domain expertise. Thus, we explored the validity of Risk Labels using Clustering algorithms. We used the FAMD (Factor Analysis of Mixed Data) algorithm, which is a generalized PCA algorithm that works well on mixed datasets. Visualization of new clusters was conducted using [Tensorflow Embedding Projector](https://projector.tensorflow.org/). This is an important tool for the partner to investigate how APIs are clustered and identify factors that may have been missed out.
+
+As such, we have created a [notebook](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/notebooks/eda/eda-clustering.ipynb) to explore (1) the clusters based on the risk labels assigned by TeejLab and (2) the clusters formed using the K-prototypes clustering algorithm. More details can be found in this [section of the final report](https://teejlab.github.io/API-Risk-Assessment-Framework/5_conclusion.html). 
+
 
 ## Results
 The main scoring metric is Recall, with an acceptance criteria of more than 0.9. We understood that it is critical to correctly identify the High Risk classes, while also ensuring that not too many Low and Medium risk labels are incorrectly classified as High Risk. 
