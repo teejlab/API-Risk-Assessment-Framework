@@ -1,26 +1,25 @@
 # API-Risk-Assessment-Framework
 
 This project quantified the risk of the endpoint of each API based on security and data sovereignty markers. In this repository, we have included a well-annotated python script for (1) the data preprocessing and feature engineering, along with the (2) machine learning pipeline. These can be found in the `src` folder.
-​
+
 This project is part of UBC MDS' capstone project 2022 where the contributors collaborated with TeejLab.
-​
+
 
 ## Proposal
 
-​
 Our proposal can be found [here](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/proposal_book/_build/pdf/book.pdf).
-​
+
 
 ## Final Report
 
 Our final report can be found [here](https://teejlab.github.io/API-Risk-Assessment-Framework/intro.html).
-​
+
 
 ## Technical Report
 
 For a high level summary of our project and to understand our decision making choices, please refer to the [technical report](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/docs/technical_report.md).
 We have included links to the relevant scripts and notebooks for easy navigation within the repository.
-​
+
 
 ## Top-level Directory Layout
 
@@ -46,15 +45,16 @@ We have included links to the relevant scripts and notebooks for easy navigation
     ├── CONTRIBUTING.md         # Contributing File
     ├── env.yml                 # Conda Environment File
     └── README.md               # README
-​
+
 
 ## Usage
 
 1. Clone the repository to your machine.
 2. Set up the environment using the instructions below.
-3. Template to include new API endpoint can be found in the `data/processed` folder.
-4. To use the models directly, please refer to Makefile instructions below.
-​
+3. Template to include new API endpoint for training or prediction can be found in the `data/raw` folder.
+4. To access the notebooks via Jupyter Lab, follow the instructions below.
+5. To use the models directly, or to generate the reports, please refer to Makefile instructions below.
+
 
 ## Environment set up
 
@@ -65,6 +65,13 @@ You can install all the dependencies you need using conda:
 conda env create -f env.yml
 conda activate api-risk-env
 ```
+Please note that this process will take approximately 10-15 minutes. 
+
+## Template for Input Data
+The input data needs to be in a specified format for the script to run without errors. All the column headers are required to be present in the input data file. As for the data inputs, the script will accept empty fields. More specificially, all 18 column headers need to be present, however, not all 18 columns each row needs to be completed. 
+
+A sample of the data format, description of input columns and information about mandatory fields are provided in the [raw_data_format.xlxs](https://github.com/teejlab/API-Risk-Assessment-Framework/blob/main/data/raw/raw_data_format.xlsx) file inside `data/raw` folder.
+
 
 ## Jupyter Notebook
 
@@ -75,8 +82,6 @@ jupyter lab
 ```
 
 Once the Jupyter Server is running, go to http://localhost:8888/ and navigate to the directory `/notebooks`.
-
-
 
 
 ## Makefile
@@ -106,7 +111,7 @@ To predict only:
 make data/processed/df_predicted.xlxs
 ```
 
-To generate the report only:
+To generate the final report only:
 
 ```
 make book.html
@@ -119,7 +124,7 @@ To run preprocessing:
 ```
 python src/preprocessing.py --endpoint_path=<path_to_endpoint> --country_path=<path_to_country>--risk_rules_path=<path_to_risk_rules> --output_path=<path_to_output> --split_data=<bool>
 ```
-​
+
 To create the model:
     
 ```
@@ -144,7 +149,7 @@ Generate the final report:
 jupyter-book build docs/report_book/ --builder pdfhtml
 ```
 
-Build Github Pages:
+To build Github Pages, first:
 
 ```
 jupyter-book build docs/report_book/
@@ -160,14 +165,13 @@ ghp-import -n -p -f _build/html
 
 ## Contributing
 
-​
+
 | Contributors         | Github                |
 |----------------------|-----------------------|
 | Anupriya Srivastava  | \@Anupriya-Sri        |
 | Harry Chan           | \@harryyikhchan       |
 | Jacqueline Chong     | \@Jacq4nn             |
 | Son Chau             | \@SonQBChau           |
-​
 
 ## License
 
