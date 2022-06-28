@@ -42,7 +42,7 @@ Hence, we used the `imblearn` package for Oversampling. It was a technique that 
 </br>
 
 ### Feature Engineering
-From the 17 variables provided to us by TeejLab, most of the rows were categorical or text features. As such, in order to draw out more information, it was essential for us to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test. All the relevant code can be found in [this document](https://github.com/teejlab/API-Risk-Assessment-Framework/tree/main/src/utils)
+From the 18 variables provided to us by TeejLab, most of the rows were categorical or text features. As such, in order to draw out more information, it was essential for us to extract and/or engineer several features - (1) PII and FII extraction, (2) quantify exposure frequency, (3) quantify risk associated with server location, and (4) imputation of security test. All the relevant code can be found in [this document](https://github.com/teejlab/API-Risk-Assessment-Framework/tree/main/src/utils).
 </br>
 </br>
 
